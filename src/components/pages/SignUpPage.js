@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
 
-function SignUpPage() {
+const SignUpPage=()=>{
   const [formData, setFormData] = useState({
     email: '',
     password: '',

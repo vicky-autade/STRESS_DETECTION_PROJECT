@@ -1,27 +1,99 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
+import toast from "react-hot-toast";
+import {AiOutlineEye,AiOutlineEyeInvisible} from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
 
-function LoginPage() {
+
+const LoginPage=({setIsLoggedIn})=> {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+        
+    email: "",
+    password: ""
+  
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log("Printing the form data");
+    console.log(formData);
+    try {
+      console.log("Backend URL: ", process.env.REACT_APP_BACKEND_URL);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+// Log the response data
+console.log("Response: ", data);
+      if (data.isValidUser) {
+        setIsLoggedIn(true);
+        console.log("User Logged in successfully!");
+        toast.success("Login successful !", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeButton: false,
+          draggable: false,
+          pauseOnHover: false,
+          className: "large-toast",
+        });
+        // Optionally, reset form fields
+        setFormData({ name: "", email: "", message: "" });
+        Navigate("/first"); 
+      } else {
+        console.error("User Login failed!");
+        toast.error("Invalid credentials. Please try again.!",{
+            position: "top-center",
+            autoClose: 2000,
+          hideProgressBar: true,
+          closeButton: false,
+          draggable: false,
+          pauseOnHover: false,
+          className: "large-toast"
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Error submitting form. Please try again later.");
+    }
+
+
+
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add login logic here
-    console.log('Form submitted:', formData);
-  };
+  const Navigate=useNavigate();
+
+  const[showPassword,setShowPassword] = useState(false);
+  
+  function changeHandler(event){
+    handleChange(event);
+        setFormData( (prevData)=>(
+           
+            {
+
+                 ...prevData, [event.target.name]:event.target.value
+            }
+
+        ))       
+          
+  }
+
+
+const handleFormSubmit = (event) => {
+  handleSubmit(event);
+}
 
   return (
     <main className="page-content">
@@ -31,7 +103,7 @@ function LoginPage() {
             <img src="/images/meditation.svg" alt="Peaceful meditation illustration" />
           </div>
           
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleFormSubmit} className="login-form">
             <div className="form-header">
               <h2>Welcome Back</h2>
               <p>Sign in to continue your stress management journey</p>
@@ -42,26 +114,34 @@ function LoginPage() {
                 type="email"
                 name="email"
                 value={formData.email}
-                onChange={handleChange}
+                onChange={changeHandler}
                 placeholder="Email Address"
                 required
               />
             </div>
             <div className="form-group animate-in">
               <input
-                type="password"
+                type={showPassword ? ("text") : ("password") }
                 name="password"
                 value={formData.password}
-                onChange={handleChange}
+                onChange={changeHandler}
                 placeholder="Password"
                 required
               />
+              <span 
+                    className="absolute right-3 top-[38px] cursor-pointer "
+                    onClick={()=>setShowPassword( (prev) => !prev )}>
+                    {/* if showPassword is true then show invisible eye icon else show visible eye icon */}
+                    {showPassword ? (<AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF"/>) : (<AiOutlineEye fontSize={24} fill="#AFB2BF"/>) }
+              </span>
             </div>
             <div className="form-options animate-in">
               <label className="remember-me">
                 <input type="checkbox" /> Remember me
               </label>
-              <a href="#" className="forgot-password">Forgot Password?</a>
+              <Link to="#">
+                    <p className="forgot-password">Forgot Password?</p>
+              </Link>
             </div>
             <button type="submit" className="submit-btn animate-in">Login</button>
           </form>
