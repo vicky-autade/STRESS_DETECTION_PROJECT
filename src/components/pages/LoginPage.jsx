@@ -148,17 +148,17 @@ const LoginPage = ({ setIsLoggedIn }) => {
               <label className="remember-me">
                 <input type="checkbox" /> Remember me
               </label>
-              <Link to="#">
-                <p className="forgot-password">Forgot Password?</p>
-              </Link>
+              <a href="#" className="forgot-password">Forgot Password?</a>
             </div>
             <button type="submit" className="submit-btn animate-in">Login</button>
+
+            <p className="signup-link animate-in">
+              New to Stress Research Analyzer? <br></br><Link to="/signup">Create an account</Link>
+            </p>
           </form>
         </div>
 
-        <p className="signup-link animate-in">
-          New to Stress Research Analyzer? <Link to="/signup">Create an account</Link>
-        </p>
+
       </div>
 
 

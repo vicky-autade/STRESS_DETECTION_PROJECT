@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import signupImage from '../assets/signup.png';
-import '../style/SignUpPageStyle.css';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import signupImage from "../assets/signup.png";
+import "../style/SignUpPageStyle.css";
+import toast from "react-hot-toast";
 
 function SignUpPage() {
   useEffect(() => {
@@ -9,16 +10,139 @@ function SignUpPage() {
   }, []);
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    userName: '',
-    dob: '',
-    gender: '',
+    email: "",
+    password: "",
+    confirmPassword: "",
+    userName: "",
+    dob: "",
+    gender: "",
   });
 
   const [isEmailPasswordEntered, setIsEmailPasswordEntered] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
+  const [timer, setTimer] = useState(120); // Timer in seconds
+  const [isTimerActive, setIsTimerActive] = useState(false);
+  const Navigate = useNavigate();
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+    console.log(formData.dob);
+    // If confirming the email (Confirm Email button clicked)
+    if (!isConfirming) {
+      try {
+        // Send request to initiate signup and send OTP to user's email
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email, 
+            username: formData.userName,
+            gender: formData.gender,
+            dateOfBirth: formData.dob,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+        console.log("My data : "+data);
+        if (data.isValidUser) {
+          toast.success("OTP sent to your email. Please check your inbox.", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeButton: false,
+            draggable: false,
+            pauseOnHover: false,
+            className: "large-toast",
+          });
+
+          setIsConfirming(true);  // Proceed to confirm step
+          setIsTimerActive(true);  // Start the timer for OTP input
+          setTimer(120);  // Reset timer to 2 minutes
+        } else {
+          console.log("In else :"+data.message);
+          toast.error(data.message || "Failed to send OTP. Please try again.", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeButton: false,
+            draggable: false,
+            pauseOnHover: false,
+            className: "large-toast",
+          });
+        }
+      } catch (error) {
+        console.error("Error during signup request:", error);
+        toast.error("An error occurred. Please try again later.", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeButton: false,
+          draggable: false,
+          pauseOnHover: false,
+          className: "large-toast",
+        });
+      }
+    }
+
+    // If confirming OTP (Create Account button clicked)
+    else {
+      try {
+        // Send OTP confirmation request to validate OTP
+        console.log(formData.otp);
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/signup/confirmOtp`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email, // Send the user's email
+            otp: formData.otp, // Send the OTP entered by the user
+          }),
+        });
+
+        const data = await response.json();
+       
+          if (data.isValidUser) {
+            toast.success("Account created successfully! You can now log in.", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeButton: false,
+              draggable: false,
+              pauseOnHover: false,
+              className: "large-toast",
+            });
+            Navigate("/login"); // Redirect to login page after successful signup
+          } else {
+            toast.error(data.message || "Account creation failed. Please try again.", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeButton: false,
+              draggable: false,
+              pauseOnHover: false,
+              className: "large-toast",
+            });
+          }
+      } catch (error) {
+        console.error("Error during OTP confirmation:", error);
+        toast.error("An error occurred. Please try again later.", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeButton: false,
+          draggable: false,
+          pauseOnHover: false,
+          className: "large-toast",
+        });
+      }
+    }
+  };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +151,7 @@ function SignUpPage() {
       [name]: value,
     }));
 
-    if (name === 'email' || name === 'password') {
+    if (name === "email" || name === "password") {
       // Check if both email and password are entered
       if (formData.email && formData.password) {
         setIsEmailPasswordEntered(true);
@@ -37,14 +161,26 @@ function SignUpPage() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (isEmailPasswordEntered && !isConfirming) {
-      setIsConfirming(true);  // Switch to confirm step
-    } else {
-      // Submit the form when confirming
-      console.log('Form submitted:', formData);
+
+  // Handle timer countdown
+  useEffect(() => {
+    let timerInterval;
+    if (isTimerActive && timer > 0) {
+      timerInterval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      setIsTimerActive(false); // Stop the timer when it reaches 0
+      setIsConfirming(false); // Revert to initial state
     }
+    return () => clearInterval(timerInterval);
+  }, [isTimerActive, timer]);
+
+  // Format timer as mm:ss
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
   return (
@@ -83,9 +219,9 @@ function SignUpPage() {
                   <option value="" disabled>
                     Select Gender
                   </option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
             </div>
@@ -136,22 +272,31 @@ function SignUpPage() {
 
             {/* Conditional rendering of confirm email field */}
             {isConfirming && (
-              <div className="form-group animate-in">
-                <input
-                  type="text"
-                  name="confirmEmail"
-                  placeholder="Enter verification code"
-                  required
-                />
+              <div>
+                <div className="form-group animate-in">
+                  <input
+                    type="text"
+                    name="otp"
+                    value={formData.otp}
+                    onChange={handleChange}
+                    placeholder="Enter verification code"
+                    required
+                  />
+                </div>
+                {/* Display Timer */}
+                <p className="timer-text">Time remaining: {formatTime(timer)}</p>
               </div>
             )}
 
             <button type="submit" className="submit-btn animate-in">
-              {isConfirming ? 'Create Account' : 'Confirm Email'}
+              {isConfirming ? "Create Account" : "Confirm Email"}
             </button>
 
             <p className="login-link animate-in">
-              Already have an account? <Link to="/login" className='link'>Login here</Link>
+              Already have an account?{" "}
+              <Link to="/login" className="link">
+                Login here
+              </Link>
             </p>
           </form>
         </div>
