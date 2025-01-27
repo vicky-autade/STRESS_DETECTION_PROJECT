@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import resetPasswordImage from '../assets/lock.png'; // Placeholder image for reset password page
 import '../style/LoginPageStyle.css';
+import axios from 'axios';
 
 const ResetPasswordPage = () => {
   const [formData, setFormData] = useState({
@@ -45,21 +46,15 @@ const ResetPasswordPage = () => {
     const token = urlParams.get("token");
     try {
       // Send the password and token to the backend
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/resetpassword`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          newPassword: formData.password, // Password entered by the user
-          token, // Token from the URL
-        }),
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/resetpassword`, {
+        newPassword: formData.password, // Password entered by the user
+        token, // Token from the URL
       });
 
-      const data = await response.json();
-      console.log(data.message);
+      const data = response.data;
+      console.log("Sucess :"+data.sucess);
       // Handle response from the backend
-      if (data.success) {
+      if (data.sucess) {
         toast.success("Password reset successful!");
         navigate("/login"); // Redirect user to login page
       } else {

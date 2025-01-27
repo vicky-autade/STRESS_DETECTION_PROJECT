@@ -36,6 +36,8 @@ const Header = (props) => {
             <button
               onClick={() => {
                 setIsLoggedIn(false);
+                console.log(sessionStorage.getItem("token"));
+                console.log(sessionStorage.getItem("user"));
                 toast.success("Logged out successfully!");
               }}
               className="logout-button"

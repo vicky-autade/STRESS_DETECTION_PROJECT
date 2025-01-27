@@ -1,20 +1,31 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaEnvelope, FaLock } from 'react-icons/fa';
 import toast from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import loginImage from '../assets/login.png';
 import '../style/LoginPageStyle.css';
+import { useEffect } from 'react';
+import axiosClient from "../api/axiosClient";
+import axios from 'axios';
 
-
-const LoginPage = ({ setIsLoggedIn }) => {
+const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
   const [formData, setFormData] = useState({
 
     email: "",
     password: ""
 
   });
+
+  const Navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      Navigate("/first");
+    }
+  }, [isLoggedIn, Navigate]);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,15 +38,27 @@ const LoginPage = ({ setIsLoggedIn }) => {
     console.log(formData);
     try {
       console.log("Backend URL: ", process.env.REACT_APP_BACKEND_URL);
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/login`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(formData),
+      // });
+      
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}api/login`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+     
+      console.log("Backend Response : "+response.data); // Handle the response data
 
-      const data = await response.json();
+      const data = await response.data;
 
       // Log the response data
       console.log("Response: ", data);
@@ -75,9 +98,9 @@ const LoginPage = ({ setIsLoggedIn }) => {
 
   };
 
-  const Navigate = useNavigate();
+  
 
-  const [showPassword, setShowPassword] = useState(false);
+  
 
   function changeHandler(event) {
     handleChange(event);
