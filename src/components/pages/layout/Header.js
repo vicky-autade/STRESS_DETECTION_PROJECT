@@ -8,11 +8,19 @@ const Header = (props) => {
   let isLoggedIn = props.isLoggedIn;
   let setIsLoggedIn = props.setIsLoggedIn;
 
+  const scrollToTop = () => {
+    console.log("Scrolling to top...");
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }
+
   return (
     <header className="header">
       <div className="logo">
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>Stress Research Analyzer</h1>
+          <h1 onClick={scrollToTop}>Stress Research Analyzer</h1>
         </Link>
       </div>
 
@@ -37,12 +45,10 @@ const Header = (props) => {
           </>
         ) : (
           <>
-            <Link to="/login" className="nav-link">
-              Login
-            </Link>
-            <Link to="/signup" className="nav-link">
-              Sign Up
-            </Link>
+           
+              <Link to="/login" className="nav-link">Login</Link>
+              <Link to="/signup" className="nav-link">Sign Up</Link>
+        
           </>
         )}
       </nav>

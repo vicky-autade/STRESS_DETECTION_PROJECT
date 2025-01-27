@@ -4,9 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeartbeat, faRunning, faAppleAlt, faBed, faUsers, faChartLine, faBrain, faLightbulb, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { motion, useAnimation, useViewportScroll, useTransform } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import './HomePage.css';
+import '../style/HomePageStyle.css';
+import user1 from '../assets/user1.png';
+import user2 from '../assets/user2.png';
+import user3 from '../assets/user3.png';
 
 const HomePage = () => {
+
+ 
+
   const controls = useAnimation();
   const [ref, inView] = useInView();
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -19,17 +25,17 @@ const HomePage = () => {
     {
       quote: "This revolutionary tool has completely transformed my understanding of stress. I've seen a 40% increase in my productivity!",
       author: "Sarah J., Tech Entrepreneur",
-      image: "https://via.placeholder.com/100"
+      image: user1
     },
     {
       quote: "The personalized insights have helped me manage my work-life balance effectively. I feel more in control than ever.",
       author: "Michael R., Project Manager",
-      image: "https://via.placeholder.com/100"
+      image: user2
     },
     {
       quote: "As a healthcare professional, I'm impressed by the scientific approach. It's a game-changer in stress management.",
       author: "Dr. Emily L., Psychologist",
-      image: "https://via.placeholder.com/100"
+      image: user3
     }
   ];
 
@@ -38,6 +44,15 @@ const HomePage = () => {
       controls.start('visible');
     }
   }, [controls, inView]);
+
+  useEffect(() => {
+    const header = document.querySelector('header');
+    if (header) {
+      const headerHeight = header.offsetHeight;
+      document.querySelector('.home-content').style.marginTop = `${headerHeight}px`;
+    }
+  }, []);
+  
 
   useEffect(() => {
     if (stressLevelChart.current) {
@@ -91,15 +106,16 @@ const HomePage = () => {
   };
 
   return (
-    <div className="home-content">
+    <div className="home-content" >
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
+       
       >
-        <Link to="/" className="title-link">
-          Stress Research Analyzer
-        </Link>
+          <Link to="/" className="title-link"   >
+            Stress Research Analyzer
+          </Link>
       </motion.h1>
       <motion.p
         className="intro-text"
@@ -134,7 +150,7 @@ const HomePage = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <canvas ref={stressLevelChart} width="400" height="200"></canvas>
+          <canvas ref={stressLevelChart} width="300" height="200"></canvas>
           <p>Real-time visualization of stress levels</p>
         </motion.div>
         <p>
@@ -142,7 +158,7 @@ const HomePage = () => {
         </p>
       </section>
 
-      <motion.section 
+      {/* <motion.section 
         className="tips-section"
         variants={staggerChildren}
         initial="hidden"
@@ -171,9 +187,9 @@ const HomePage = () => {
             </motion.div>
           ))}
         </div>
-      </motion.section>
+      </motion.section> */}
 
-      <section className="animation-section">
+      <section className="animation-section" >
         <h2>Our Innovative Approach</h2>
         <div className="animation-container">
           {[
