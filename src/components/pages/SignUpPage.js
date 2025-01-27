@@ -184,7 +184,7 @@ function SignUpPage() {
   };
 
   return (
-    <main className="page-content">
+    <main className="page-content" >
       <div className="content-container">
         <div className="signup-wrapper">
           <div className="signup-image">

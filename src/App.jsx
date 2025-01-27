@@ -11,7 +11,8 @@ import PrivateRoute from './components/PrivateRoute';
 import First from './components/pages/First';
 import Header from './components/pages/layout/Header';
 import Footer from './components/pages/layout/Footer';
-
+import ResetPassword from './components/pages/ResetPassword';
+import ConfirmPassword from './components/pages/confirm-password';
 
 
 
@@ -29,6 +30,8 @@ const App=()=>{
                   <Route path="/" element={<HomePage/>}></Route>   
                   <Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
                   <Route path="/signup" element={<SignupPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>}/>
+                  <Route path="/reset-password" element={<ResetPassword/>}/>
+                  <Route path="/confirm-password" element={<ConfirmPassword/>}/>
                   <Route path="/first" element={<PrivateRoute isLoggedIn={isLoggedIn}><First/></PrivateRoute>}/>
           </Routes>
              

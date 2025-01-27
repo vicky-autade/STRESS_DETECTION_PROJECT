@@ -98,7 +98,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
   }
 
   return (
-    <main className="page-content">
+    <main className="page-content" >
       <div className="content-container">
         <div className="login-wrapper">
           <div className="login-image">
@@ -148,8 +148,10 @@ const LoginPage = ({ setIsLoggedIn }) => {
               <label className="remember-me">
                 <input type="checkbox" /> Remember me
               </label>
-              <a href="#" className="forgot-password">Forgot Password?</a>
-            </div>
+              <Link to="/reset-password" className="forgot-password">
+                      Forgot Password?
+              </Link>            
+              </div>
             <button type="submit" className="submit-btn animate-in">Login</button>
 
             <p className="signup-link animate-in">
