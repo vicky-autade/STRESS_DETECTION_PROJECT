@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import toast from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import loginImage from '../assets/login.png';
 import '../style/LoginPageStyle.css';
 import { useEffect } from 'react';
-import axiosClient from "../api/axiosClient";
 import axios from 'axios';
+import Cookies from "js-cookie";
+import {jwtDecode} from "jwt-decode";
 
 const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
   const [formData, setFormData] = useState({
@@ -38,33 +39,41 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
     console.log(formData);
     try {
       console.log("Backend URL: ", process.env.REACT_APP_BACKEND_URL);
-      // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/login`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(formData),
-      // });
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
       
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}api/login`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      // const response = await axios.post(
+      //   `${process.env.REACT_APP_BACKEND_URL}api/login`,
+      //   formData,
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // );
      
-      console.log("Backend Response : "+response.data); // Handle the response data
+      // console.log("Backend Response : "+response.json()); // Handle the response data
 
-      const data = await response.data;
+      const data = await response.json();
 
       // Log the response data
       console.log("Response: ", data);
       if (data.isValidUser) {
+       
+        const token = data.user.token;
+        const decodedToken = jwtDecode(token);
+        const expiresAt = decodedToken.exp * 1000; // Convert to milliseconds
+
+        // Store token in cookies with expiration
+        Cookies.set("authToken", token, { expires: new Date(expiresAt), secure: true });
+        console.log(Cookies.get("authToken"));
         setIsLoggedIn(true);
-        console.log("User Logged in successfully!");
+       // console.log("User Logged in successfully!");
         toast.success("Login successful !", {
           position: "top-center",
           autoClose: 2000,
@@ -74,7 +83,13 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
           pauseOnHover: false,
           className: "large-toast",
         });
-        // Optionally, reset form fields
+        // Cookies.set("userId", data.user.id, { expires: 7, secure: true });  // Expires in 7 days
+        // Cookies.set("userName", data.user.userName, { expires: 7 });
+        // Cookies.set("userRole", data.user.role, { expires: 7 });
+
+        console.log("Login successful, user data stored in cookies.");
+          
+       // Optionally, reset form fields
         setFormData({ name: "", email: "", message: "" });
         Navigate("/first");
       } else {
