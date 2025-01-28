@@ -17,16 +17,18 @@ const First = () => {
     // const token = urlParams.get("token");
     try {
       // Send the password and token to the backend
-      const response = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}api/profile`);
-      const data = response.data;
-      console.log("Sucess :"+data.sucess);
-
-    } catch (error) {
-      if(error.status == 403){
-        // Navigate('/login')
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/profile`,{method:'GET',credential:'include'});
+      if(!response.ok){
+        throw new Error("unauthorized or session errios");
       }
+      const data = await response.json();
+      console.log(data);
+
+      
+    } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Error submitting form. Please try again later."+error.message);
+      window.location.href = '/login';
     }
   };
 
