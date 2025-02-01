@@ -333,7 +333,7 @@ const ResetPasswordPage = () => {
               </>
             )}
 
-            <button type="submit" className="submit-btn animate-in">
+            <button type="submit" className="submit-button animate-in">
               {step === 1 ? "Verify Email" : "Reset Password"}
             </button>
 

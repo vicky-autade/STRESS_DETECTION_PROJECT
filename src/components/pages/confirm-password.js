@@ -128,7 +128,7 @@ const ResetPasswordPage = () => {
               </div>
             </div>
 
-            <button type="submit" className="submit-btn animate-in">
+            <button type="submit" className="submit-button animate-in">
               Reset Password
             </button>
           </form>

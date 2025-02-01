@@ -1,12 +1,19 @@
 import React from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
-import { axiosClient } from '../api/axiosClient';
-import { Navigate } from "react-router-dom";
+import "../style/FirstPageStyle.css";
+import graph from "../assets/trend.png";
+import quiz from "../assets/quiz.png";
+import wave from "../assets/wave.png";
+import { useNavigate } from "react-router-dom";
+
 const First = () => {
+
+  const navigate = useNavigate();
 
   const handleClick = async (event) => {
     event.preventDefault();
+
+
 
     // Check if passwords match
     // if (formData.password !== formData.confirmPassword) {
@@ -32,22 +39,46 @@ const First = () => {
     }
   };
 
+  const inputFieldsShow =()=>{
+      navigate("/input-data");
+  }
+
 
   return (
-    <div style={{ 
-      display: "flex", 
-      justifyContent: "center", 
-      alignItems: "center", 
-      height: "100vh", 
-      fontSize: "24px", 
-      fontWeight: "bold" 
-    }}>
-      Welcome to Stress Detection System
-      <button onClick={handleClick}>
-        handleChange
-      </button>
-    </div>
+    <main className="page-container">
+      <div className="content-wrapper">
+        <div className="section-group">
+          {/* Input Data Section */}
+          <div className="data-section">
+            <h2>Input Data</h2>
+            <p>Provide the necessary data to analyze your stress levels.</p>
+            <button className="button-primary" onClick={inputFieldsShow}>Input Data</button>
+            <img src={wave} alt="Input Data" className="section-image" />
+          </div>
+  
+          {/* See Recommendation Section */}
+          <div className="data-section">
+            <h2 className="text-center">Recommendation</h2>
+            <p>View recommendations based on your input data.</p>
+            <button className="button-primary">See Recommendations</button>
+            <img src={quiz} alt="Recommendation" className="section-image" />
+          </div>
+  
+          {/* Show Analytics Section */}
+          <div className="data-section">
+            <h2>Show Analytics</h2>
+            <p>View analytics and trends based on your data.</p>
+            <button className="button-primary">Show Analytics</button>
+            <img src={graph} alt="Analytics" className="section-image" />
+          </div>
+        </div>
+      </div>
+    </main>
   );
+  
 };
 
 export default First;
+
+
+

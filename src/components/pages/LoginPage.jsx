@@ -190,7 +190,7 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
                       Forgot Password?
               </Link>            
               </div>
-            <button type="submit" className="submit-btn animate-in">Login</button>
+            <button type="submit" className="submit-button animate-in">Login</button>
 
             <p className="signup-link animate-in">
               New to Stress Research Analyzer? <br></br><Link to="/signup">Create an account</Link>

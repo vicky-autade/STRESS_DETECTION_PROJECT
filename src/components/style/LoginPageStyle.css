@@ -146,7 +146,7 @@
   text-decoration: underline;
 }
 
-.submit-btn {
+.submit-button {
   width: 100%;
   padding: 1rem;
   background: linear-gradient(135deg, #3498db, #2c3e50);
@@ -159,7 +159,7 @@
   transition: transform 0.3s ease;
 }
 
-.submit-btn:hover {
+.submit-button:hover {
   transform: translateY(-2px);
 }
 

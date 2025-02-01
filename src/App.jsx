@@ -9,8 +9,11 @@ import First from './components/pages/First';
 import Header from './components/pages/layout/Header';
 import Footer from './components/pages/layout/Footer';
 import ResetPassword from './components/pages/ResetPassword';
+import Profile from './components/pages/profilePage';
+import InputData from './components/pages/InputData';
 import ConfirmPassword from './components/pages/confirm-password';
 import { setupAxiosInterceptors } from './components/api/axiosClient';
+
 
 const App = () => {
   const navigate = useNavigate();
@@ -33,6 +36,8 @@ const App = () => {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/confirm-password" element={<ConfirmPassword />} />
           <Route path="/first" element={<PrivateRoute isLoggedIn={isLoggedIn}><First setIsLoggedIn={setIsLoggedIn} /></PrivateRoute>} />
+          <Route path="/profile" element={<PrivateRoute isLoggedIn={isLoggedIn}><Profile/></PrivateRoute>} /> 
+          <Route path="/input-data" element={<PrivateRoute isLoggedIn={isLoggedIn}><InputData/></PrivateRoute>} /> 
         </Routes>
       </div>
       <div className="footer">

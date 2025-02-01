@@ -583,7 +583,7 @@ function SignUpPage() {
               </div>
             )}
 
-            <button type="submit" className="submit-btn animate-in">
+            <button type="submit" className="submit-button animate-in">
               {isConfirming ? "Create Account" : "Confirm Email"}
             </button>
 
