@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import resetPasswordImage from '../assets/lock.png'; // Placeholder image for reset password page
 import '../style/LoginPageStyle.css';
 import axios from 'axios';
+import Loader from './Loader';
 
 const ResetPasswordPage = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const ResetPasswordPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,7 +38,7 @@ const ResetPasswordPage = () => {
 
   const handlePasswordSubmit = async (event) => {
     event.preventDefault();
-
+    setLoading(true);
     // Check if passwords match
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match.");
@@ -63,6 +65,8 @@ const ResetPasswordPage = () => {
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Error submitting form. Please try again later.");
+    }finally {
+      setLoading(false); // Hide loader after API call finishes
     }
   };
 
@@ -129,11 +133,12 @@ const ResetPasswordPage = () => {
             </div>
 
             <button type="submit" className="submit-button animate-in">
-              Reset Password
+               {loading ? "Processing" : "Reset Password"} 
             </button>
           </form>
         </div>
       </div>
+      {loading && <Loader />} {/* Show loader when loading is true */}
     </main>
   );
 };
