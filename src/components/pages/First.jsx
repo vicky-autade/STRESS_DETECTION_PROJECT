@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import "../style/FirstPageStyle.css";
 import graph from "../assets/trend.png";
@@ -7,6 +8,10 @@ import wave from "../assets/wave.png";
 import { useNavigate } from "react-router-dom";
 
 const First = () => {
+
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
   const navigate = useNavigate();
 
@@ -43,7 +48,9 @@ const First = () => {
   const inputFieldsShow =()=>{
       navigate("/input-data");
   }
-
+  const recommandationShow =()=>{
+    navigate("/recommandation");
+}
 
   return (
     <main className="page-container">
@@ -61,7 +68,7 @@ const First = () => {
           <div className="data-section">
             <h2 className="text-center">Recommendation</h2>
             <p>View recommendations based on your input data.</p>
-            <button className="button-primary">See Recommendations</button>
+            <button className="button-primary" onClick={recommandationShow}>See Recommendations</button>
             <img src={quiz} alt="Recommendation" className="section-image" />
           </div>
   

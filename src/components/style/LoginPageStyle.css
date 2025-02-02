@@ -38,11 +38,11 @@
 }
 
 /* Container for password input and icon */
-.input-container {
+.input-container1-pass {
   position: relative;
 }
 
-.input-container input {
+.input-container1-pass input {
   width: 100%;
   padding-right: 2.5rem;
   /* Space for the eye icon */

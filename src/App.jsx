@@ -12,7 +12,9 @@ import ResetPassword from './components/pages/ResetPassword';
 import Profile from './components/pages/profilePage';
 import InputData from './components/pages/InputData';
 import ConfirmPassword from './components/pages/confirm-password';
+import Recommandation from "./components/pages/RecommandationPage";
 import { setupAxiosInterceptors } from './components/api/axiosClient';
+
 
 
 const App = () => {
@@ -38,6 +40,7 @@ const App = () => {
           <Route path="/first" element={<PrivateRoute isLoggedIn={isLoggedIn}><First setIsLoggedIn={setIsLoggedIn} /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute isLoggedIn={isLoggedIn}><Profile/></PrivateRoute>} /> 
           <Route path="/input-data" element={<PrivateRoute isLoggedIn={isLoggedIn}><InputData/></PrivateRoute>} /> 
+          <Route path="/recommandation" element={<PrivateRoute isLoggedIn={isLoggedIn}><Recommandation/></PrivateRoute>} /> 
         </Routes>
       </div>
       <div className="footer">

@@ -168,7 +168,7 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
               />
             </div>
             <div className="form-group password-field animate-in">
-              <div className="input-container">
+              <div className="input-container-pass">
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"

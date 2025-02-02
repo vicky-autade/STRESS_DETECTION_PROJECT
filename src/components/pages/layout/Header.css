@@ -57,7 +57,7 @@
 .nav-links {
   padding-right: 2rem;
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .nav-link {

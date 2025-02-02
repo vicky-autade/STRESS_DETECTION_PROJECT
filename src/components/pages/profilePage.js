@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import "../style/ProfilePageStyle.css";
 
 const ProfilePage = () => {
+
+  
+    useEffect(() => {
+          window.scrollTo(0, 0);
+        }, []);
+
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -81,17 +87,7 @@ const ProfilePage = () => {
                 placeholder="Enter username"
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Enter email"
-              />
-            </div>
+            
             <div className="form-group">
               <label htmlFor="firstName">First Name</label>
               <input
@@ -117,10 +113,33 @@ const ProfilePage = () => {
                 <option value="Other">Other</option>
               </select>
             </div>
+
+            <div className="form-group">
+              <label htmlFor="phone">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="Enter phone number"
+              />
+            </div>
           </div>
 
           {/* Second Set of Text Fields */}
           <div className="section input-section">
+          <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Enter email"
+              />
+            </div>
             <div className="form-group">
               <label htmlFor="lastName">Last Name</label>
               <input
@@ -153,17 +172,7 @@ const ProfilePage = () => {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="form-group">
-              <label htmlFor="phone">Phone Number</label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="Enter phone number"
-              />
-            </div>
+           
           </div>
         </div>
         <div className="form-footer1">

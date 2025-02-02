@@ -5,11 +5,11 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent white background */
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(5px); /* Apply background blur */
+  backdrop-filter: blur(2px); /* Apply background blur */
   z-index: 9999; /* Ensure it's on top */
 }
 
@@ -18,7 +18,7 @@
   --uib-size: 45px;
   --uib-color: black;
   --uib-speed: 1.75s;
-  --uib-bg-opacity: .1;
+  --uib-bg-opacity: .05;
   height: 31.25px;
   width: 50px;
   transform-origin: center;
