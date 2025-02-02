@@ -50,7 +50,7 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
         },
         body: JSON.stringify(formData),
       });
-      
+      console.log("demo data "+ response.headers);
       // const response = await axios.post(
       //   `${process.env.REACT_APP_BACKEND_URL}api/login`,
       //   formData,
