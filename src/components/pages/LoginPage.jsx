@@ -5,9 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import loginImage from '../assets/login.png';
 import '../style/LoginPageStyle.css';
 import { useEffect } from 'react';
-import axios from 'axios';
 import Cookies from "js-cookie";
 import {jwtDecode} from "jwt-decode";
+import Loader from './Loader';
 
 const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
   const [formData, setFormData] = useState({
@@ -18,6 +18,8 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
   });
 
   const Navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -35,12 +37,14 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     console.log("Printing the form data");
     console.log(formData);
     try {
       console.log("Backend URL: ", process.env.REACT_APP_BACKEND_URL);
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/login`, {
         method: "POST",
+        credentials: "include", // Include cookies
         headers: {
           "Content-Type": "application/json",
         },
@@ -94,7 +98,7 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
         Navigate("/first");
       } else {
         console.error("User Login failed!");
-        toast.error("Invalid credentials. Please try again.!", {
+        toast.error(data.message, {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: true,
@@ -107,6 +111,8 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Error submitting form. Please try again later.");
+    }finally {
+      setIsLoading(false); // Hide loader
     }
 
 
@@ -190,8 +196,10 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
                       Forgot Password?
               </Link>            
               </div>
-            <button type="submit" className="submit-button animate-in">Login</button>
-
+            {/* <button type="submit" className="submit-button animate-in">Login</button> */}
+            <button type="submit" className="submit-button animate-in" disabled={isLoading}>
+              {isLoading ? "Logging in..." : "Login"}
+            </button>
             <p className="signup-link animate-in">
               New to Stress Research Analyzer? <br></br><Link to="/signup">Create an account</Link>
             </p>
@@ -201,7 +209,7 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
 
       </div>
 
-
+      {isLoading && <Loader />}
     </main>
   );
 }

@@ -112,29 +112,9 @@
     width: 100%;
   }
   
-  .submit-btn {
-    width: 20%;
-    margin-left: 85px;
-    padding: 1rem;
-    background: linear-gradient(135deg, #3498db, #2c3e50);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    margin-top: 1.5rem;
-  }
   
-  .submit-btn:hover {
-    transform: translateY(-2px);
-  }
   
-  .submit-btn:disabled {
-    background: #bdc3c7;
-    cursor: not-allowed;
-  }
+  
 
   .change-photo-btn {
     margin-top: 46px;
