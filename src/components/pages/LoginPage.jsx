@@ -51,6 +51,8 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
         body: JSON.stringify(formData),
       });
       console.log("demo data "+ response.headers);
+      console.log("demo data get cokkies "+ response.headers.getSetCookie());
+      console.log("demo data get cokkies  "+ response.headers.get('set-cookie'));
       // const response = await axios.post(
       //   `${process.env.REACT_APP_BACKEND_URL}api/login`,
       //   formData,
