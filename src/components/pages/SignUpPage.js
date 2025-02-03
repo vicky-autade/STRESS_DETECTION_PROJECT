@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import signupImage from "../assets/signup.png";
@@ -6,6 +5,7 @@ import "../style/SignUpPageStyle.css";
 import toast from "react-hot-toast";
 import axios from 'axios'; // Import axios
 import Loader from "./Loader";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 function SignUpPage() {
   useEffect(() => {
@@ -27,12 +27,60 @@ function SignUpPage() {
   const [isTimerActive, setIsTimerActive] = useState(false);
   const Navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
 
+  const validatePasswordsMatch = (password, confirmPassword) => {
+    return password === confirmPassword;
+  };
+
+  const validatePasswordStrength = (password) => {
+    // Password should be at least 8 characters long, contain uppercase, lowercase, numbers, and special characters
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return passwordRegex.test(password);
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     console.log(formData.dob);
+    
+    // Email format validation
+     if (!validateEmail(formData.email)) {
+      toast.error("Please enter a valid email address.");
+      setLoading(false);
+      return;
+    }
+
+    // Password match validation
+    if (!validatePasswordsMatch(formData.password, formData.confirmPassword)) {
+      toast.error("Passwords do not match.");
+      setLoading(false);
+      return;
+    }
+
+     // Password strength validation
+     if (!validatePasswordStrength(formData.password)) {
+      toast.error("Password must be at least 8 characters long and contain a combination of uppercase, lowercase, numbers, and special characters.", {
+        style: {
+          width: '800px', // Set a custom width
+          backgroundColor: '#f8d7da', // Optional: Red background for error
+          color: '#721c24', // Optional: Text color
+          border: '1px solid #f5c6cb', // Optional: Border color
+          padding: '16px', // Optional: Padding
+          fontSize: '14px', // Optional: Font size
+        },
+        className: 'custom-toast', // Optional: You can also add a class for custom styling
+        duration: 5000, // Optional: Toast duration (in ms)
+      });
+      setLoading(false);
+      return;
+    }
 
     // If confirming the email (Confirm Email button clicked)
     if (!isConfirming) {
@@ -45,7 +93,6 @@ function SignUpPage() {
           dateOfBirth: formData.dob,
           password: formData.password,
         });
-
         const data = response.data; // Axios response is in data property
         console.log("My data : " + data);
         if (data.isValidUser) {
@@ -76,7 +123,7 @@ function SignUpPage() {
         }
       } catch (error) {
         console.error("Error during signup request:", error);
-        toast.error("An error occurred. Please try again later.", {
+        toast.error(error.response.data.message, {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: true,
@@ -127,7 +174,7 @@ function SignUpPage() {
         }
       } catch (error) {
         console.error("Error during OTP confirmation:", error);
-        toast.error("An error occurred. Please try again later.", {
+        toast.error(error.response.data.message, {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: true,
@@ -247,24 +294,44 @@ function SignUpPage() {
 
             <div className="form-group animate-in">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
                 required
               />
+            <span
+                  className="password-toggle-icon"
+                  onClick={() => setShowPassword((prev) => !prev)}
+            >
+            {showPassword ? (
+                  <AiOutlineEyeInvisible fontSize={20} />
+                       ) : (
+                   <AiOutlineEye fontSize={20} />
+                   )}
+            </span>     
             </div>
 
             <div className="form-group animate-in">
               <input
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="Confirm Password"
                 required
               />
+              <span
+                  className="password-toggle-icon"
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
+              >
+                      {showConfirmPassword ? (
+                       <AiOutlineEyeInvisible fontSize={20} />
+                         ) : (
+                        <AiOutlineEye fontSize={20} />
+                      )}
+              </span>
             </div>
 
             {/* Conditional rendering of confirm email field */}

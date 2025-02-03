@@ -100,6 +100,9 @@
   border-radius: 50%; /* Circle shape */
   padding: 8px; /* Add padding for better clickability */
   cursor: pointer;
+  width: 40px; /* Set the desired size */
+  height: 40px; /* Set the desired size */ 
+  object-fit: cover; /* Ensure the image fills the circle without distortion */
   transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 

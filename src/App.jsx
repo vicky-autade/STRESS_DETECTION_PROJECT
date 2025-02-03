@@ -12,14 +12,15 @@ import ResetPassword from './components/pages/ResetPassword';
 import Profile from './components/pages/profilePage';
 import InputData from './components/pages/InputData';
 import ConfirmPassword from './components/pages/confirm-password';
-import Recommandation from "./components/pages/RecommandationPage";
 import { setupAxiosInterceptors } from './components/api/axiosClient';
+import Recommandation from './components/pages/RecommandationPage'; 
 
 
 
 const App = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     setupAxiosInterceptors(navigate, setIsLoggedIn);
@@ -28,7 +29,7 @@ const App = () => {
   return (
     <div className="app-container">
       <div className="header">
-        <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser} />
       </div>
       <div>    
         <Routes>
@@ -38,7 +39,7 @@ const App = () => {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/confirm-password" element={<ConfirmPassword />} />
           <Route path="/first" element={<PrivateRoute isLoggedIn={isLoggedIn}><First setIsLoggedIn={setIsLoggedIn} /></PrivateRoute>} />
-          <Route path="/profile" element={<PrivateRoute isLoggedIn={isLoggedIn}><Profile/></PrivateRoute>} /> 
+          <Route path="/profile" element={<PrivateRoute isLoggedIn={isLoggedIn}><Profile user={user} setUser={setUser}/></PrivateRoute>} /> 
           <Route path="/input-data" element={<PrivateRoute isLoggedIn={isLoggedIn}><InputData/></PrivateRoute>} /> 
           <Route path="/recommandation" element={<PrivateRoute isLoggedIn={isLoggedIn}><Recommandation/></PrivateRoute>} /> 
         </Routes>

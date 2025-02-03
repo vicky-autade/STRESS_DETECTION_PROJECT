@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import "../style/FirstPageStyle.css";
@@ -8,10 +7,10 @@ import wave from "../assets/wave.png";
 import { useNavigate } from "react-router-dom";
 
 const First = () => {
-
+  
   useEffect(() => {
-        window.scrollTo(0, 0);
-      }, []);
+    window.scrollTo(0, 0);
+  }, []);
 
   const navigate = useNavigate();
 
@@ -50,7 +49,7 @@ const First = () => {
   }
   const recommandationShow =()=>{
     navigate("/recommandation");
-}
+  }
 
   return (
     <main className="page-container">
@@ -86,12 +85,7 @@ const First = () => {
   
 };
 
-
-
-
 export default First;
-
-
 
 
 

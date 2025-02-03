@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import "../style/inputDataStyle.css";
 import meter from "../assets/trend.png";
 import { useNavigate } from "react-router-dom";
 
 const InputData = () => {
-
-    const navigate = useNavigate();
-
+  
+  const navigate = useNavigate();
+  
   useEffect(() => {
       window.scrollTo(0, 0);
     }, []);
-
 
   const [formData, setFormData] = useState({
     snoringRange: "",
@@ -26,7 +25,6 @@ const InputData = () => {
   const recommandationShow =()=>{
     navigate("/recommandation");
 }
-
   const [stressLevel, setStressLevel] = useState(0);
 
   const handleInputChange = (e) => {
@@ -39,14 +37,14 @@ const InputData = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic to calculate stress level based on input data (for demonstration)
+     // Logic to calculate stress level based on input data (for demonstration)
     let calculatedStress = Math.random() * 4; // Random stress level between 0 and 4
     setStressLevel(Math.floor(calculatedStress)); // Update stress level state
   };
 
   return (
     <div className="form-container">
-      <div className="input-container">
+     <div className="input-container">
         <h2>Health Data Input</h2>
         <form className="input-form" onSubmit={handleSubmit}>
           <div className="form-group">
@@ -140,7 +138,6 @@ const InputData = () => {
           <button type="submit" className="recommendation-btn  btn">Submit</button>
         </form>
       </div>
-
       {/* Right side - Stress Level Display */}
       <div className="stress-container">
         <div className="stress-level">

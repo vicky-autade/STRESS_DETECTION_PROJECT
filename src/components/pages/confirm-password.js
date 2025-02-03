@@ -138,7 +138,7 @@ const ResetPasswordPage = () => {
           </form>
         </div>
       </div>
-      {loading && <Loader />} {/* Show loader when loading is true */}
+      {loading && <Loader />} {/* Show loader when loading is true */}  
     </main>
   );
 };

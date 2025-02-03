@@ -6,11 +6,13 @@ import { FaUserCircle } from "react-icons/fa"; // Import profile icon
 import "./Header.css";
 import Cookies from "js-cookie";
 import {jwtDecode} from "jwt-decode"; // Import jwt-decode for token decoding
-
+import axios from "axios"; // Import axios for API calls
 const Header = (props) => {
   let isLoggedIn = props.isLoggedIn;
   let setIsLoggedIn = props.setIsLoggedIn;
-  
+  let user = props.user;
+  let setUser = props.setUser;
+
   // Function to scroll to top
   const scrollToTop = () => {
     console.log("Scrolling to top...");
@@ -30,20 +32,27 @@ const Header = (props) => {
   // };
   const handleLogout = async () => {
     try {
-      // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/logout`, {
-      //   method: "POST",
-      //   credentials: "include", // Ensure cookies are sent with the request
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   }
-      // });
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}api/logout`,
+        {},
+        {
+          withCredentials: true, // Ensure cookies are sent with the request
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`
+          },
+        }
+      );
   
-      // if (!response.ok) {
-      //   throw new Error("Failed to log out from backend");
-      // }
+      if (response.status !== 200) {
+        throw new Error("Failed to log out from backend");
+      }
   
-      Cookies.remove("authToken"); // Remove token from cookies
+      // Remove token and user data from localStorage
+      localStorage.removeItem("jwt"); // Remove JWT from local storage
+      localStorage.removeItem("jwt_expiry"); 
       setIsLoggedIn(false);
+  
       toast.success("Logged out successfully!");
       console.log("User logged out and removed from backend.");
     } catch (error) {
@@ -52,9 +61,10 @@ const Header = (props) => {
     }
   };
   
+  
   // Function to check token expiration and log out if expired
   const checkTokenExpiration = () => {
-    const token = Cookies.get("authToken");
+   const token = localStorage.getItem("jwt");
     console.log("Checking token expiration...");
     console.log("Token: ", token);
     if (!token) return;
@@ -92,14 +102,23 @@ const Header = (props) => {
       <nav className="nav-links">
         {isLoggedIn ? (
           <>
-          <Link to="/first" className="nav-link">
-              Home
+            <Link to="/first" className="nav-link">
+                       Home
             </Link>
             <Link to="/dashboard" className="nav-link">
               Dashboard
             </Link>
             <Link to="/profile" className="nav-link">
-              <FaUserCircle className="profile-icon" />
+             {/* Conditionally render the profile image or icon */}
+              {user && user.profileImage ? (
+                <img
+                  src={user.profileImage}
+                  alt="Profile"
+                  className="profile-icon"
+                />
+              ) : (
+                <FaUserCircle className="profile-icon" />
+              )}
             </Link>
             <button onClick={handleLogout} className="logout-button">
               Logout

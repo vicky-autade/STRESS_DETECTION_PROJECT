@@ -1,13 +1,16 @@
 import React, { useState} from 'react';
 import toast from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { data, Link, useNavigate } from "react-router-dom";
 import loginImage from '../assets/login.png';
 import '../style/LoginPageStyle.css';
 import { useEffect } from 'react';
 import Cookies from "js-cookie";
 import {jwtDecode} from "jwt-decode";
 import Loader from './Loader';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
   const [formData, setFormData] = useState({
@@ -42,31 +45,28 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
     console.log(formData);
     try {
       console.log("Backend URL: ", process.env.REACT_APP_BACKEND_URL);
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/login`, {
-        method: "POST",
-        credentials: "include", // Include cookies
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      console.log("demo data "+ response.headers);
-      console.log("demo data get cokkies "+ response.headers.getSetCookie());
-      console.log("demo data get cokkies  "+ response.headers.get('set-cookie'));
-      // const response = await axios.post(
-      //   `${process.env.REACT_APP_BACKEND_URL}api/login`,
+      // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}api/login`, {
+      //   method: "POST",
+      //   credentials: "include", // Include cookies
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(formData),
+      // });
       
-      //   formData,
-      //   {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   }
-      // );
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}api/login`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
      
-      // console.log("Backend Response : "+response.json()); // Handle the response data
-
-      const data = await response.json();
+      console.log("Backend Response : "+response.data); // Handle the response data
+      console.log("Backend headers : "+response.headers); // Handle the response data
+      const data = await response.data;
 
       // Log the response data
       console.log("Response: ", data);
@@ -77,8 +77,12 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
         const expiresAt = decodedToken.exp * 1000; // Convert to milliseconds
 
         // Store token in cookies with expiration
-        Cookies.set("authToken", token, { expires: new Date(expiresAt), secure: true });
-        console.log(Cookies.get("authToken"));
+        // Cookies.set("jwt", token, { expires: new Date(expiresAt), secure: true,sameSite:"None",path:"/" });
+        // console.log(Cookies.get("jwt"));
+        localStorage.setItem("jwt", token);
+        localStorage.setItem("jwt_expiry", expiresAt);
+
+       console.log("JWT Token stored in localStorage:", localStorage.getItem("jwt"));
         setIsLoggedIn(true);
        // console.log("User Logged in successfully!");
         toast.success("Login successful !", {
@@ -113,18 +117,12 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("Error submitting form. Please try again later.");
+      console.log("Error message : "+error.response.data.message);
+      toast.error(error.response.data.message);
     }finally {
       setIsLoading(false); // Hide loader
     }
-
-
-
   };
-
-  
-
-  
 
   function changeHandler(event) {
     handleChange(event);
