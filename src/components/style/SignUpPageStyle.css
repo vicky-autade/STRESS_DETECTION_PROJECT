@@ -144,3 +144,269 @@
     text-align: center;
   }
 }
+
+/* signup page style */
+
+.page-content {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+  
+  .content-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+  }
+  
+  .signup-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 1);
+  overflow: hidden;
+  }
+  
+  .signup-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #3498db, #2c3e50);
+  }
+  
+  .signup-image img {
+  max-width: 150%;
+  height: auto;
+  animation: fadeIn 1.2s ease-out;
+  }
+  
+  .signup-form {
+  padding: 2.5rem;
+  }
+  
+  .form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  }
+  
+  .form-header h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  animation: fadeInDown 0.8s ease-out;
+  }
+  
+  .form-header p {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+  animation: fadeIn 1s ease-out;
+  }
+  
+  .form-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 0.3rem;
+  }
+  
+  .form-group {
+  margin-bottom: 1rem;
+  }
+  
+  .form-group input,
+  .form-group select {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  outline: none;
+  }
+  
+  /* Placeholder styling for all input fields */
+  ::placeholder {
+  color: #b0b0b0; /* Light grey placeholder color */
+  opacity: 1; /* Ensure it's fully visible */
+  }
+  
+  /* Specific placeholder styling for date input */
+  input[type="date"]::placeholder {
+  color: #b0b0b0; /* Light grey color for 'dd-mm-yyyy' placeholder */
+  }
+  
+  /* Styling for select dropdown placeholder */
+  .gender-select option[value=""] {
+  color: #b0b0b0; /* Light grey placeholder text */
+  }
+  
+  /* Ensure dropdown's default styling doesn't override placeholder */
+  .gender-select {
+  color: #2c3e50; /* Default text color for dropdown */
+  }
+  
+  /* Placeholder color when no value is selected */
+  .gender-select:invalid {
+  color: #b0b0b0; /* Light grey color */
+  }
+  
+  /* Text color for selected options */
+  .gender-select:not(:invalid) {
+  color: #2c3e50; /* Standard text color */
+  }
+  
+  .submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #3498db, #2c3e50);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+  }
+  
+  .login-link {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: #7f8c8d;
+  animation: fadeIn 1s ease-out;
+  }
+  
+  .login-link a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  }
+  
+  .login-link a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+  }
+  
+  .animate-in {
+  opacity: 0;
+  animation: slideUp 0.8s ease-out forwards;
+  }
+  
+  .link {
+  text-decoration: none;
+  }
+  
+  .timer-text {
+    color: #e74c3c;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+  
+  
+  @keyframes fadeInDown {
+  from {
+  opacity: 0;
+  transform: translateY(-20px);
+  }
+  to {
+  opacity: 1;
+  transform: translateY(0);
+  }
+  }
+  
+  @keyframes slideUp {
+  from {
+  opacity: 0;
+  transform: translateY(20px);
+  }
+  to {
+  opacity: 1;
+  transform: translateY(0);
+  }
+  }
+  
+  @keyframes fadeIn {
+  from {
+  opacity: 0;
+  }
+  to {
+  opacity: 1;
+  }
+  }
+  
+  /* Responsive styling for tablets */
+  @media (max-width: 768px) {
+  .signup-wrapper {
+  grid-template-columns: 1fr;
+  padding: 1.5rem;
+  }
+  
+  .signup-image {
+  padding: 1.5rem;
+  }
+  
+  .form-columns {
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+  }
+  
+  .form-header h2 {
+  font-size: 1.75rem;
+  }
+  }
+  
+  /* Responsive styling for mobile devices */
+  @media (max-width: 480px) {
+  .content-container {
+  padding: 0.5rem;
+  }
+  
+  .signup-wrapper {
+  padding: 1rem;
+  gap: 1rem;
+  }
+  
+  .signup-image {
+  display: none; /* Hide image on small screens */
+  }
+  
+  .signup-form {
+  padding: 1rem;
+  }
+  
+  .form-header h2 {
+  font-size: 1.5rem;
+  }
+  
+  .form-group input,
+  .form-group select {
+  padding: 0.875rem;
+  font-size: 0.9rem;
+  }
+  
+  .submit-btn {
+  padding: 0.875rem;
+  font-size: 0.9rem;
+  }
+  }

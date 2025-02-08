@@ -102,10 +102,10 @@ const Header = (props) => {
       <nav className="nav-links">
         {isLoggedIn ? (
           <>
-            <Link to="/first" className="nav-link">
+            <Link to="/first" className="nav-link sam">
                        Home
             </Link>
-            <Link to="/dashboard" className="nav-link">
+            <Link to="/dashboard" className="nav-link sam">
               Dashboard
             </Link>
             <Link to="/profile" className="nav-link">

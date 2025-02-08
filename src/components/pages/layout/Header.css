@@ -24,6 +24,7 @@
   position: fixed;
   width: 100%;
   top: 0;
+  align-items: center;
   z-index: 1000;
   transition: all var(--transition-speed) ease;
 }
@@ -43,7 +44,7 @@
 }
 
 .logo-link {
- 
+  
   text-decoration: none;
   color: var(--primary-color);
 }
@@ -57,10 +58,12 @@
 .nav-links {
   padding-right: 2rem;
   display: flex;
+  
   gap: 2rem;
 }
 
 .nav-link {
+
   text-decoration: none;
   color: var(--secondary-color);
   font-weight: 500;
@@ -72,6 +75,7 @@
 }
 
 .nav-link.cta {
+
   background-color: var(--primary-color);
   color: white;
   padding: 0.5rem 1rem;
@@ -84,6 +88,7 @@
 }
   
   .menu-toggle {
+    
     display: none;
     background: none;
     border: none;
@@ -92,13 +97,17 @@
     cursor: pointer;
   }
 
+  .sam{
+    margin-top: 7px;
+  }
+
 /* Profile icon styles */
 .profile-icon {
   font-size: 1.5rem;
   color: var(--primary-color); /* Default to theme's primary color */
   background-color: rgba(0, 0, 0, 0.05); /* Add subtle background for visibility */
   border-radius: 50%; /* Circle shape */
-  padding: 8px; /* Add padding for better clickability */
+ /* padding: 8px;  */
   cursor: pointer;
   width: 40px; /* Set the desired size */
   height: 40px; /* Set the desired size */ 
@@ -115,8 +124,10 @@
 .logout-button {
   background-color: #ef4444; /* Red color */
   color: white;
+  height: 2.5rem;
   font-size: 0.9rem;
   font-weight: 600;
+  margin-top: 7px;
   padding: 8px 16px;
   border: none;
   border-radius: 5px;
