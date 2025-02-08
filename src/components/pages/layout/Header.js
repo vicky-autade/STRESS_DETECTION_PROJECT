@@ -12,7 +12,7 @@ const Header = (props) => {
   let setIsLoggedIn = props.setIsLoggedIn;
   let user = props.user;
   let setUser = props.setUser;
-
+console.log("user profile image---->"+user);
   // Function to scroll to top
   const scrollToTop = () => {
     console.log("Scrolling to top...");
@@ -21,7 +21,8 @@ const Header = (props) => {
       behavior: "smooth",
     });
   };
-
+  
+  // console.log("user profile image---->"+isLoggedIn?:"default");
   // // Function to log out user
   // const handleLogout = () => {
   //   Cookies.remove("authToken"); // Remove token

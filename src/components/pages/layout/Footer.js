@@ -1,16 +1,33 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import './Footer.css'; // Add custom styles for the footer here
 
+
+
+
 const Footer = () => {
+
+
+  const navigate = useNavigate();
+
+  const FeedbackPage = () => {
+    navigate("/feedback");
+  }
+
+
   return (
     <footer className="footer-section">
       <div className="footer-content">
         <div className="footer-links">
           <h3>Quick Links</h3>
           <ul>
+          <li>
+              <button className="footer-link-btn" onClick={FeedbackPage}>
+                Feedback
+              </button>
+            </li>
             <li><Link to="/about">About</Link></li>
             <li><Link to="/contact">Contact</Link></li>
             <li><Link to="/privacy">Privacy Policy</Link></li>
