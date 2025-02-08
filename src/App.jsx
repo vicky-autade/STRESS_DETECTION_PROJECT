@@ -19,7 +19,7 @@ import Feedback from './components/pages/Feedback';
 
 const App = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);//nantr change kara re 
   const [user, setUser] = useState(null);
 
   useEffect(() => {

@@ -128,7 +128,7 @@ const ProfilePage = (props) => {
       <header className="page-header">
         <h1>Profile</h1>
       </header>
-      <form className="profile-form" onSubmit={handleSubmit}>
+      <form className="profile-form" >
         <div className="form-section-container">
           {/* Profile Image Section */}
           <div className="section profile-section">
@@ -267,8 +267,12 @@ const ProfilePage = (props) => {
           </div>
         </div>
         <div className="form-footer1">
-          <button type="submit" className="submit-btn1" disabled={loading}>
+          <button type="submit" onClick={handleSubmit} className="submit-btn1" disabled={loading}>
               {loading ? "Updating ..." : "Update Profile"}
+          </button>
+          
+          <button type="submit"  className="submit-btn2" disabled={loading}>
+              {loading ? "Deleting ..." : "Delete Profile"}
           </button>
         </div>
       </form>

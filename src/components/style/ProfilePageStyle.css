@@ -3,7 +3,7 @@
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
   min-height: 80vh;
   padding: 2rem;
-  margin-top: 100px;
+  margin-top: 120px;
   margin-bottom: 40px;
   margin-left: 40px;
   margin-right: 40px;
@@ -136,6 +136,7 @@
 
 .form-footer1 {
   display: flex;
+  gap: 25px;
   justify-content: flex-end;
   margin-top: 0.5rem;
 }
@@ -155,6 +156,24 @@
 .submit-btn1:hover {
   transform: translateY(-2px);
 }
+
+.submit-btn2 {
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #e63946, #b22222); /* Red gradient */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.submit-btn2:hover {
+  transform: translateY(-2px);
+}
+
+
 
 
 /* Responsive Styles */
