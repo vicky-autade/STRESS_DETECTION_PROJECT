@@ -6,6 +6,11 @@ import Cookies from "js-cookie";
 import Loader from "./Loader";
 
 const ProfilePage = (props) => {
+
+  useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
   const [formData, setFormData] = useState({
     userName: "",
     email: "",

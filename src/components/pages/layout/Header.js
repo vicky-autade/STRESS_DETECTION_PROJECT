@@ -106,7 +106,8 @@ console.log("user profile image---->"+user);
             <Link to="/first" className="nav-link sam">
                        Home
             </Link>
-            <Link to="/dashboard" className="nav-link sam">
+            {/* change this also */}
+            <Link to="/admin" className="nav-link sam">
               Dashboard
             </Link>
             <Link to="/profile" className="nav-link">

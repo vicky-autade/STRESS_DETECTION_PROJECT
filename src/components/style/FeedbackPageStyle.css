@@ -3,7 +3,7 @@
   justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
-  height: 75vh;
+  height: 85vh;
   margin-top: 110px;
   margin-bottom: 40px;
   padding: 40px;
@@ -11,6 +11,41 @@
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.feedback-type-section {
+  position: relative;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.feedback-type-section select {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f5f7fa;
+  color: #2c3e50;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: border-color 0.3s;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%232c3e50"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 1rem;
+}
+
+.feedback-type-section select:hover {
+  border-color: #3498db;
+}
+
+.feedback-type-section select:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
 
 .feedback-left-section {
   width: 40%;
@@ -65,7 +100,7 @@
 
 }
 
-.feedback-textarea-section,.feedback-improvement-section,.rating-section label{
+.feedback-textarea-section,.feedback-improvement-section,.rating-section label,label{
   font-weight: bold;
  
 }
@@ -79,6 +114,16 @@ textarea {
   font-size: 1rem;
   resize: none;
   margin-top: 10px;
+}
+
+textarea:hover{
+  border-color: #3498db;
+}
+
+textarea:focus{
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+
 }
 
 .send-feedback-btn {

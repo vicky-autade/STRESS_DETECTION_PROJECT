@@ -1,0 +1,188 @@
+/* Main Page Wrapper */
+.user-list-page-wrapper {
+    margin: 120px 40px 20px 40px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    min-height: 60vh;
+    padding: 3rem;
+    border-radius: 15px;
+    /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .user-list-title {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+  }
+  
+  .user-list-empty {
+    font-size: 1.5rem;
+    color: #7f8c8d;
+  }
+
+  .search-bar-container {
+    display: flex;
+    justify-content: center;
+    margin: 0px 0px 20px 0px;
+  }
+  
+  .search-bar {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: box-shadow 0.3s;
+  }
+  
+ 
+  
+  
+  /* User List Container */
+  .user-list-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Ensure 4 cards per row */
+    gap: 2rem;
+    width: 100%;
+    justify-items: center;
+    align-items: center;
+  }
+  
+ 
+  
+  .user-list-card {
+    background-color: white;
+    border-radius: 12px;
+    width: 300px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .user-list-profile-photo:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
+  .user-list-profile-photo {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 3px solid #ddd;
+  }
+  
+  .user-list-username {
+    font-size: 1.3rem;
+    color: #2c3e50;
+    font-weight: bold;
+  }
+
+  .user-details-button{
+    width: 100%;
+    max-width: 150px;
+    padding: 1rem;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .user-details-button:hover{
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    @media screen and (max-width: 1024px) {
+        .user-list-container {
+          grid-template-columns: repeat(2, 1fr); /* 2 cards per row for tablets */
+        }
+      }
+      
+      @media screen and (max-width: 600px) {
+        .user-list-container {
+          grid-template-columns: repeat(1, 1fr); /* 1 card per row for mobile */
+        }
+      }
+  
+    .user-list-title {
+      font-size: 2rem;
+    }
+  }
+  
+/* asdfghjk, */
+
+.user-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .user-modal-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .user-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .user-modal-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .user-list-profile-photo:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  

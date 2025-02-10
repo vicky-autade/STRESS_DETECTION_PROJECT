@@ -8,6 +8,12 @@ import axios from 'axios';
 import Loader from './Loader';
 
 const ResetPasswordPage = () => {
+
+  useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
+
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",

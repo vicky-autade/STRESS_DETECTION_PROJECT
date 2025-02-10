@@ -11,7 +11,9 @@ import user3 from '../assets/user3.png';
 
 const HomePage = () => {
 
- 
+ useEffect(() => {
+     window.scrollTo(0, 0);
+   }, []);
 
   const controls = useAnimation();
   const [ref, inView] = useInView();

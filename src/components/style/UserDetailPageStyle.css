@@ -1,0 +1,177 @@
+/* Main Container Styling */
+.admin-detail-container {
+  margin: 120px auto;
+  max-width: 1200px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Title Styling */
+.admin-detail-title {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Profile Card Section */
+.admin-profile-card {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 2rem;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  gap: 2rem;
+  align-items: center;
+}
+
+.admin-profile-photo-container {
+  flex: 1;
+  text-align: center;
+}
+
+.admin-profile-photo {
+  margin-top: 50px;
+  width: 350px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 5%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+
+
+/* Detail Info Section */
+.admin-detail-table-container {
+  max-width: 600px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 15px;
+  /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); */
+}
+
+.admin-detail-name {
+  text-align: center;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.admin-detail-table {
+  width: 100%;
+  border: 0;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-detail-table td {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  color: #34495e;
+}
+
+.admin-detail-title {
+  font-weight: bold;
+  background-color: #f2f2f2;
+  color: #2c3e50;
+  width: 40%;
+}
+
+
+/* Buttons Styling */
+.admin-action-buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.admin-delete-btn,
+.admin-analytics-btn {
+  background: linear-gradient(135deg, #3498db, #2c3e50);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.admin-delete-btn:hover,
+.admin-analytics-btn:hover {
+  transform: translateY(-2px);
+}
+
+.admin-delete-btn {
+  background: linear-gradient(135deg, #e63946, #b22222);
+}
+
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .admin-profile-card {
+    flex-direction: column;
+  }
+
+  .admin-detail-info {
+    text-align: center;
+  }
+
+  .admin-action-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .admin-profile-photo {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* model styling */
+.feedback-popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  padding: 16px;
+  width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: slide-down 0.5s ease-out;
+}
+
+.feedback-item {
+  margin: 8px 0;
+}
+
+.no-feedback-message {
+  color: #888;
+  font-style: italic;
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}

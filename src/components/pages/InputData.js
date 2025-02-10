@@ -22,6 +22,7 @@ const InputData = () => {
 
   const [stressLevel, setStressLevel] = useState(0);
   const [inputMethod, setInputMethod] = useState("file");
+  const [fileData, setFileData] = useState(null); // State for file data display
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +40,7 @@ const InputData = () => {
         try {
           const jsonData = JSON.parse(event.target.result);
           setFormData(jsonData);
-       
+          setFileData(jsonData); // Store file data for display
         } catch (error) {
           alert("Invalid file format. Please upload a valid JSON file.");
         }
@@ -182,6 +183,14 @@ const InputData = () => {
             Submit
           </button>
         </form>
+
+        {/* Display Uploaded JSON Data */}
+        {fileData && (
+          <div className="uploaded-data">
+            <h3>Uploaded Data:</h3>
+            <pre>{JSON.stringify(fileData, null, 2)}</pre>
+          </div>
+        )}
       </div>
 
       {/* Stress Level Display */}

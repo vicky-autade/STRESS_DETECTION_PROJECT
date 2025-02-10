@@ -1,0 +1,117 @@
+/* Admin Page Container */
+.admin-page-container {
+    margin-top: 120px;
+    margin-bottom: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem;
+    border-radius: 15px;
+  }
+  
+  /* Content Wrapper */
+  .admin-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    gap: 2rem;
+  }
+  
+  /* Section Group Styling */
+  .admin-section-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    align-items: stretch;
+  }
+  
+  .admin-text-center {
+    text-align: center;
+  }
+  
+  /* Data Section */
+  .admin-data-section {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .admin-data-section h2 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+  
+  .admin-data-section p {
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .admin-section-image {
+    width: 150px;
+    height: 150px;
+    object-fit: covers;
+    margin-top: 1rem;
+    border-radius: 8px;
+  }
+  
+  .admin-button-primary {
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-top: 1rem;
+  }
+  
+  .admin-button-primary:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* Ensure Buttons in One Line */
+  .admin-section-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .admin-section-group {
+      flex-direction: column;
+      gap: 2rem;
+    }
+  
+    .admin-data-section {
+      width: 100%;
+    }
+  
+    .admin-data-section h2 {
+      font-size: 1.5rem;
+    }
+  
+    .admin-button-primary {
+      font-size: 0.9rem;
+    }
+  }
+  

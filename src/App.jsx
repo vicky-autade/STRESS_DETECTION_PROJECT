@@ -15,11 +15,14 @@ import ConfirmPassword from './components/pages/confirm-password';
 import { setupAxiosInterceptors } from './components/api/axiosClient';
 import Recommandation from './components/pages/RecommandationPage'; 
 import Feedback from './components/pages/Feedback'; 
+import AdminHomePage from './components/pages/AdminHomePage'; 
+import UserListPage from './components/pages/GetAllUserData'; 
+import UserDetailPage from './components/pages/SingleUserDetailsPage';
 
 
 const App = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(true);//nantr change kara re 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);//nantr change kara re 
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -43,6 +46,11 @@ const App = () => {
           <Route path="/input-data" element={<PrivateRoute isLoggedIn={isLoggedIn}><InputData/></PrivateRoute>} /> 
           <Route path="/recommandation" element={<PrivateRoute isLoggedIn={isLoggedIn}><Recommandation/></PrivateRoute>} />
           <Route path="/feedback" element={<PrivateRoute isLoggedIn={isLoggedIn}><Feedback/></PrivateRoute>} />  
+
+          {/* Rough work by soham */}
+          <Route path="/admin" element={<PrivateRoute isLoggedIn={isLoggedIn}><AdminHomePage/></PrivateRoute>} />  
+          <Route path="/AllUserList" element={<PrivateRoute isLoggedIn={isLoggedIn}><UserListPage/></PrivateRoute>} /> 
+          <Route path="/UserDetailPage" element={<PrivateRoute isLoggedIn={isLoggedIn}><UserDetailPage/></PrivateRoute>} /> 
         </Routes>
       </div>
       <div className="footer">
