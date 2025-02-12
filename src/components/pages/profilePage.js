@@ -11,6 +11,7 @@ const ProfilePage = (props) => {
       window.scrollTo(0, 0);
     }, []);
 
+    
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
