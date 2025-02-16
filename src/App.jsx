@@ -19,10 +19,11 @@ import Feedback from './components/pages/Feedback';
 import AdminHomePage from './components/pages/AdminHomePage'; 
 import UserListPage from './components/pages/GetAllUserData'; 
 import UserDetailPage from './components/pages/SingleUserDetailsPage';
-
+import { useLocation, useNavigate } from "react-router-dom";
 
 const App = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const userRole = localStorage.getItem("userRole"); // Get role from localStorage
@@ -30,26 +31,29 @@ const App = () => {
   // useEffect(() => {
   //   setupAxiosInterceptors(navigate, setIsLoggedIn);
   // }, [navigate]);
-  useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    // const userRole = localStorage.getItem("userRole");
+ // Restore user session on refresh
+ useEffect(() => {
+  const token = localStorage.getItem("jwt");
+  // const storedUser = localStorage.getItem("user");
 
-    if (token) {
-      setIsLoggedIn(true);
-      // setUser({ role: userRole });
-      
-      // Restore last visited page (except login/signup)
-      const lastPage = localStorage.getItem("lastPage");
-      if (lastPage && !["/login", "/signup"].includes(lastPage)) {
-        navigate(lastPage);
-      }
+  if (token && storedUser) {
+    setIsLoggedIn(true);
+    setUser(JSON.parse(storedUser)); // Restore user data
+
+    // Restore last visited page (excluding login/signup)
+    const lastPage = localStorage.getItem("lastPage");
+    if (lastPage && !["/login", "/signup"].includes(lastPage)) {
+      navigate(lastPage);
     }
-  }, []);
+  }
+}, []);
 
-  // Track last visited page
-  useEffect(() => {
+// Track last visited page
+useEffect(() => {
+  if (isLoggedIn) {
     localStorage.setItem("lastPage", location.pathname);
-  }, [location]);
+  }
+}, [location, isLoggedIn]);
 
 
   return (
