@@ -1,7 +1,9 @@
 importScripts("https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js");
 importScripts("https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js");
 
-const firebaseConfig = {
+
+// ✅ Initialize Firebase
+firebase.initializeApp({
     apiKey: "AIzaSyA0XxRiTU_RfWznX62NsrzEQsZEW6k1h0s",
     authDomain: "stressdetectionapplication.firebaseapp.com",
     projectId: "stressdetectionapplication",
@@ -9,10 +11,9 @@ const firebaseConfig = {
     messagingSenderId: "752241639782",
     appId: "1:752241639782:web:e5378d2768b1a1084a88a7",
     measurementId: "G-5M600L70J9"
-};
+});
 
-// ✅ Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+// ✅ Retrieve Firebase Messaging
 const messaging = firebase.messaging();
 
 // ✅ Handle notification clicks
@@ -20,9 +21,8 @@ self.addEventListener("notificationclick", function (event) {
     console.log("🔔 Notification clicked:", event.notification);
     event.notification.close();
 
-    // ✅ Extract the correct URL from event.notification.data
-    const notificationData = event.notification.data || {};
-    const clickUrl = notificationData.url || "https://stress-detection-project.vercel.app";
+    // ✅ Extract the correct URL
+    const clickUrl = event.notification.data?.url || event.notification.data?.click_action || "https://stress-detection-project.vercel.app";
 
     event.waitUntil(
         clients.matchAll({ type: "window", includeUncontrolled: true }).then(clientList => {
@@ -35,18 +35,16 @@ self.addEventListener("notificationclick", function (event) {
     );
 });
 
-// ✅ Handle background messages
+// ✅ Handle background messages (when app is closed)
 messaging.onBackgroundMessage((payload) => {
-    console.log("📩 Received background message:", payload);
+    console.log("📩 Background message received:", payload);
 
     const { title, body } = payload.notification || {};
     const data = payload.data || {};
 
-    const notificationOptions = {
+    self.registration.showNotification(title || "New Notification", {
         body: body || "You have a new message!",
-        data, // ✅ Store data in the notification
-        // icon: "/firebase-logo.png",
-    };
-
-    self.registration.showNotification(title || "New Notification", notificationOptions);
+        data, // ✅ Store data to retrieve it in click event
+        icon: "/firebase-logo.png",
+    });
 });
