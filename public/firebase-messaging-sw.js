@@ -11,16 +11,42 @@ const firebaseConfig = {
     measurementId: "G-5M600L70J9"
 };
 
-// Initialize Firebase
+// ✅ Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
-// Retrieve Firebase Messaging
 const messaging = firebase.messaging();
 
+// ✅ Handle notification clicks
+self.addEventListener("notificationclick", function (event) {
+    console.log("🔔 Notification clicked:", event.notification);
+    event.notification.close();
+
+    // ✅ Extract the correct URL from event.notification.data
+    const notificationData = event.notification.data || {};
+    const clickUrl = notificationData.url || "https://stress-detection-project.vercel.app";
+
+    event.waitUntil(
+        clients.matchAll({ type: "window", includeUncontrolled: true }).then(clientList => {
+            if (clientList.length > 0) {
+                clientList[0].focus();
+            } else {
+                clients.openWindow(clickUrl);
+            }
+        })
+    );
+});
+
+// ✅ Handle background messages
 messaging.onBackgroundMessage((payload) => {
-    console.log("Received background message:", payload);
-    self.registration.showNotification(payload.notification.title, {
-        body: payload.notification.body,
+    console.log("📩 Received background message:", payload);
+
+    const { title, body } = payload.notification || {};
+    const data = payload.data || {};
+
+    const notificationOptions = {
+        body: body || "You have a new message!",
+        data, // ✅ Store data in the notification
         // icon: "/firebase-logo.png",
-    });
+    };
+
+    self.registration.showNotification(title || "New Notification", notificationOptions);
 });
