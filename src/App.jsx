@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate ,useLocation} from 'react-router-dom';
 import './App.css';
 // import axios from "axios";
 import LoginPage from './components/pages/LoginPage';
@@ -19,7 +19,7 @@ import Feedback from './components/pages/Feedback';
 import AdminHomePage from './components/pages/AdminHomePage'; 
 import UserListPage from './components/pages/GetAllUserData'; 
 import UserDetailPage from './components/pages/SingleUserDetailsPage';
-import { useLocation, useNavigate } from "react-router-dom";
+
 
 const App = () => {
   const navigate = useNavigate();
