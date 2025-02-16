@@ -50,6 +50,7 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
   };
 
   const getFCMToken = async (email) => {
+    
     try {
       console.log("🔄 Waiting for service worker to be ready...");
       const registration = await navigator.serviceWorker.ready;
