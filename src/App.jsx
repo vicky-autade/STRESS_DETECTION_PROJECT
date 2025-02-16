@@ -36,7 +36,7 @@ const App = () => {
   const token = localStorage.getItem("jwt");
   // const storedUser = localStorage.getItem("user");
 
-  if (token && storedUser) {
+  if (token) {
     setIsLoggedIn(true);
     setUser(JSON.parse(storedUser)); // Restore user data
 
