@@ -18,8 +18,9 @@ const FeedbackPage = () => {
   const [feedbackType, setFeedbackType] = useState("General");
 
   const handleSubmit = async (e) => {
+    e.preventDefault(); 
     try {
-
+      console.log("Feedback Data: "); 
       const feedbackData = {
         category:feedbackType,
        whatyouLoved: feedback,

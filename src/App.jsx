@@ -22,12 +22,13 @@ import UserDetailPage from './components/pages/SingleUserDetailsPage';
 
 const App = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);//nantr change kara re 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const userRole = localStorage.getItem("userRole"); // Get role from localStorage
 
-  useEffect(() => {
-    setupAxiosInterceptors(navigate, setIsLoggedIn);
-  }, [navigate]);
+  // useEffect(() => {
+  //   setupAxiosInterceptors(navigate, setIsLoggedIn);
+  // }, [navigate]);
 
   return (
     <div className="app-container">
@@ -37,24 +38,35 @@ const App = () => {
       <div>    
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser}/>} />
           <Route path="/signup" element={<SignupPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/confirm-password" element={<ConfirmPassword />} />
-          <Route path="/first" element={<PrivateRoute isLoggedIn={isLoggedIn}><First setIsLoggedIn={setIsLoggedIn} /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute isLoggedIn={isLoggedIn}><Profile user={user} setUser={setUser}/></PrivateRoute>} /> 
-          <Route path="/input-data" element={<PrivateRoute isLoggedIn={isLoggedIn}><InputData/></PrivateRoute>} /> 
-          <Route path="/recommandation" element={<PrivateRoute isLoggedIn={isLoggedIn}><Recommandation/></PrivateRoute>} />
-          <Route path="/feedback" element={<PrivateRoute isLoggedIn={isLoggedIn}><Feedback/></PrivateRoute>} />  
 
-          {/* Rough work by soham */}
-          <Route path="/admin" element={<PrivateRoute isLoggedIn={isLoggedIn}><AdminHomePage/></PrivateRoute>} />  
-          <Route path="/AllUserList" element={<PrivateRoute isLoggedIn={isLoggedIn}><UserListPage/></PrivateRoute>} /> 
-          <Route path="/UserDetailPage" element={<PrivateRoute isLoggedIn={isLoggedIn}><UserDetailPage/></PrivateRoute>} /> 
+          {/* Routes for Normal Users */}
+          {userRole === "nonAdmin" && (
+            <>
+              <Route path="/first" element={<PrivateRoute isLoggedIn={isLoggedIn}><First setIsLoggedIn={setIsLoggedIn} /></PrivateRoute>} />
+              <Route path="/input-data" element={<PrivateRoute isLoggedIn={isLoggedIn}><InputData/></PrivateRoute>} /> 
+              <Route path="/recommandation" element={<PrivateRoute isLoggedIn={isLoggedIn}><Recommandation/></PrivateRoute>} />
+              <Route path="/feedback" element={<PrivateRoute isLoggedIn={isLoggedIn}><Feedback/></PrivateRoute>} />  
+            </>
+          )}
+
+          {/* Routes for Admins */}
+          {userRole === "admin" && (
+            <>
+              <Route path="/admin" element={<PrivateRoute isLoggedIn={isLoggedIn}><AdminHomePage/></PrivateRoute>} /> 
+              <Route path="/AllUserList" element={<PrivateRoute isLoggedIn={isLoggedIn}><UserListPage/></PrivateRoute>} /> 
+              <Route path="/UserDetailPage" element={<PrivateRoute isLoggedIn={isLoggedIn}><UserDetailPage/></PrivateRoute>} /> 
+            </>
+          )}
+
         </Routes>
       </div>
       <div className="footer">
-        <Footer />
+        <Footer isLoggedIn={isLoggedIn}/>
       </div>
     </div>
   );

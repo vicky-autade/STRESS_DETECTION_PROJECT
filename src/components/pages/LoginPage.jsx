@@ -12,7 +12,7 @@ import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
-const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
+const LoginPage = ({isLoggedIn,setIsLoggedIn,user,setUser }) => {
   const [formData, setFormData] = useState({
 
     email: "",
@@ -25,14 +25,7 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      Navigate("/first");
-    }
-  }, [isLoggedIn, Navigate]);
-
-
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -83,6 +76,7 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
         localStorage.setItem("jwt_expiry", expiresAt);
 
        console.log("JWT Token stored in localStorage:", localStorage.getItem("jwt"));
+        setUser(data.user);
         setIsLoggedIn(true);
        // console.log("User Logged in successfully!");
         toast.success("Login successful !", {
@@ -102,7 +96,8 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
           
        // Optionally, reset form fields
         setFormData({ name: "", email: "", message: "" });
-        Navigate("/first");
+        localStorage.setItem("userRole", data.user.role); // Store user role
+        Navigate(data.user.role === "nonAdmin" ? "/first" : "/admin");  
       } else {
         console.error("User Login failed!");
         toast.error(data.message, {
@@ -141,7 +136,7 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn }) => {
   const handleFormSubmit = (event) => {
     handleSubmit(event);
   }
-
+  
   return (
     <main className="page-content" >
       <div className="content-container">

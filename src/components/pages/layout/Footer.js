@@ -7,15 +7,18 @@ import './Footer.css'; // Add custom styles for the footer here
 
 
 
-const Footer = () => {
+const Footer = (props) => {
 
-
+  const isUserLoggedIn = props.isLoggedIn;
   const navigate = useNavigate();
 
   const FeedbackPage = () => {
+    if(isUserLoggedIn){
     navigate("/feedback");
+  }else{
+    navigate("/login");
   }
-
+  }
 
   return (
     <footer className="footer-section">
