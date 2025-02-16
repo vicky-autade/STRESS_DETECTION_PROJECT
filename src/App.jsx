@@ -38,7 +38,7 @@ const App = () => {
 
   if (token) {
     setIsLoggedIn(true);
-    setUser(JSON.parse(storedUser)); // Restore user data
+    // setUser(JSON.parse(storedUser)); // Restore user data
 
     // Restore last visited page (excluding login/signup)
     const lastPage = localStorage.getItem("lastPage");
