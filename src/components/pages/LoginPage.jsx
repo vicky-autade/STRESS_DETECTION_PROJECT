@@ -173,6 +173,13 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
               </div>
             </div>
             <button type="submit" className="submit-button animate-in" disabled={isLoading}>{isLoading ? "Logging in..." : "Login"}</button>
+          
+           <p className="login-link animate-in">
+                        Don't have an account?{" "}
+                        <Link to="/signup" className="link">
+                          Register here
+                        </Link>
+                      </p>
           </form>
         </div>
       </div>
