@@ -1,15 +1,9 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 
-const PrivateRoute=({isLoggedIn,children})=>{
+const PrivateRoute = ({ isLoggedIn, children }) => {
+  const token = localStorage.getItem("jwt"); // Check for stored token
 
-    if(isLoggedIn){
-        return children;
-    }
-    else{
-         return  <Navigate to="/login" /> ;
-    }
-
-}
+  return token && isLoggedIn ? children : <Navigate to="/login" />;
+};
 
 export default PrivateRoute;

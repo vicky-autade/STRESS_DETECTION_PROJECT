@@ -30,7 +30,26 @@ const App = () => {
   // useEffect(() => {
   //   setupAxiosInterceptors(navigate, setIsLoggedIn);
   // }, [navigate]);
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    // const userRole = localStorage.getItem("userRole");
 
+    if (token) {
+      setIsLoggedIn(true);
+      // setUser({ role: userRole });
+      
+      // Restore last visited page (except login/signup)
+      const lastPage = localStorage.getItem("lastPage");
+      if (lastPage && !["/login", "/signup"].includes(lastPage)) {
+        navigate(lastPage);
+      }
+    }
+  }, []);
+
+  // Track last visited page
+  useEffect(() => {
+    localStorage.setItem("lastPage", location.pathname);
+  }, [location]);
 
 
   return (
