@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
+// import axios from "axios";
 import LoginPage from './components/pages/LoginPage';
 import SignupPage from './components/pages/SignUpPage';
 import HomePage from './components/pages/HomePage';
@@ -25,10 +26,12 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const userRole = localStorage.getItem("userRole"); // Get role from localStorage
-
+  const [fcmToken, setFcmToken] = useState(null);
   // useEffect(() => {
   //   setupAxiosInterceptors(navigate, setIsLoggedIn);
   // }, [navigate]);
+
+
 
   return (
     <div className="app-container">
@@ -38,7 +41,7 @@ const App = () => {
       <div>    
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} user={user} setUser={setUser}/>} />
+          <Route path="/login" element={<LoginPage  fcmToken={fcmToken}  setFcmToken={setFcmToken}  isLoggedIn={isLoggedIn}  setIsLoggedIn={setIsLoggedIn}  user={user} setUser={setUser}/>} />
           <Route path="/signup" element={<SignupPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/confirm-password" element={<ConfirmPassword />} />

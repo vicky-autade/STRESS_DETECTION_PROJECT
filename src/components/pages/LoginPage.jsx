@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import toast from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { data, Link, useNavigate } from "react-router-dom";
@@ -6,13 +6,15 @@ import loginImage from '../assets/login.png';
 import '../style/LoginPageStyle.css';
 import { useEffect } from 'react';
 import Cookies from "js-cookie";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import Loader from './Loader';
 import axios from 'axios';
+import { messaging } from "../../firebase-config";
+import { getToken, onMessage } from "firebase/messaging";
 
 axios.defaults.withCredentials = true;
 
-const LoginPage = ({isLoggedIn,setIsLoggedIn,user,setUser }) => {
+const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmToken }) => {
   const [formData, setFormData] = useState({
 
     email: "",
@@ -22,14 +24,65 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn,user,setUser }) => {
 
   const Navigate = useNavigate();
 
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const requestPermission = async (email) => {
+    try {
+      console.log("Requesting notification permission...");
+      const permission = await Notification.requestPermission();
+
+      if (permission === "granted") {
+        console.log("✅ Notification permission granted.");
+        getFCMToken(email);
+      } else {
+        console.log("❌ Notification permission denied.");
+      }
+    } catch (error) {
+      console.error("❌ Error checking notification permission:", error);
+    }
+  };
+
+  const getFCMToken = async (email) => {
+    try {
+      console.log("🔄 Waiting for service worker to be ready...");
+      const registration = await navigator.serviceWorker.ready;
+      const token = await getToken(messaging, { serviceWorkerRegistration: registration });
+
+      if (token) {
+        console.log("✅ FCM Token:", token);
+        setFcmToken(token);
+        sendTokenToBackend(token,email); // Automatically send token
+      } else {
+        console.log("⚠ No FCM token received. Check notification permissions.");
+      }
+    } catch (error) {
+      console.error("❌ Error getting FCM token:", error);
+    }
+  };
+
+  const sendTokenToBackend = async (token,email) => {
+    
+    try {
+      const response = await axios.post("https://stress-detection-backend.vercel.app/api/save-token", {
+        fcmToken: token,
+        email: email,
+      });
+      console.log("✅ Token sent successfully:", response.data);
+    } catch (error) {
+      console.error("❌ Error sending FCM token:", error);
+    }
+  };
+
+  onMessage(messaging, (payload) => {
+    console.log("🔔 Message received:", payload);
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,7 +99,7 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn,user,setUser }) => {
       //   },
       //   body: JSON.stringify(formData),
       // });
-      
+
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}api/login`,
         formData,
@@ -56,15 +109,15 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn,user,setUser }) => {
           },
         }
       );
-     
-      console.log("Backend Response : "+response.data); // Handle the response data
-      console.log("Backend headers : "+response.headers); // Handle the response data
+
+      console.log("Backend Response : " + response.data); // Handle the response data
+      console.log("Backend headers : " + response.headers); // Handle the response data
       const data = await response.data;
 
       // Log the response data
       console.log("Response: ", data);
       if (data.isValidUser) {
-       
+
         const token = data.user.token;
         const decodedToken = jwtDecode(token);
         const expiresAt = decodedToken.exp * 1000; // Convert to milliseconds
@@ -75,10 +128,11 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn,user,setUser }) => {
         localStorage.setItem("jwt", token);
         localStorage.setItem("jwt_expiry", expiresAt);
 
-       console.log("JWT Token stored in localStorage:", localStorage.getItem("jwt"));
+        console.log("JWT Token stored in localStorage:", localStorage.getItem("jwt"));
         setUser(data.user);
+        requestPermission(data.user.email);
         setIsLoggedIn(true);
-       // console.log("User Logged in successfully!");
+        // console.log("User Logged in successfully!");
         toast.success("Login successful !", {
           position: "top-center",
           autoClose: 2000,
@@ -93,11 +147,11 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn,user,setUser }) => {
         // Cookies.set("userRole", data.user.role, { expires: 7 });
 
         console.log("Login successful, user data stored in cookies.");
-          
-       // Optionally, reset form fields
+
+        // Optionally, reset form fields
         setFormData({ name: "", email: "", message: "" });
         localStorage.setItem("userRole", data.user.role); // Store user role
-        Navigate(data.user.role === "nonAdmin" ? "/first" : "/admin");  
+        Navigate(data.user.role === "nonAdmin" ? "/first" : "/admin");
       } else {
         console.error("User Login failed!");
         toast.error(data.message, {
@@ -112,9 +166,9 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn,user,setUser }) => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      console.log("Error message : "+error.response.data.message);
+      console.log("Error message : " + error.response.data.message);
       toast.error(error.response.data.message);
-    }finally {
+    } finally {
       setIsLoading(false); // Hide loader
     }
   };
@@ -136,7 +190,7 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn,user,setUser }) => {
   const handleFormSubmit = (event) => {
     handleSubmit(event);
   }
-  
+
   return (
     <main className="page-content" >
       <div className="content-container">
@@ -189,9 +243,9 @@ const LoginPage = ({isLoggedIn,setIsLoggedIn,user,setUser }) => {
                 <input type="checkbox" /> Remember me
               </label>
               <Link to="/reset-password" className="forgot-password">
-                      Forgot Password?
-              </Link>            
-              </div>
+                Forgot Password?
+              </Link>
+            </div>
             {/* <button type="submit" className="submit-button animate-in">Login</button> */}
             <button type="submit" className="submit-button animate-in" disabled={isLoading}>
               {isLoading ? "Logging in..." : "Login"}
