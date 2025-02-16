@@ -11,6 +11,7 @@ const InputData = () => {
   }, []);
 
   const [formData, setFormData] = useState({
+    weight:"",
     snoringRange: "",
     respirationRate: "",
     bodyTemperature: "",
@@ -51,9 +52,26 @@ const InputData = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+  
+    if (inputMethod === "file" && !fileData) {
+      alert("Please upload a file before submitting.");
+      return;
+    }
+  
+    if (inputMethod === "manual") {
+      for (const key in formData) {
+        if (formData[key] === "") {
+          alert(`Please fill in all fields before submitting.`);
+          return;
+        }
+      }
+    }
+  
     let calculatedStress = Math.random() * 4;
     setStressLevel(Math.floor(calculatedStress));
   };
+  
+  
 
   const recommandationShow = () => {
     navigate("/recommandation");
@@ -99,7 +117,19 @@ const InputData = () => {
           {inputMethod === "manual" && (
             <>
               <div className="form-group">
-                <label htmlFor="snoringRange">Snoring Range</label>
+                <label htmlFor="weight">Weight (10.0 Kg - 180.0 Kg)</label>
+                <input
+                  type="number"
+                  id="Weight"
+                  name="Weight"
+                  value={formData.weight}
+                  onChange={handleInputChange}
+                  placeholder="Enter weight"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="snoringRange">Snoring Range (0.0 DB - 100.0 DB)</label>
                 <input
                   type="number"
                   id="snoringRange"
@@ -110,7 +140,7 @@ const InputData = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="respirationRate">Respiration Rate</label>
+                <label htmlFor="respirationRate">Respiration Rate (10.0 BPM - 25.0 BPM)</label>
                 <input
                   type="number"
                   id="respirationRate"
@@ -121,7 +151,7 @@ const InputData = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="bodyTemperature">Body Temperature (°C)</label>
+                <label htmlFor="bodyTemperature">Body Temperature (35.0 °C - 38.0 °C)</label>
                 <input
                   type="number"
                   id="bodyTemperature"
@@ -132,7 +162,7 @@ const InputData = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="limbMovement">Limb Movement</label>
+                <label htmlFor="limbMovement">Limb Movement (0 PLMI - 50 PLMI)</label>
                 <input
                   type="number"
                   id="limbMovement"
@@ -143,7 +173,7 @@ const InputData = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="bloodOxygenLevels">Blood Oxygen Levels (%)</label>
+                <label htmlFor="bloodOxygenLevels">Blood Oxygen Levels (80.0 % - 100.0 %)</label>
                 <input
                   type="number"
                   id="bloodOxygenLevels"
@@ -154,7 +184,7 @@ const InputData = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="hoursOfSleep">Hours of Sleep</label>
+                <label htmlFor="hoursOfSleep">Hours of Sleep (1 hr - 18 hr)</label>
                 <input
                   type="number"
                   id="hoursOfSleep"
@@ -165,7 +195,7 @@ const InputData = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="heartRate">Heart Rate (bpm)</label>
+                <label htmlFor="heartRate">Heart Rate (40 BPM - 120 BPM)</label>
                 <input
                   type="number"
                   id="heartRate"

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "../style/UserDetailPageStyle.css";
+import { FaStar, FaRegStar } from "react-icons/fa"; // Import star icons
 import axios from "axios";
+import "../style/UserDetailPageStyle.css";
 
 const UserDetailPage = () => {
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -13,7 +13,7 @@ const UserDetailPage = () => {
   const user = location.state?.user || {};
   const navigate = useNavigate();
   const [feedbackData, setFeedbackData] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   const handleDeleteUser = () => {
     alert(`User ${user.username} deleted successfully!`);
@@ -32,28 +32,38 @@ const UserDetailPage = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      // console.log(await response.data);
+
       if (response.status !== 200 || !response.data) {
         throw new Error("Failed to fetch user feedback");
       }
 
-
       setFeedbackData(response.data.feedbacks || []);
-      setShowPopup(true); // Show pop-up after fetching data
-
-      // Auto-close the pop-up after 5 seconds
-      setTimeout(() => {
-        setShowPopup(false);
-      }, 5000);
+      setShowFeedback(true);
     } catch (error) {
       console.error("Error fetching user feedback:", error);
       alert("Failed to fetch user feedback. Please try again.");
     }
   };
 
+  // Function to render stars for rating
+  const renderStars = (rating) => {
+    const maxStars = 5;
+    return (
+      <span className="star-rating">
+        {Array.from({ length: maxStars }).map((_, index) =>
+          index < rating ? (
+            <FaStar key={index} color="#FFD700" size={25} />
+          ) : (
+            <FaRegStar key={index} color="#ccc" size={25} />
+          )
+        )}
+      </span>
+    );
+  };
+
   return (
     <main className="admin-detail-container">
-      <h1 className="admin-detail-title">User Details</h1>
+      <h2 className="admin-detail-title">{user.username}'s Details</h2>
       <div className="admin-profile-card">
         <div className="admin-profile-photo-container">
           <img
@@ -61,8 +71,6 @@ const UserDetailPage = () => {
             alt={`${user.username}'s profile`}
             className="admin-profile-photo"
           />
-          <br />
-          <h2 className="admin-detail-name">{user.username}</h2>
         </div>
 
         <div className="admin-detail-table-container">
@@ -97,6 +105,27 @@ const UserDetailPage = () => {
         </div>
       </div>
 
+      {/* Feedback Section */}
+      {showFeedback && (
+        <div className="feedback-card">
+          <h3>{user.username}'s Feedback</h3>
+          <div>
+            {feedbackData.length > 0 ? (
+              feedbackData.map((feedback, index) => (
+                <div key={index} className="feedback-item">
+                  <p className="rating-container"><strong>Feedback Category:</strong> {feedback.category || "N/A"}</p>
+                  <p className="rating-container"><strong>What they Liked:</strong> {feedback.whatyouLoved || "N/A"}</p>
+                  <p   className="rating-container"><strong>Improvement Needed:</strong> {feedback.improvementNeeded || "N/A"}</p>
+                  <p className="rating-container"><strong>Rating Given:</strong> {renderStars(feedback.rating || 0)}</p>
+                </div>
+              ))
+            ) : (
+              <p className="no-feedback-message">No feedback available.</p>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Action Buttons */}
       <div className="admin-action-buttons">
         <button className="admin-delete-btn" onClick={handleDeleteUser}>
@@ -109,38 +138,6 @@ const UserDetailPage = () => {
           View Feedback
         </button>
       </div>
-
-      {/* Feedback Pop-up */}
-      {showPopup && (
-        <div className="feedback-popup">
-          <h2>User Feedback</h2>
-          <div>
-            {feedbackData.length > 0 ? (
-              feedbackData.map((feedback, index) => (
-                <div key={index} className="feedback-item">
-                  <p>
-                    <strong>Category:</strong> {feedback.category || "N/A"}
-                  </p>
-                  <p>
-                    <strong>What You Loved:</strong>{" "}
-                    {feedback.whatyouLoved || "N/A"}
-                  </p>
-                  <p>
-                    <strong>Improvement Needed:</strong>{" "}
-                    {feedback.improvementNeeded || "N/A"}
-                  </p>
-                  <p>
-                    <strong>Rating:</strong> {feedback.rating || "N/A"} / 5
-                  </p>
-                  <hr />
-                </div>
-              ))
-            ) : (
-              <p className="no-feedback-message">No feedback available.</p>
-            )}
-          </div>
-        </div>
-      )}
     </main>
   );
 };

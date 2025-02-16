@@ -1,11 +1,10 @@
 /* Main Container Styling */
 .admin-detail-container {
-  margin: 120px auto;
+  margin: 120px auto 40px auto;
   max-width: 1200px;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
   border-radius: 15px;
   padding: 40px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,15 +21,17 @@
 
 /* Profile Card Section */
 .admin-profile-card {
+
   display: flex;
   justify-content: space-between;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 15px;
-  padding: 2rem;
+  padding: 1rem;
   width: 100%;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  gap: 2rem;
+  gap: 0rem;
   align-items: center;
+  margin-top: 20px;
 }
 
 .admin-profile-photo-container {
@@ -39,7 +40,7 @@
 }
 
 .admin-profile-photo {
-  margin-top: 50px;
+ 
   width: 350px;
   height: 350px;
   object-fit: cover;
@@ -142,22 +143,24 @@
 }
 
 /* model styling */
-.feedback-popup {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #ffffff;
+/* Feedback Section */
+.feedback-card {
+  background: #ffffff;
   padding: 16px;
-  width: 400px;
+  margin-top: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  animation: slide-down 0.5s ease-out;
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  opacity: 1;
+  transform: translateY(0);
+  margin-bottom: 0;
 }
 
 .feedback-item {
-  margin: 8px 0;
+  padding: 8px 0;
 }
 
 .no-feedback-message {
@@ -165,13 +168,33 @@
   font-style: italic;
 }
 
-@keyframes slide-down {
+/* Animation */
+@keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(-20px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
   }
+}
+
+.feedback-card {
+  animation: fade-in 0.5s ease-in-out;
+}
+
+/* Star Rating Container */
+.rating-container {
+  margin-left: 9rem;
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
+/* Star Icons */
+.star-rating {
+  margin-top: 0px;
+  display: flex;
+  align-items: center;
 }
