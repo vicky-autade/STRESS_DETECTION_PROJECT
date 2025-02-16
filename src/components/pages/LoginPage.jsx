@@ -71,7 +71,7 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
   const sendTokenToBackend = async (token,email) => {
     
     try {
-      const response = await axios.post("https://stress-detection-backend.vercel.app/api/save-token", {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/save-token`, {
         fcmToken: token,
         email: email,
       });
