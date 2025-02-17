@@ -41,7 +41,9 @@
   text-align: center;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+
 }
 
 .stress-level {
@@ -88,6 +90,7 @@
 /* New Additions */
 .input-method-selection {
   display: flex;
+  margin-top: 30px;
   gap: 1rem;
   justify-content: center;
   margin-bottom: 1.5rem;
@@ -167,4 +170,45 @@
 
 .submit-btn:hover {
   transform: translateY(-2px);
+}
+
+
+
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.data-table th {
+  background-color: #007bff;
+  color: white;
+  /* font-weight: normal; */
+}
+
+.data-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.data-table tr:hover {
+  background-color: #ddd;
+}
+
+.table-key {
+  /* font-weight: bold; */
+  text-transform: capitalize;
+  width: 40%;
+}
+
+.table-value {
+  color: #333;
 }

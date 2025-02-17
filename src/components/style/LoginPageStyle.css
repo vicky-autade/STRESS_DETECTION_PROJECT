@@ -3,7 +3,7 @@
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
   min-height: calc(100vh - 140px);
   margin-top: 7rem;
-  margin-bottom: 7rem;
+  margin-bottom: 3rem;
   margin-left: 10rem;
   margin-right: 10rem;
   display: flex;
@@ -16,7 +16,7 @@
 .content-container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0.4rem;
 }
 
 .form-header {

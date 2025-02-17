@@ -74,7 +74,7 @@ const App = () => {
           {userRole === "nonAdmin" && (
             <>
               <Route path="/first" element={<PrivateRoute isLoggedIn={isLoggedIn}><First setIsLoggedIn={setIsLoggedIn} /></PrivateRoute>} />
-              <Route path="/input-data" element={<PrivateRoute isLoggedIn={isLoggedIn}><InputData/></PrivateRoute>} /> 
+              <Route path="/input-data" element={<PrivateRoute isLoggedIn={isLoggedIn} ><InputData user={user} /></PrivateRoute>} /> 
               <Route path="/recommandation" element={<PrivateRoute isLoggedIn={isLoggedIn}><Recommandation/></PrivateRoute>} />
               <Route path="/feedback" element={<PrivateRoute isLoggedIn={isLoggedIn}><Feedback/></PrivateRoute>} />  
             </>
