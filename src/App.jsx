@@ -56,7 +56,6 @@ const App = () => {
 // }, [location, isLoggedIn]);
 
 
-
   return (
     <div className="app-container">
       <div className="header">
