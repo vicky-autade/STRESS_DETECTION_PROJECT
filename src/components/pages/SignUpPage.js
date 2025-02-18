@@ -278,6 +278,7 @@ function SignUpPage() {
                 onChange={handleChange}
                 placeholder="Date of birth"
                 required
+                style={{ color: "#aaa" }} 
               />
             </div>
 

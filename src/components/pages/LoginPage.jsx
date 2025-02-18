@@ -177,7 +177,7 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
            <p className="login-link animate-in">
                         Don't have an account?{" "}
                         <Link to="/signup" className="link">
-                          Register here
+                          Sign up
                         </Link>
                       </p>
           </form>
@@ -187,5 +187,6 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
     </main>
   );
 }
+
 
 export default LoginPage;
