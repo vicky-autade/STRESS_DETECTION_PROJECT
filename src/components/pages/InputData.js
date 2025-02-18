@@ -90,7 +90,7 @@ const handleSubmit = async (e) => {
 
       requestData = {
           ...fileData, 
-          source: "File Upload"
+          source: "Automated Device"
       };
   } else {
       // Manual Entry Handling
