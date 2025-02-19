@@ -48,6 +48,7 @@ const App = () => {
 //   }
 // }, []);
 
+
 // // Track last visited page
 // useEffect(() => {
 //   if (isLoggedIn) {
