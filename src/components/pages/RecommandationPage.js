@@ -1,27 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "../style/RecommandationStyle.css";
 
 const RecommendationPage = () => {
- useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
+  const location = useLocation();
+  const recommendations = location.state?.recommendations || [];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  console.log("recommandation page->>>>>>>>>>>" + recommendations);
 
   return (
     <div className="recommendation-page">
       <h1 className="recommendation-title">Recommendations for a Healthier Life</h1>
       <div className="recommendation-container">
-        <div className="recommendation-card">
-          <h3>Tip 1</h3>
-          <p>Ensure you get at least 7-8 hours of sleep every night.</p>
-        </div>
-        <div className="recommendation-card">
-          <h3>Tip 2</h3>
-          <p>Maintain a balanced diet with plenty of fruits and vegetables.</p>
-        </div>
-        <div className="recommendation-card">
-          <h3>Tip 3</h3>
-          <p>Exercise regularly to reduce stress and improve sleep patterns.</p>
-        </div>
+        {recommendations.length > 0 ? (
+          recommendations.map((recommendation, index) => (
+            <div className="recommendation-card" key={index}>
+              <h3>Tip {index + 1}</h3>
+              <p>{recommendation}</p>
+            </div>
+          ))
+        ) : (
+          <p>No recommendations available. Please try submitting your data again.</p>
+        )}
       </div>
     </div>
   );

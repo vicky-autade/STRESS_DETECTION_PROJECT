@@ -28,6 +28,8 @@ const InputData = ({user}) => {
   const [inputMethod, setInputMethod] = useState("file");
   const [fileData, setFileData] = useState(null); 
   const [ stressGiven,setStressGiven] = useState("Not Yet Given");
+  const [recommendations, setRecommendations] = useState([]); // Store recommendations
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -137,10 +139,12 @@ const submitData = async (requestData) => {
         );
 
         console.log("API Response:", response.data);
-        if (response.data && response.data.stressLevel !== undefined) {
+        if (response.data ) {
           const levelMapping = ["Normal", "Medium-Normal", "Medium", "Medium-High", "High"];
           setStressLevel(response.data.stressLevel);
           setStressGiven(levelMapping[response.data.stressLevel] || "Unknown");
+          setRecommendations(response.data.recommendation || []);
+          console.log("recommandations ->>>>>>>>" +response.data.recommendation );
       } else {
           alert("Error: Invalid response from the server.");
       }
@@ -152,9 +156,10 @@ const submitData = async (requestData) => {
     }
 };
 
-  const recommandationShow = () => {
-    navigate("/recommandation");
-  };
+  
+const recommandationShow = () => {
+  navigate("/recommandation", { state: { recommendations } });
+};
 
   return (
     <div className="form-container">

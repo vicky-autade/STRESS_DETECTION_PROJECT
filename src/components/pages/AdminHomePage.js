@@ -71,6 +71,10 @@ const AdminHomePage = () => {
         }
     };
 
+    const AdminStatistic =()=>{
+        navigate("/adminStatistics");
+    }
+
     return (
         <main className="admin-page-container">
             <div className="admin-content-wrapper">
@@ -89,7 +93,7 @@ const AdminHomePage = () => {
                     <div className="admin-data-section">
                         <h2 className="admin-text-center">Statistics</h2>
                         <p>Analyze user data and view detailed statistics.</p>
-                        <button className="admin-button-primary">View Statistics</button>
+                        <button className="admin-button-primary" onClick={AdminStatistic}>View Statistics</button>
                         <img src={statsImage} alt="Statistics" className="admin-section-image" />
                     </div>
 

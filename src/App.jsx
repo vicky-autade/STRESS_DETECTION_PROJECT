@@ -19,7 +19,7 @@ import Feedback from './components/pages/Feedback';
 import AdminHomePage from './components/pages/AdminHomePage'; 
 import UserListPage from './components/pages/GetAllUserData'; 
 import UserDetailPage from './components/pages/SingleUserDetailsPage';
-
+import AdminStatistics from './components/pages/StatisticsAdmin';
 
 const App = () => {
   // const navigate = useNavigate();
@@ -86,6 +86,7 @@ const App = () => {
               <Route path="/admin" element={<PrivateRoute isLoggedIn={isLoggedIn}><AdminHomePage/></PrivateRoute>} /> 
               <Route path="/AllUserList" element={<PrivateRoute isLoggedIn={isLoggedIn}><UserListPage/></PrivateRoute>} /> 
               <Route path="/UserDetailPage" element={<PrivateRoute isLoggedIn={isLoggedIn}><UserDetailPage/></PrivateRoute>} /> 
+              <Route path="/adminStatistics" element={<PrivateRoute isLoggedIn={isLoggedIn}><AdminStatistics/></PrivateRoute>} /> 
             </>
           )}
 
