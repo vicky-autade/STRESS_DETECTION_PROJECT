@@ -116,9 +116,11 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
         const expiresAt = decodedToken.exp * 1000;
         localStorage.setItem("jwt", token);
         localStorage.setItem("jwt_expiry", expiresAt);
+        localStorage.setItem("user", JSON.stringify(data.user)); 
         setUser(data.user);
         requestPermission(data.user.email);
         setIsLoggedIn(true);
+        console.log("🔑 Login successful:", data);
         toast.success("Login successful !", {
           position: "top-center",
           autoClose: 2000,
