@@ -4,7 +4,9 @@ import "../style/RecommandationStyle.css";
 
 const RecommendationPage = () => {
   const location = useLocation();
-  const recommendations = location.state?.recommendations || [];
+  // const recommendations = location.state?.recommendations || [];
+  const storedRecommendations = localStorage.getItem("latestRecommendations");
+  const recommendations = storedRecommendations ? JSON.parse(storedRecommendations) : [];
 
   useEffect(() => {
     window.scrollTo(0, 0);

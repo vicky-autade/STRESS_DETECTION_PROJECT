@@ -144,6 +144,7 @@ const submitData = async (requestData) => {
           setStressLevel(response.data.stressLevel);
           setStressGiven(levelMapping[response.data.stressLevel] || "Unknown");
           setRecommendations(response.data.recommendation || []);
+          localStorage.setItem("latestRecommendations", JSON.stringify(response.data.recommendation));
           console.log("recommandations ->>>>>>>>" +response.data.recommendation );
       } else {
           alert("Error: Invalid response from the server.");

@@ -3,6 +3,9 @@ import "../style/FeedbackPageStyle.css";
 import FeedbackImage from "../assets/feedback.png"; // Placeholder for your image path
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
+import toast from "react-hot-toast";
+import Loader from "./Loader";
+
 
 const FeedbackPage = () => {
   useEffect(() => {
@@ -11,7 +14,7 @@ const FeedbackPage = () => {
 
  
   
-
+  const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [feedback, setFeedback] = useState("");
@@ -20,6 +23,7 @@ const FeedbackPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
+    setLoading(true);
     try {
       console.log("Feedback Data: "); 
       const feedbackData = {
@@ -37,10 +41,19 @@ const FeedbackPage = () => {
         },
       });
       console.log("Profile Data: ", response.data);
+      toast.success("Feedback submitted successfully!");
+
+      setFeedback("");
+      setImprovementSuggestion("");
+      setRating(0);
+      setHoverRating(0);
+      setFeedbackType("General");
       // Update user state with the new profile data
     } catch (error) {
       console.error("Error fetching profile:", error);
-      // toast.error("Failed to load profile data.");
+      toast.error("Failed to submit feedback. Please try again.");
+    }finally {
+      setLoading(false); // Stop loader
     }
   };
 
@@ -92,7 +105,7 @@ const FeedbackPage = () => {
           {/* Star Rating Section */}
           <div className="rating-section">
             <label>How satisfied are you with our service?</label>
-            <div className="star-rating">
+            <div className="star-rating-feedback">
               {[1, 2, 3, 4, 5].map((star) => (
                 <FaStar
                   key={star}
@@ -106,11 +119,12 @@ const FeedbackPage = () => {
             </div>
           </div>
 
-          <button type="submit" className="send-feedback-btn">
+          <button type="submit" className="send-feedback-btn" disabled={loading} >
             Send Feedback
           </button>
         </form>
       </div>
+      {loading && <Loader />}
     </div>
   );
 };

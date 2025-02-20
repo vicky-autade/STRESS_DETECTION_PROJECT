@@ -11,7 +11,7 @@ const Footer = (props) => {
 
   const isUserLoggedIn = props.isLoggedIn;
   const navigate = useNavigate();
-
+  // console.log("Role ->>>>>>" + props.user.role);
   const FeedbackPage = () => {
     if(isUserLoggedIn){
     navigate("/feedback");

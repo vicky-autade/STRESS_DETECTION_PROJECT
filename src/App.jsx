@@ -83,11 +83,14 @@ const App = () => {
           {/* Routes for Admins */}
           {userRole === "admin" && (
             <>
-              <Route path="/admin" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><AdminHomePage/></PrivateRoute>} /> 
+              <Route path="/admin" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><AdminHomePage/></PrivateRoute>} />
+              <Route path="/adminStatistics" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><AdminStatistics/></PrivateRoute>} /> 
               <Route path="/AllUserList" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><UserListPage/></PrivateRoute>} /> 
-              <Route path="/UserDetailPage" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><UserDetailPage/></PrivateRoute>} /> 
+              <Route path="/UserDetailPage" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><UserDetailPage/></PrivateRoute>}
+               /> 
             </>
           )}
+          
 
         </Routes>
       </div>
