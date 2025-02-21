@@ -29,7 +29,7 @@ const App = () => {
   const [user, setUser] = useState(null);
   const userRole = localStorage.getItem("userRole"); // Get role from localStorage
   const [fcmToken, setFcmToken] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(false); 
 
   
   useEffect(() => {
@@ -45,13 +45,13 @@ const App = () => {
       setUser(JSON.parse(storedUser)); 
       setLoading(false);// Restore user data safely
     } else {
-      console.log("Token expired or missing, clearing localStorage...");
-      localStorage.removeItem("jwt");
-      localStorage.removeItem("jwt_expiry");
-      localStorage.removeItem("user");
-      setIsLoggedIn(false);
-      setUser(null);
-      setLoading(false);//
+      // console.log("Token expired or missing, clearing localStorage...");
+      // localStorage.removeItem("jwt");
+      // localStorage.removeItem("jwt_expiry");
+      // localStorage.removeItem("user");
+      // setIsLoggedIn(false);
+      // setUser(null);
+      // setLoading(false);//
       return <Navigate to ={'/login'}/>
     }
      // Mark as loaded
