@@ -89,6 +89,7 @@ const FeedbackPage = () => {
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="Share your thoughts..."
+              required
             />
           </div>
 
@@ -99,6 +100,7 @@ const FeedbackPage = () => {
               value={improvementSuggestion}
               onChange={(e) => setImprovementSuggestion(e.target.value)}
               placeholder="Suggest improvements..."
+              required
             />
           </div>
 
