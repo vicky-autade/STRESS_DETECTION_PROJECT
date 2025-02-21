@@ -51,6 +51,7 @@ const App = () => {
       localStorage.removeItem("user");
       setIsLoggedIn(false);
       setUser(null);
+      setLoading(false);//
       return <Navigate to ={'/login'}/>
     }
      // Mark as loaded
