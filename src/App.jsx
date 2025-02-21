@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from 'react';
-import { Routes, Route, useNavigate ,useLocation} from 'react-router-dom';
+import { Routes, Route, useNavigate ,useLocation,Navigate} from 'react-router-dom';
 import './App.css';
 // import axios from "axios";
 import LoginPage from './components/pages/LoginPage';
@@ -23,6 +23,7 @@ import AdminStatistics from './components/pages/StatisticsAdmin';
 import Loader from './components/pages/Loader';
 import "./components/style/Loader.css";
 
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
@@ -41,7 +42,8 @@ const App = () => {
     // Check if token exists and is not expired
     if (token && expiry && new Date().getTime() < Number(expiry) && storedUser) {
       setIsLoggedIn(true);
-      setUser(JSON.parse(storedUser)); // Restore user data safely
+      setUser(JSON.parse(storedUser)); 
+      setLoading(false);// Restore user data safely
     } else {
       console.log("Token expired or missing, clearing localStorage...");
       localStorage.removeItem("jwt");
@@ -49,8 +51,9 @@ const App = () => {
       localStorage.removeItem("user");
       setIsLoggedIn(false);
       setUser(null);
+      return <Navigate to ={'/login'}/>
     }
-    setLoading(false); // Mark as loaded
+     // Mark as loaded
   }, []);
   if (loading) {
     return <Loader />// Prevent routing issues before auth check completes
