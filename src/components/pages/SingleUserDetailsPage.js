@@ -254,7 +254,7 @@ const UserDetailPage = () => {
           Delete User
         </button>
         <button className="admin-analytics-btn" onClick={viewUserAnalytics}>
-          View Analytics
+          View Latest Stress Data
         </button>
         <button className="admin-analytics-btn" onClick={viewUserFeedback}>
           View Feedback

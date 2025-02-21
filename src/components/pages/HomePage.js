@@ -5,41 +5,53 @@ import { faHeartbeat, faRunning, faAppleAlt, faBed, faUsers, faChartLine, faBrai
 import { motion, useAnimation, useViewportScroll, useTransform } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import '../style/HomePageStyle.css';
-import user1 from '../assets/user1.png';
-import user2 from '../assets/user2.png';
-import user3 from '../assets/user3.png';
+
 
 const HomePage = () => {
 
- useEffect(() => {
-     window.scrollTo(0, 0);
-   }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const controls = useAnimation();
   const [ref, inView] = useInView();
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  // const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const stressLevelChart = useRef(null);
   const { scrollYProgress } = useViewportScroll();
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
 
-  const testimonials = [
-    {
-      quote: "This revolutionary tool has completely transformed my understanding of stress. I've seen a 40% increase in my productivity!",
-      author: "Sarah J., Tech Entrepreneur",
-      image: user1
-    },
-    {
-      quote: "The personalized insights have helped me manage my work-life balance effectively. I feel more in control than ever.",
-      author: "Michael R., Project Manager",
-      image: user2
-    },
-    {
-      quote: "As a healthcare professional, I'm impressed by the scientific approach. It's a game-changer in stress management.",
-      author: "Dr. Emily L., Psychologist",
-      image: user3
-    }
-  ];
+  const [testimonials, setTestimonials] = useState([]);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  useEffect(() => {
+    fetch("https://stress-detection-backend.vercel.app/api/general/getGeneralFeedbacks")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.feedbackByRating) {
+          // Extract all feedback entries from different ratings
+          const allFeedback = Object.values(data.feedbackByRating)
+            .flat()
+            .map((feedback) => ({
+              image: feedback.profileImage,
+              quote: feedback.whatYouLoved,
+              author: feedback.username,
+            }));
+          setTestimonials(allFeedback);
+        }
+      })
+      .catch((error) => console.error("Error fetching testimonials:", error));
+  }, []);
+
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) =>
+      prev === 0 ? testimonials.length - 1 : prev - 1
+    );
+  };
 
   useEffect(() => {
     if (inView) {
@@ -54,7 +66,7 @@ const HomePage = () => {
       document.querySelector('.home-content').style.marginTop = `${headerHeight}px`;
     }
   }, []);
-  
+
 
   useEffect(() => {
     if (stressLevelChart.current) {
@@ -99,13 +111,13 @@ const HomePage = () => {
     }
   };
 
-  const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-  };
+  // const nextTestimonial = () => {
+  //   setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+  // };
 
-  const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
+  // const prevTestimonial = () => {
+  //   setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  // };
 
   return (
     <div className="home-content" >
@@ -113,11 +125,11 @@ const HomePage = () => {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-       
+
       >
-          <Link to="/" className="title-link"   >
-            Stress Research Analyzer
-          </Link>
+        <Link to="/" className="title-link"   >
+          Stress Research Analyzer
+        </Link>
       </motion.h1>
       <motion.p
         className="intro-text"
@@ -147,7 +159,7 @@ const HomePage = () => {
 
       <section className="info-section">
         <h2>The Science of Stress</h2>
-        <motion.div 
+        <motion.div
           className="stress-visual"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -222,7 +234,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <motion.section 
+      <motion.section
         className="benefits-section"
         style={{ scale }}
       >
@@ -232,7 +244,7 @@ const HomePage = () => {
             { title: "Enhanced Mental Clarity", description: "Sharpen your focus and decision-making abilities." },
             { title: "Improved Physical Health", description: "Boost your immune system and overall vitality." },
             { title: "Emotional Resilience", description: "Develop stronger coping mechanisms for life's challenges." },
-            { title: "Career Advancement", description: "Perform better under pressure and stand out professionally." }
+            // { title: "Career Advancement", description: "Perform better under pressure and stand out professionally." }
           ].map((benefit, index) => (
             <motion.div
               key={index}
@@ -252,28 +264,30 @@ const HomePage = () => {
 
       <section className="testimonials-section">
         <h2>Success Stories</h2>
-        <div className="testimonial-carousel">
-          <motion.div
-            key={currentTestimonial}
-            className="testimonial"
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
-          >
-            <img src={testimonials[currentTestimonial].image} alt="User" className="testimonial-image" />
-            <blockquote>
-              {testimonials[currentTestimonial].quote}
-            </blockquote>
-            <p className="testimonial-author">{testimonials[currentTestimonial].author}</p>
-          </motion.div>
-          <button className="testimonial-nav prev" onClick={prevTestimonial}>
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
-          <button className="testimonial-nav next" onClick={nextTestimonial}>
-            <FontAwesomeIcon icon={faChevronRight} />
-          </button>
-        </div>
+        {testimonials.length > 0 ? (
+          <div className="testimonial-carousel">
+            <motion.div
+              key={currentTestimonial}
+              className="testimonial"
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.5 }}
+            >
+              <img src={testimonials[currentTestimonial].image} alt="User" className="testimonial-image" />
+              <blockquote>{testimonials[currentTestimonial].quote}</blockquote>
+              <p className="testimonial-author">{testimonials[currentTestimonial].author}</p>
+            </motion.div>
+            <button className="testimonial-nav prev" onClick={prevTestimonial}>
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+            <button className="testimonial-nav next" onClick={nextTestimonial}>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </button>
+          </div>
+        ) : (
+          <p className="testimonial-placeholder">No testimonials available yet.</p>
+        )}
       </section>
 
       <section className="cta-section">

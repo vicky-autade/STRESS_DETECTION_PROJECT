@@ -13,6 +13,7 @@ const AdminStatistics = () => {
   const [genderData, setGenderData] = useState({ Male: 0, Female: 0, Other: 0 });
   const [stressData, setStressData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedStressUsers, setSelectedStressUsers] = useState([]);
 
   const stressLabels = ["Normal", "Medium-Normal", "Medium", "Medium-High", "High"];
   const stressColors = ["#4CAF50", "#FFC107", "#FF9800", "#FF5722", "#D32F2F"];
@@ -74,6 +75,11 @@ const AdminStatistics = () => {
       )}
     </div>
   );
+
+  const handleStressLevelClick = (stressLevel) => {
+    const selectedUsers = stressData.find((level) => level.stressLevel === stressLevel)?.users || [];
+    setSelectedStressUsers(selectedUsers);
+  };
 
   const ratingColors = {
     1: "#FF3D00", // Red
@@ -145,11 +151,42 @@ const AdminStatistics = () => {
         <div className="feedback-list-container">
           {userFeedback[selectedFeedback].length > 0 ? userFeedback[selectedFeedback].map((item, index) => (
             <div key={index} className="feedback-card-box">
+              <p><strong>Given by:</strong>  {item.username}</p>
+              <p><strong>rating:</strong> {(item.rating)} stars</p>
               <p><strong>What you loved:</strong> {item.whatyouLoved}</p>
               <p><strong>Improvement needed:</strong> {item.improvementNeeded}</p>
             </div>
           )) : <p>No feedback available for {selectedFeedback}</p>}
         </div>
+      </div>
+     
+      <div className="user-list-section">
+        <h3>Users with Stress Level</h3>
+        <div className="stress-section">
+        {stressData.map((level) => (
+          <div key={level.stressLevel} onClick={() => handleStressLevelClick(level.stressLevel)} style={{ cursor: "pointer", margin: "10px 0" }}>
+            <strong>{stressLabels[level.stressLevel]}:</strong> {level.count} Users
+          </div>
+        ))}
+      </div>
+
+        {selectedStressUsers.length > 0 ? (
+          <ul>
+            {selectedStressUsers.map((user) => (
+              <li key={user.userId} className="user-card">
+                <img src={user.profileImage} alt={user.username} className="user-profile-img" />
+                <div className="user-info">
+                  <p><strong>Username:</strong> {user.username}</p>
+                  <p><strong>Email Id:</strong> {user.email || "N/A"}</p>
+                  <p><strong>Contact:</strong> {user.phone || "N/A"}</p>
+                  <p><strong>Gender:</strong> {user.gender || "N/A"}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No users found for this stress level</p>
+        )}
       </div>
       {loading && <Loader />}
     </div>

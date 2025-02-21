@@ -88,7 +88,7 @@
 }
 
 .stats-section {
-  margin-top: 180px;
+  margin-top: 200px;
   background: white;
   padding: 2rem;
   border-radius: 12px;
@@ -162,5 +162,111 @@
 
   .pie-chart-container {
     width: 80%;
+  }
+}
+
+/* Stress Level Selection Section */
+.stress-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.stress-section div {
+  background: linear-gradient(135deg, #3498db, #2c3e50);
+  padding: 10px 15px;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease-in-out, background 0.3s ease-in-out;
+}
+
+.stress-section div:hover {
+  background: linear-gradient(135deg, #3498db, #2c3e50);
+  transform: scale(1.05);
+}
+
+/* User List Section */
+.user-list-section {
+  margin-top: 40px;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 80%;
+  margin-bottom: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-left: 110px;
+}
+
+.user-list-section h3 {
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.user-list-section ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  background: #ecf0f1;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  width: 430px;
+}
+
+.user-card:hover {
+  transform: scale(1.05);
+}
+
+.user-profile-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+}
+
+.user-info {
+  text-align: left;
+}
+
+.user-info p {
+  margin: 3px 0;
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pie-chart-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .user-list-section {
+    width: 95%;
+  }
+
+  .user-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .user-profile-img {
+    margin-bottom: 10px;
   }
 }
