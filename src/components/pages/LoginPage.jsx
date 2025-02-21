@@ -14,6 +14,12 @@ import { getToken, onMessage } from "firebase/messaging";
 axios.defaults.withCredentials = true;
 
 const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmToken }) => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []); 
+
+
   const [formData, setFormData] = useState({
     email: "",
     password: ""
