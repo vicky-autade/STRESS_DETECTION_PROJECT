@@ -106,6 +106,7 @@ const AdminHomePage = () => {
                         <img src={trainModelImage} alt="Train Model" className="admin-section-image" />
                     </div>
 
+
                     {/* Send Notification Section */}
                     <div className="admin-data-section noti">
                         <h2>Send Notifications</h2>
