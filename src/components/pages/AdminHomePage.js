@@ -6,6 +6,8 @@ import statsImage from "../assets/stats.png";
 import trainModelImage from "../assets/train_model.png";
 import notificationImage from "../assets/notification.png";
 import axios from "axios";
+import toast from "react-hot-toast";
+
 
 const AdminHomePage = () => {
     const [notification, setNotification] = useState({
@@ -37,10 +39,25 @@ const AdminHomePage = () => {
 
             const usersData = response.data;
             console.log("Fetched Users Data:", usersData);
+            toast.success("Users Fetched Successfully!", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
             navigate("/AllUserList", { state: { users: usersData.users } });
         } catch (error) {
             console.error("Error fetching user data:", error);
-            alert("Failed to fetch user data. Please try again.");
+            toast.error("Failed to fetch user data. Please try again.", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
         }
     };
 
@@ -62,19 +79,67 @@ const AdminHomePage = () => {
             );
 
             console.log("Notification sent:", response.data);
-            alert("Notification sent successfully!");
+            toast.success("Notification sent successfully!", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
             setNotification({ title: "", body: "" });
         
         } catch (error) {
             console.error("Error sending notification:", error);
-            alert("Failed to send notification.");
-           
+            toast.error("Failed to send notification.", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
         }
     };
 
     const AdminStatistic =()=>{
         navigate("/adminStatistics");
     }
+
+    const trainModel = async () => {
+        try {
+            const response = await axios.get(
+                `${process.env.REACT_APP_BACKEND_URL}api/admin/TrainModel`,
+                {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                    },
+                }
+            );
+    
+            console.log("Model training started:", response.data);
+            toast.success("Model training initiated successfully!", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
+        } catch (error) {
+            console.error("Error training model:", error);
+            toast.error("Failed to initiate model training.", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
+        }
+    };
+    
 
     return (
         <main className="admin-page-container">
@@ -102,7 +167,7 @@ const AdminHomePage = () => {
                     <div className="admin-data-section">
                         <h2>Train Model</h2>
                         <p>Train and improve the machine learning model.</p>
-                        <button className="admin-button-primary">Train Model</button>
+                        <button className="admin-button-primary" onClick={trainModel}>Train Model</button>
                         <img src={trainModelImage} alt="Train Model" className="admin-section-image" />
                     </div>
 

@@ -63,7 +63,7 @@ const App = () => {
       </div>
       <div>    
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} />} />
           <Route path="/login" element={<LoginPage  fcmToken={fcmToken}  setFcmToken={setFcmToken}  isLoggedIn={isLoggedIn}  setIsLoggedIn={setIsLoggedIn}  user={user} setUser={setUser} />} />
           <Route path="/signup" element={<SignupPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/reset-password" element={<ResetPassword />} />

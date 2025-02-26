@@ -32,7 +32,10 @@ const UserDetailPage = () => {
         `${process.env.REACT_APP_BACKEND_URL}api/admin/particularUserFeedback`,
         { userId: user._id },
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
         }
       );
 
@@ -55,9 +58,13 @@ const UserDetailPage = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "https://stress-detection-backend.vercel.app/api/admin/getLatestUserParameters"
+        `${process.env.REACT_APP_BACKEND_URL}api/admin/getLatestUserParameters`,
+        {
+          withCredentials: true, // Include credentials if required
+          headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+        }
       );
-
+      
       if (response.status !== 200 || !response.data.latestParameters) {
         throw new Error("Failed to fetch user analytics");
       }

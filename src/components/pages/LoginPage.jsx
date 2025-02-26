@@ -97,6 +97,10 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/save-token`, {
         fcmToken: token,
         email: email,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`
       });
       console.log("✅ Token sent successfully:", response.data);
     } catch (error) {
