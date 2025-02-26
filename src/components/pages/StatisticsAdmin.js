@@ -19,19 +19,34 @@ const AdminStatistics = () => {
   const stressColors = ["#4CAF50", "#FFC107", "#FF9800", "#FF5722", "#D32F2F"];
 
   useEffect(() => {
-    setLoading(true);
-    const fetchFeedback = axios.get("https://stress-detection-backend.vercel.app/api/admin/getFeedbackStats");
-    const fetchGender = axios.get("https://stress-detection-backend.vercel.app/api/admin/getUserGenderCount");
-    const fetchStress = axios.get("https://stress-detection-backend.vercel.app/api/admin/getsimilarstressedusers");
-
-    Promise.all([fetchFeedback, fetchGender, fetchStress])
-      .then(([feedbackRes, genderRes, stressRes]) => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [feedbackRes, genderRes, stressRes] = await Promise.all([
+          axios.get(`${process.env.REACT_APP_BACKEND_URL}api/admin/getFeedbackStats`, {
+            withCredentials: true,
+            headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+          }),
+          axios.get(`${process.env.REACT_APP_BACKEND_URL}api/admin/getUserGenderCount`, {
+            withCredentials: true,
+            headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+          }),
+          axios.get(`${process.env.REACT_APP_BACKEND_URL}api/admin/getsimilarstressedusers`, {
+            withCredentials: true,
+            headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+          }),
+        ]);
+  
         if (feedbackRes.data && feedbackRes.data.ratingCount) {
           setRatingData(feedbackRes.data.ratingCount);
-          const total = Object.entries(feedbackRes.data.ratingCount).reduce((sum, [rating, count]) => sum + Number(rating) * count, 0);
+  
+          const total = Object.entries(feedbackRes.data.ratingCount).reduce(
+            (sum, [rating, count]) => sum + Number(rating) * count,
+            0
+          );
           const countTotal = Object.values(feedbackRes.data.ratingCount).reduce((sum, count) => sum + count, 0);
           setAvgRating(countTotal ? (total / countTotal).toFixed(1) : 0);
-          
+  
           const feedbackCategories = { "Bug Report": [], "Feature Request": [], "General": [], "Other": [] };
           feedbackRes.data.latestFeedback.forEach((item) => {
             if (feedbackCategories[item.category]) {
@@ -42,19 +57,24 @@ const AdminStatistics = () => {
           });
           setUserFeedback(feedbackCategories);
         }
-
+  
         if (genderRes.data && genderRes.data.counts) {
           setGenderData(genderRes.data.counts);
         }
-
+  
         if (stressRes.data && stressRes.data.stressLevels) {
           setStressData(stressRes.data.stressLevels);
         }
-      })
-      .catch((error) => console.error("Error fetching data:", error))
-      .finally(() => setLoading(false));
-  }, []);
-
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, []); // Runs only once when the component mounts
+  
   const renderChart = (data, title) => (
     <div className="pie-chart-container">
       <h3>{title}</h3>

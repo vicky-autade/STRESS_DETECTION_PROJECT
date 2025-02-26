@@ -7,8 +7,8 @@ import { useInView } from 'react-intersection-observer';
 import '../style/HomePageStyle.css';
 
 
-const HomePage = () => {
-
+const HomePage = (props) => {
+  let isLoggedIn = props.isLoggedIn;
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -111,14 +111,6 @@ const HomePage = () => {
     }
   };
 
-  // const nextTestimonial = () => {
-  //   setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-  // };
-
-  // const prevTestimonial = () => {
-  //   setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  // };
-
   return (
     <div className="home-content" >
       <motion.h1
@@ -171,37 +163,6 @@ const HomePage = () => {
           Stress is more than just a feeling - it's a complex physiological response that affects every system in your body. Our analyzer uses advanced algorithms to interpret these responses, giving you a comprehensive view of your stress profile.
         </p>
       </section>
-
-      {/* <motion.section 
-        className="tips-section"
-        variants={staggerChildren}
-        initial="hidden"
-        animate="visible"
-      >
-        <h2>Holistic Stress Management</h2>
-        <div className="tips-grid">
-          {[
-            { icon: faHeartbeat, title: "Biofeedback Training", description: "Learn to control your physiological responses with real-time feedback." },
-            { icon: faRunning, title: "Adaptive Exercise Plans", description: "Personalized workout routines that adjust based on your stress levels." },
-            { icon: faAppleAlt, title: "Nutrition Optimization", description: "AI-driven diet suggestions to boost resilience and energy." },
-            { icon: faBed, title: "Sleep Enhancement", description: "Advanced sleep tracking and optimization techniques." },
-            { icon: faUsers, title: "Social Support AI", description: "Virtual support system that adapts to your social needs." },
-            { icon: faBrain, title: "Cognitive Restructuring", description: "AI-assisted techniques to reframe stressful thoughts." }
-          ].map((tip, index) => (
-            <motion.div
-              key={index}
-              className="tip-item"
-              variants={fadeInUp}
-              whileHover={{ scale: 1.05, rotate: 2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <FontAwesomeIcon icon={tip.icon} size="2x" />
-              <h3>{tip.title}</h3>
-              <p>{tip.description}</p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.section> */}
 
       <section className="animation-section" >
         <h2>Our Innovative Approach</h2>
@@ -298,7 +259,7 @@ const HomePage = () => {
           onHoverStart={() => setIsHovering(true)}
           onHoverEnd={() => setIsHovering(false)}
         >
-          <Link to="/signup" className="cta-button">
+          <Link to={isLoggedIn ? "/first" : "/signup"} className="cta-button">
             Start Your Journey
             <motion.span
               className="cta-arrow"
