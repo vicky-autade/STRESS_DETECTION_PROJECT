@@ -93,6 +93,7 @@ function SignUpPage() {
           dateOfBirth: formData.dob,
           password: formData.password,
         });
+      
         const data = response.data; // Axios response is in data property
         console.log("My data : " + data);
         if (data.isValidUser) {
@@ -149,7 +150,7 @@ function SignUpPage() {
         });
 
         const data = response.data;
-
+console.log("otp>>>>>>>>"+data);
         if (data.isValidUser) {
           toast.success("Account created successfully! You can now log in.", {
             position: "top-center",

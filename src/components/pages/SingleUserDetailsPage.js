@@ -4,7 +4,7 @@ import { FaStar, FaRegStar } from "react-icons/fa"; // Import star icons
 import axios from "axios";
 import "../style/UserDetailPageStyle.css";
 import Loader from "./Loader";
-
+import toast from "react-hot-toast";
 
 const UserDetailPage = () => {
   useEffect(() => {
@@ -21,8 +21,98 @@ const UserDetailPage = () => {
   const [loading, setLoading] = useState(false);
   const stressLabels = ["Normal", "Medium-Normal", "Medium", "Medium-High", "High"];
 
-  const handleDeleteUser = () => {
-    alert(`User ${user.username} deleted successfully!`);
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest(".analytics-card") && !event.target.closest(".feedback-card") && !event.target.closest(".admin-action-buttons")) {
+        setShowFeedback(false);
+        setShowAnalytics(false);
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
+  const getAllUsersData = async () => {
+    try {
+        const response = await axios.get(
+            `${process.env.REACT_APP_BACKEND_URL}api/admin/getUsers`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`
+                },
+            }
+        );
+
+        if (response.status !== 200) {
+            throw new Error("Failed to fetch user data");
+        }
+
+        const usersData = response.data;
+        console.log("Fetched Users Data:", usersData);
+        toast.success("Users Fetched Successfully!", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        navigate("/AllUserList", { state: { users: usersData.users } });
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        toast.error("Failed to fetch user data. Please try again.", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+    }
+};
+
+
+  const handleDeleteUser = async () => {
+    if (window.confirm(`Are you sure you want to delete user ${user.username}?`)) {
+      setLoading(true);
+      console.log(user._id);
+      let userid = user._id;
+
+      try {
+        const response = await axios.delete(
+          `${process.env.REACT_APP_BACKEND_URL}api/admin/deleteUser`,
+          {
+            data: { id: userid },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+          }
+        );
+
+        if (response.status !== 200) {
+          throw new Error("Failed to delete user");
+        }
+        toast.success("User Deleted Successfully!", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        getAllUsersData();
+      } catch (error) {
+        console.error("Error deleting user:", error);
+        alert("Failed to delete user. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   const viewUserFeedback = async () => {
@@ -257,7 +347,7 @@ const UserDetailPage = () => {
 
       {/* Action Buttons */}
       <div className="admin-action-buttons">
-        <button className="admin-delete-btn" onClick={handleDeleteUser}>
+        <button className="admin-delete-btn" onClick={handleDeleteUser} disabled={loading}>
           Delete User
         </button>
         <button className="admin-analytics-btn" onClick={viewUserAnalytics}>
