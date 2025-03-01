@@ -75,7 +75,7 @@ const App = () => {
             <>
               <Route path="/first" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><First setIsLoggedIn={setIsLoggedIn} /></PrivateRoute>} />
               <Route path="/input-data" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><InputData user={user} /></PrivateRoute>} /> 
-              <Route path="/recommandation" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Recommandation/></PrivateRoute>} />
+              <Route path="/recommandation" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Recommandation  user={user} setUser={setUser}/></PrivateRoute>} />
               <Route path="/feedback" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Feedback/></PrivateRoute>} /> 
             </>
           )}

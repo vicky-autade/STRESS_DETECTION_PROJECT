@@ -30,6 +30,13 @@ const InputData = ({user}) => {
   const [ stressGiven,setStressGiven] = useState("Not Yet Given");
   const [recommendations, setRecommendations] = useState([]); // Store recommendations
 
+  useEffect(() => {
+    // Load user-specific recommendations from localStorage
+    const storedRecommendations = localStorage.getItem(`recommendations_${user.id}`);
+    if (storedRecommendations) {
+      setRecommendations(JSON.parse(storedRecommendations));
+    }
+  }, [user.id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -144,7 +151,9 @@ const submitData = async (requestData) => {
           setStressLevel(response.data.stressLevel);
           setStressGiven(levelMapping[response.data.stressLevel] || "Unknown");
           setRecommendations(response.data.recommendation || []);
-          localStorage.setItem("latestRecommendations", JSON.stringify(response.data.recommendation));
+
+          // Save recommendations with user ID
+          localStorage.setItem(`recommendations_${user.id}`, JSON.stringify(response.data.recommendation));
           console.log("recommandations ->>>>>>>>" +response.data.recommendation );
       } else {
           alert("Error: Invalid response from the server.");
@@ -158,6 +167,7 @@ const submitData = async (requestData) => {
 };
 
   
+
 const recommandationShow = () => {
   navigate("/recommandation", { state: { recommendations } });
 };

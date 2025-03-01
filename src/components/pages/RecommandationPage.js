@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../style/RecommandationStyle.css";
 
-const RecommendationPage = () => {
+const RecommendationPage = ({user}) => {
   const location = useLocation();
   // const recommendations = location.state?.recommendations || [];
-  const storedRecommendations = localStorage.getItem("latestRecommendations");
+  const storedRecommendations = localStorage.getItem(`recommendations_${user.id}`);
   const recommendations = storedRecommendations ? JSON.parse(storedRecommendations) : [];
 
   useEffect(() => {

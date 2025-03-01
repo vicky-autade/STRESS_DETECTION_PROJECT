@@ -161,6 +161,10 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
     }
   };
 
+  const resetPassword = () => {
+    Navigate("/reset-password");
+  };
+
   return (
     <main className="page-content">
       <div className="content-container">
@@ -184,6 +188,14 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
                 </span>
               </div>
             </div>
+
+            <p className="login-link animate-in">
+                      
+                        <Link className="link" to="/reset-password">
+                          Forget Password?
+                          </Link>
+                      </p>
+
             <button type="submit" className="submit-button animate-in" disabled={isLoading}>{isLoading ? "Logging in..." : "Login"}</button>
           
            <p className="login-link animate-in">
