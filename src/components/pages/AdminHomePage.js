@@ -106,6 +106,7 @@ const AdminHomePage = () => {
         navigate("/adminStatistics");
     }
 
+    
     const trainModel = async () => {
         try {
             const response = await axios.get(
