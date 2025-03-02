@@ -1,0 +1,119 @@
+/* Main Container for User Statistics */
+.user-statistics-container {
+    margin: 140px 40px 20px 40px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    padding: 3rem;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.user-statistics-title {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+    animation: slideDown 1.2s ease-in-out;
+}
+
+/* Table Styling */
+.user-statistics-table {
+    width: 60%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    margin-bottom: 80px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+    animation: fadeIn 1.8s ease-in-out;
+}
+
+.user-statistics-table th, .user-statistics-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    transition: background-color 0.3s ease;
+}
+
+.user-statistics-table th {
+    background-color: #061b316f;
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.user-statistics-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.user-statistics-table tr:hover {
+    background-color: #ddd;
+    transform: scale(1.02);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Charts Section */
+.charts-section {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+.chart-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1.5s ease-in-out;
+}
+
+.chart-container {
+    width: 100%;
+}
+
+.chart-container h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #2c3e50;
+}
+
+@media (max-width: 768px) {
+    .charts-section {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+/* Hover Effects */
+.chart-wrapper:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}
+
+.chart-wrapper h2:hover {
+    color: #3498db;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

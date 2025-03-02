@@ -107,7 +107,7 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
       console.error("❌ Error sending FCM token:", error);
     }
   };
-
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
@@ -116,7 +116,10 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
         `${process.env.REACT_APP_BACKEND_URL}api/login`,
         formData,
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
         }
       );
       const data = await response.data;

@@ -22,6 +22,7 @@ import UserDetailPage from './components/pages/SingleUserDetailsPage';
 import AdminStatistics from './components/pages/StatisticsAdmin';
 import Loader from './components/pages/Loader';
 import "./components/style/Loader.css";
+import UserStatistics from './components/pages/userStatistics';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -75,6 +76,7 @@ const App = () => {
             <>
               <Route path="/first" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><First setIsLoggedIn={setIsLoggedIn} /></PrivateRoute>} />
               <Route path="/input-data" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><InputData user={user} /></PrivateRoute>} /> 
+              <Route path="/userStatistics" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><UserStatistics user={user} /></PrivateRoute>} /> 
               <Route path="/recommandation" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Recommandation  user={user} setUser={setUser}/></PrivateRoute>} />
               <Route path="/feedback" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Feedback/></PrivateRoute>} /> 
             </>

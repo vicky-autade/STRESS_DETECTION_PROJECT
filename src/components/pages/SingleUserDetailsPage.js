@@ -53,14 +53,14 @@ const UserDetailPage = () => {
 
         const usersData = response.data;
         console.log("Fetched Users Data:", usersData);
-        toast.success("Users Fetched Successfully!", {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+        // toast.success("Users Fetched Successfully!", {
+        //     position: "top-center",
+        //     autoClose: 3000,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        //   });
         navigate("/AllUserList", { state: { users: usersData.users } });
     } catch (error) {
         console.error("Error fetching user data:", error);

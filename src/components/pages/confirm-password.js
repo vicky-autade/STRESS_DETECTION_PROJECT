@@ -57,6 +57,11 @@ const ResetPasswordPage = () => {
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}api/resetpassword`, {
         newPassword: formData.password, // Password entered by the user
         token, // Token from the URL
+      },{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
       });
 
       const data = response.data;

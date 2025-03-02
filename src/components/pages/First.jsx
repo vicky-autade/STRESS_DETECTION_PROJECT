@@ -50,6 +50,10 @@ const First = () => {
   const recommandationShow =()=>{
     navigate("/recommandation");
   }
+  
+  const userStatisticsShow =()=>{
+    navigate("/userStatistics");
+}
 
   // Rough work
  
@@ -80,7 +84,7 @@ const First = () => {
           <div className="data-section">
             <h2>Show Analytics</h2>
             <p>View analytics and trends based on your data.</p>
-            <button className="button-primary">Show Analytics</button>
+            <button className="button-primary" onClick={userStatisticsShow}>Show Analytics</button>
             <img src={graph} alt="Analytics" className="section-image" />
           </div>
         </div>
