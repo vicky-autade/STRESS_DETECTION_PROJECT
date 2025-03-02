@@ -13,7 +13,7 @@ const ProfilePage = (props) => {
 
     
   const [formData, setFormData] = useState({
-    userName: "",
+    username: "",
     email: "",
     firstName: "",
     lastName: "",
@@ -47,7 +47,7 @@ const ProfilePage = (props) => {
         ? new Date(response.data.DateOfBirth).toISOString().split("T")[0]
         : "";
         setFormData({
-          userName: response.data.username || "",
+          username: response.data.username || "",
           email: response.data.email || "",
           firstName: response.data.firstName || "",
           lastName: response.data.lastName || "",
@@ -175,12 +175,12 @@ const ProfilePage = (props) => {
           {/* First Set of Text Fields */}
           <div className="section input-section">
             <div className="form-group">
-              <label htmlFor="userName">Username</label>
+              <label htmlFor="username">Username</label>
               <input
                 type="text"
-                id="userName"
-                name="userName"
-                value={formData.userName}
+                id="username"
+                name="username"
+                value={formData.username}
                 onChange={handleInputChange}
                 placeholder="Enter username"
               />
