@@ -9,6 +9,7 @@ const UserStatistics = () => {
     const [history, setHistory] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
