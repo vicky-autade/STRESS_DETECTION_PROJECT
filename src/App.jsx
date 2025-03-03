@@ -23,6 +23,8 @@ import AdminStatistics from './components/pages/StatisticsAdmin';
 import Loader from './components/pages/Loader';
 import "./components/style/Loader.css";
 import UserStatistics from './components/pages/userStatistics';
+import About from './components/pages/About';
+import PrivacyPage from './components/pages/PrivacyPolicyPage';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -79,6 +81,8 @@ const App = () => {
               <Route path="/userStatistics" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><UserStatistics user={user} /></PrivateRoute>} /> 
               <Route path="/recommandation" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Recommandation  user={user} setUser={setUser}/></PrivateRoute>} />
               <Route path="/feedback" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Feedback/></PrivateRoute>} /> 
+              <Route path="/about" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><About/></PrivateRoute>} /> 
+              <Route path="/privacyPolicy" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><PrivacyPage/></PrivateRoute>} /> 
             </>
           )}
 

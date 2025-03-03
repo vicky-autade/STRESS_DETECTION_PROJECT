@@ -20,6 +20,24 @@ const Footer = (props) => {
   }
   }
 
+  const AboutPage = ()=>{
+     if(isUserLoggedIn){
+    navigate("/about");
+  }else{
+    navigate("/login");
+  }
+   
+  }
+
+  const PPPage = ()=>{
+    if(isUserLoggedIn){
+      navigate("/privacyPolicy");
+    }else{
+      navigate("/login");
+    }
+    
+  }
+
   return (
     <footer className="footer-section">
       <div className="footer-content">
@@ -31,9 +49,15 @@ const Footer = (props) => {
                 Feedback
               </button>
             </li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
-            <li><Link to="/privacy">Privacy Policy</Link></li>
+            <li> <button className="footer-link-btn" onClick={AboutPage}>
+                About Us
+              </button>
+              </li>
+            {/* <li><Link to="/contact">Contact</Link></li> */}
+            <li><button className="footer-link-btn" onClick={PPPage}>
+                Privacy Policy
+              </button>
+            </li>
           </ul>
         </div>
         <div className="footer-social">

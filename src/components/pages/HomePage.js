@@ -197,7 +197,7 @@ const HomePage = (props) => {
 
       <motion.section
         className="benefits-section"
-        style={{ scale }}
+        // style={{ scale }}
       >
         <h2>The Impact of Advanced Stress Management</h2>
         <div className="benefits-grid">

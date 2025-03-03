@@ -9,7 +9,11 @@ const UserStatistics = () => {
     const [history, setHistory] = useState([]);
     const [loading, setLoading] = useState(true);
 
+     useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
     
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -51,6 +55,32 @@ const UserStatistics = () => {
         })).reverse();
     };
 
+    const getStatus = (key, value) => {
+        const ranges = {
+            snoring_range: [0, 30, 60],
+            respiration_rate: [12, 20, 30],
+            body_temperature: [36.1, 37.2, 38],
+            limb_movement: [0, 10, 20],
+            blood_oxygen: [90, 95, 100],
+            heart_rate: [60, 100, 110],
+            sleep_duration: [4, 7, 9]
+        };
+
+        if (!ranges[key]) return "N/A";
+        if (value <= ranges[key][0]) return "Low";
+        if (value <= ranges[key][1]) return "Normal";
+        return "High";
+    };
+
+    const getStatusClass = (status) => {
+        switch (status) {
+            case "Low": return "status-low";
+            case "Normal": return "status-normal";
+            case "High": return "status-high";
+            default: return "";
+        }
+    };
+
     const parametersList = [
         "snoring_range",
         "respiration_rate",
@@ -58,20 +88,11 @@ const UserStatistics = () => {
         "limb_movement",
         "blood_oxygen",
         "heart_rate",
-        "sleep_duration"
-    ];
-
-    const tableParameters = [
-        "snoring_range",
-        "respiration_rate",
-        "body_temperature",
-        "limb_movement",
-        "blood_oxygen",
-        "heart_rate",
         "sleep_duration",
-        "stress_level",
         "weight"
     ];
+
+    const tableParameters = [...parametersList, "stress_level", "weight"];
 
     return (
         <div className="user-statistics-container">
@@ -82,17 +103,22 @@ const UserStatistics = () => {
                         <tr>
                             <th>Parameter</th>
                             <th>Latest Value</th>
+                             <th>Status</th> 
                         </tr>
                     </thead>
                     <tbody>
                         {Object.entries(parameters)
                             .filter(([key]) => tableParameters.includes(key))
-                            .map(([key, value]) => (
-                                <tr key={key}>
-                                    <td><strong><br></br>{key.replace(/_/g, " ").toUpperCase()}</strong></td>
-                                    <td><br></br>{value}</td>
-                                </tr>
-                            ))}
+                            .map(([key, value]) => {
+                                const status = getStatus(key, value);
+                                return (
+                                    <tr key={key}>
+                                        <td><strong>{key.replace(/_/g, " ").toUpperCase()}</strong></td>
+                                        <td className="latVal">{value}</td>
+                                        <td><span className={`status-box ${getStatusClass(status)}`}>{status}</span></td>
+                                    </tr>
+                                );
+                            })}
                     </tbody>
                 </table>
             ) : (

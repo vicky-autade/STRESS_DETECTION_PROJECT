@@ -1,6 +1,6 @@
 /* Main Container for User Statistics */
 .user-statistics-container {
-    margin: 140px 40px 20px 40px;
+    margin: 120px 40px 20px 40px;
     background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
     padding: 3rem;
     border-radius: 15px;
@@ -49,8 +49,8 @@
 
 .user-statistics-table tr:hover {
     background-color: #ddd;
-    transform: scale(1.02);
-    transition: transform 0.3s ease-in-out;
+    /* transform: scale(1.02); */
+    /* transition: transform 0.3s ease-in-out; */
 }
 
 /* Charts Section */
@@ -117,3 +117,23 @@
     from { transform: translateY(50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+
+
+.status-box {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 10px;
+    color: white;
+}
+.status-low {
+    background-color: #f39c12; /* Orange */
+}
+.status-normal {
+    background-color: #28a745; /* Green */
+}
+.status-high {
+    background-color: #dc3545; /* Red */
+}
+
