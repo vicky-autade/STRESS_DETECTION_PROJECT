@@ -144,6 +144,9 @@ const UserDetailPage = () => {
     }
   };
 
+  const userStatisticsShow =()=>{
+    navigate("/Admin-userStatistics", { state: { user } });
+}
   const viewUserAnalytics = async () => {
     setLoading(true);
     try {
@@ -355,6 +358,9 @@ const UserDetailPage = () => {
         </button>
         <button className="admin-analytics-btn" onClick={viewUserFeedback}>
           View Feedback
+        </button>
+        <button className="admin-analytics-btn" onClick={userStatisticsShow}>
+          View Analytics
         </button>
       </div>
     </main>

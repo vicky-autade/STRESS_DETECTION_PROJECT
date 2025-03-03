@@ -24,6 +24,7 @@ import Loader from './components/pages/Loader';
 import "./components/style/Loader.css";
 import UserStatistics from './components/pages/userStatistics';
 import About from './components/pages/About';
+import AdminUserStatistics from './components/pages/AdminUserStatistics';
 import PrivacyPage from './components/pages/PrivacyPolicyPage';
 
 const App = () => {
@@ -89,6 +90,7 @@ const App = () => {
           {/* Routes for Admins */}
           {userRole === "admin" && (
             <>
+            <Route path="/Admin-userStatistics" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><AdminUserStatistics /></PrivateRoute>} /> 
               <Route path="/admin" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><AdminHomePage/></PrivateRoute>} />
               <Route path="/adminStatistics" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><AdminStatistics/></PrivateRoute>} /> 
               <Route path="/AllUserList" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><UserListPage/></PrivateRoute>} /> 
