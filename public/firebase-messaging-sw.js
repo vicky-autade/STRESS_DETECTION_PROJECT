@@ -39,7 +39,8 @@ self.addEventListener("notificationclick", function (event) {
 messaging.onBackgroundMessage((payload) => {
     console.log("📩 Background message received:", payload);
 
-    const { title, body } = payload.notification || {};
+    const title = payload.data?.title || "New Notification";
+    const body = payload.data?.body || "You have a new message!";
     const data = payload.data || {};
 
     self.registration.showNotification(title || "New Notification", {
