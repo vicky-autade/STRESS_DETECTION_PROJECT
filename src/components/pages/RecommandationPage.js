@@ -1,23 +1,51 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "../style/RecommandationStyle.css";
+import Loader from "./Loader";
 
-const RecommendationPage = ({user}) => {
-  const location = useLocation();
-  // const recommendations = location.state?.recommendations || [];
-  const storedRecommendations = localStorage.getItem(`recommendations_${user.id}`);
-  const recommendations = storedRecommendations ? JSON.parse(storedRecommendations) : [];
+const RecommendationPage = ({ user }) => {
+  const [recommendations, setRecommendations] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
 
-  console.log("recommandation page->>>>>>>>>>>" + recommendations);
+    const fetchRecommendations = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}api/reccomdation/getLatestRecommendation`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+          }
+        );
+
+        const rec = response.data.recommendation;
+        console.log(">>>>>>>>>>>>>>"+rec);
+        // Only show recommendations if actionRequired is true
+        if (rec ) {
+          setRecommendations(rec.recommendationText || []);
+        } else {
+          // Otherwise, clear any recommendations
+          setRecommendations([]);
+        }
+      } catch (error) {
+        console.error("Error fetching recommendations:", error);
+      }finally{
+        setLoading(false);
+      }
+    };
+
+    fetchRecommendations();
+  }, []);
 
   return (
     <div className="recommendation-page">
       <h1 className="recommendation-title">Recommendations for a Healthier Life</h1>
-      <div className="recommendation-container">
+      <div className="recommendation-container" disabled={loading}>
         {recommendations.length > 0 ? (
           recommendations.map((recommendation, index) => (
             <div className="recommendation-card" key={index}>
@@ -29,6 +57,7 @@ const RecommendationPage = ({user}) => {
           <p>No recommendations available. Please try submitting your data again.</p>
         )}
       </div>
+      {loading && <Loader />}
     </div>
   );
 };

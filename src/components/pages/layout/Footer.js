@@ -13,29 +13,24 @@ const Footer = (props) => {
   const navigate = useNavigate();
   // console.log("Role ->>>>>>" + props.user.role);
   const FeedbackPage = () => {
-    if(isUserLoggedIn){
-    navigate("/feedback");
-  }else{
-    navigate("/login");
-  }
-  }
-
-  const AboutPage = ()=>{
-     if(isUserLoggedIn){
-    navigate("/about");
-  }else{
-    navigate("/login");
-  }
-   
-  }
-
-  const PPPage = ()=>{
-    if(isUserLoggedIn){
-      navigate("/privacyPolicy");
-    }else{
+    if (isUserLoggedIn) {
+      navigate("/feedback");
+    } else {
       navigate("/login");
     }
-    
+  }
+
+  const AboutPage = () => {
+
+    navigate("/about");
+
+  }
+
+  const PPPage = () => {
+
+    navigate("/privacyPolicy");
+
+
   }
 
   return (
@@ -44,19 +39,23 @@ const Footer = (props) => {
         <div className="footer-links">
           <h3>Quick Links</h3>
           <ul>
-          <li>
-              <button className="footer-link-btn" onClick={FeedbackPage}>
-                Feedback
-              </button>
+            <li>
+              {props.user?.role !== "admin" && (
+                <button className="footer-link-btn" onClick={FeedbackPage}>
+                  Feedback
+                </button>
+              )}
+
+
             </li>
             <li> <button className="footer-link-btn" onClick={AboutPage}>
-                About Us
-              </button>
-              </li>
+              About Us
+            </button>
+            </li>
             {/* <li><Link to="/contact">Contact</Link></li> */}
             <li><button className="footer-link-btn" onClick={PPPage}>
-                Privacy Policy
-              </button>
+              Privacy Policy
+            </button>
             </li>
           </ul>
         </div>

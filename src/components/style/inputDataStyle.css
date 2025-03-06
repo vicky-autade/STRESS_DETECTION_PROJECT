@@ -71,21 +71,7 @@
   margin-top: 1rem;
 }
 
-.recommendation-btn {
-  background: linear-gradient(135deg, #3498db, #2c3e50);
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-top: 20px;
-  transition: transform 0.3s ease;
-}
 
-.recommendation-btn:hover {
-  transform: translateY(-2px);
-}
 
 /* New Additions */
 .input-method-selection {
@@ -211,4 +197,25 @@
 
 .table-value {
   color: #333;
+}
+
+.recommendation-btn:disabled {
+  background: linear-gradient(135deg, #b0d3ea, #464c52);
+  color: white;
+  cursor: not-allowed;
+}
+.recommendation-btn {
+  background: linear-gradient(135deg, #3498db, #2c3e50);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+  transition: transform 0.3s ease;
+}
+
+.recommendation-btn:hover {
+  transform: translateY(-2px);
 }

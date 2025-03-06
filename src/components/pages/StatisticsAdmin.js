@@ -22,31 +22,20 @@ const AdminStatistics = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const [feedbackRes, genderRes, stressRes] = await Promise.all([
-          axios.get(`${process.env.REACT_APP_BACKEND_URL}api/admin/getFeedbackStats`, {
-            withCredentials: true,
-            headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
-          }),
-          axios.get(`${process.env.REACT_APP_BACKEND_URL}api/admin/getUserGenderCount`, {
-            withCredentials: true,
-            headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
-          }),
-          axios.get(`${process.env.REACT_APP_BACKEND_URL}api/admin/getsimilarstressedusers`, {
-            withCredentials: true,
-            headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
-          }),
-        ]);
-  
+        // First API: Feedback stats
+        const feedbackRes = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/admin/getFeedbackStats`, {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+        });
         if (feedbackRes.data && feedbackRes.data.ratingCount) {
           setRatingData(feedbackRes.data.ratingCount);
-  
           const total = Object.entries(feedbackRes.data.ratingCount).reduce(
             (sum, [rating, count]) => sum + Number(rating) * count,
             0
           );
           const countTotal = Object.values(feedbackRes.data.ratingCount).reduce((sum, count) => sum + count, 0);
           setAvgRating(countTotal ? (total / countTotal).toFixed(1) : 0);
-  
+
           const feedbackCategories = { "Bug Report": [], "Feature Request": [], "General": [], "Other": [] };
           feedbackRes.data.latestFeedback.forEach((item) => {
             if (feedbackCategories[item.category]) {
@@ -57,11 +46,21 @@ const AdminStatistics = () => {
           });
           setUserFeedback(feedbackCategories);
         }
-  
+
+        // Second API: Gender count
+        const genderRes = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/admin/getUserGenderCount`, {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+        });
         if (genderRes.data && genderRes.data.counts) {
           setGenderData(genderRes.data.counts);
         }
-  
+
+        // Third API: Similar stressed users
+        const stressRes = await axios.get(`${process.env.REACT_APP_BACKEND_URL}api/admin/getsimilarstressedusers`, {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+        });
         if (stressRes.data && stressRes.data.stressLevels) {
           setStressData(stressRes.data.stressLevels);
         }
@@ -71,10 +70,10 @@ const AdminStatistics = () => {
         setLoading(false);
       }
     };
-  
+
     fetchData();
-  }, []); // Runs only once when the component mounts
-  
+  }, []);
+
   const renderChart = (data, title) => (
     <div className="pie-chart-container">
       <h3>{title}</h3>
@@ -108,7 +107,7 @@ const AdminStatistics = () => {
     4: "#8BC34A", // Light Green
     5: "#4CAF50", // Dark Green
   };
-  
+
   const ratingChart = Object.entries(ratingData)
     .filter(([_, count]) => count > 0)
     .map(([rating, count]) => ({
@@ -117,18 +116,21 @@ const AdminStatistics = () => {
       color: ratingColors[rating] || "#CCCCCC", // Default gray if rating is unexpected
     }));
 
-  const genderChart = Object.entries(genderData).filter(([_, count]) => count > 0).map(([gender, count]) => ({
-    title: gender,
-    value: count,
-    color: gender === "Male" ? "#007bff" : gender === "Female" ? "#ff69b4" : "#a9a9a9",
-  }));
+  const genderChart = Object.entries(genderData)
+    .filter(([_, count]) => count > 0)
+    .map(([gender, count]) => ({
+      title: gender,
+      value: count,
+      color: gender === "Male" ? "#007bff" : gender === "Female" ? "#ff69b4" : "#a9a9a9",
+    }));
 
-  const stressChart = stressData.filter((level) => level.count > 0).map((level) => ({
-    title: stressLabels[level.stressLevel],
-    value: level.count,
-    color: stressColors[level.stressLevel],
-  }));
-
+  const stressChart = stressData
+    .filter((level) => level.count > 0)
+    .map((level) => ({
+      title: stressLabels[level.stressLevel],
+      value: level.count,
+      color: stressColors[level.stressLevel],
+    }));
 
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
@@ -147,7 +149,6 @@ const AdminStatistics = () => {
       </div>
     );
   };
-
 
   return (
     <div className="admin-stats-container">
@@ -169,27 +170,33 @@ const AdminStatistics = () => {
           ))}
         </div>
         <div className="feedback-list-container">
-          {userFeedback[selectedFeedback].length > 0 ? userFeedback[selectedFeedback].map((item, index) => (
-            <div key={index} className="feedback-card-box">
-              <p><strong>Given by:</strong>  {item.username}</p>
-              <p><strong>rating:</strong> {(item.rating)} stars</p>
-              <p><strong>What you loved:</strong> {item.whatyouLoved}</p>
-              <p><strong>Improvement needed:</strong> {item.improvementNeeded}</p>
-            </div>
-          )) : <p>No feedback available for {selectedFeedback}</p>}
+          {userFeedback[selectedFeedback].length > 0 ? (
+            userFeedback[selectedFeedback].map((item, index) => (
+              <div key={index} className="feedback-card-box">
+                <p><strong>Given by:</strong>  {item.username}</p>
+                <p><strong>Rating:</strong> {item.rating} stars</p>
+                <p><strong>What you loved:</strong> {item.whatyouLoved}</p>
+                <p><strong>Improvement needed:</strong> {item.improvementNeeded}</p>
+              </div>
+            ))
+          ) : (
+            <p>No feedback available for {selectedFeedback}</p>
+          )}
         </div>
       </div>
-     
       <div className="user-list-section">
         <h3>Users with Stress Level</h3>
         <div className="stress-section">
-        {stressData.map((level) => (
-          <div key={level.stressLevel} onClick={() => handleStressLevelClick(level.stressLevel)} style={{ cursor: "pointer", margin: "10px 0" }}>
-            <strong>{stressLabels[level.stressLevel]}:</strong> {level.count} Users
-          </div>
-        ))}
-      </div>
-
+          {stressData.map((level) => (
+            <div
+              key={level.stressLevel}
+              onClick={() => handleStressLevelClick(level.stressLevel)}
+              style={{ cursor: "pointer", margin: "10px 0" }}
+            >
+              <strong>{stressLabels[level.stressLevel]}:</strong> {level.count} Users
+            </div>
+          ))}
+        </div>
         {selectedStressUsers.length > 0 ? (
           <ul>
             {selectedStressUsers.map((user) => (
