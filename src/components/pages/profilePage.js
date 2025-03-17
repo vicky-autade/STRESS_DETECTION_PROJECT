@@ -7,6 +7,11 @@ import Loader from "./Loader";
 
 const ProfilePage = (props) => {
 
+  const [showImagePopup, setShowImagePopup] = useState(false);
+
+ 
+
+  
   useEffect(() => {
       window.scrollTo(0, 0);
     }, []);
@@ -84,8 +89,20 @@ const ProfilePage = (props) => {
     });
   };
 
+  // const handleImageClick = () => {
+  //   document.getElementById("profileImage").click();
+  // };
   const handleImageClick = () => {
-    document.getElementById("profileImage").click();
+    // If an image is already available, open the popup; otherwise trigger file input
+    if (formData.profileImage || formData.profileImageUrl) {
+      setShowImagePopup(true);
+    } else {
+      document.getElementById("profileImage").click();
+    }
+  };
+
+  const closeImagePopup = () => {
+    setShowImagePopup(false);
   };
 
   const handleSubmit = async (e) => {
@@ -290,6 +307,23 @@ const ProfilePage = (props) => {
         </div>
       </form>
       {loading && <Loader />} 
+      {showImagePopup && (
+  <div className="image-popup" onClick={closeImagePopup}>
+    <div className="image-popup-content" onClick={(e) => e.stopPropagation()}>
+      <button className="close-popup" onClick={closeImagePopup}>X</button>
+      <img
+        src={
+          formData.profileImage
+            ? URL.createObjectURL(formData.profileImage)
+            : formData.profileImageUrl
+        }
+        alt="Profile Popup"
+        className="popup-img"
+      />
+    </div>
+  </div>
+)}
+
     </main>
   );
 };
