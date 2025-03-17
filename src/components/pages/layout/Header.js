@@ -11,6 +11,7 @@ const Header = (props) => {
   let setIsLoggedIn = props.setIsLoggedIn;
   let user = props.user;
   let setUser = props.setUser;
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const sidebarRef = useRef(null); // Ref for the sidebar
@@ -21,6 +22,15 @@ const Header = (props) => {
       behavior: "smooth",
     });
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -156,7 +166,7 @@ const Header = (props) => {
       </nav>
 
       {/* Mobile Navigation Elements */}
-      <div className="mobile-nav">
+     {isMobile &&( <div className="mobile-nav">
         {isLoggedIn && (
           <Link to="/profile" className="mobile-profile">
             {user && user.profileImage ? (
@@ -173,9 +183,10 @@ const Header = (props) => {
           <FaBars />
         </button>
       </div>
+     )}
 
       {/* Mobile Sidebar */}
-      {sidebarOpen && (
+      {isMobile && sidebarOpen && (
         <div className="mobile-sidebar" ref={sidebarRef}>
           <button className="close-btn" onClick={() => setSidebarOpen(false)}>
             <FaTimes />
