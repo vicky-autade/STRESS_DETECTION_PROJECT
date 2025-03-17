@@ -204,27 +204,35 @@
   }
   
 
+  
   @media (max-width: 768px) {
-    .header-content {
-      flex-direction: row !important;
-      align-items: center !important;
-      justify-content: space-between !important;
+    /* Make the header a flex container with items in a row */
+    .header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1rem; /* Adjust as needed */
     }
-    
+  
+    /* Adjust logo styling */
     .logo h1 {
-      font-size: 1.2rem !important;
-      padding-left: 1rem !important;
+      font-size: 1.2rem;
+      margin: 0;
+      padding: 0;
     }
-    
+  
+    /* Ensure the navigation links are always visible and laid out horizontally */
     .nav-links {
       display: flex !important;
       flex-direction: row !important;
       align-items: center !important;
       gap: 1rem;
-      padding-right: 1rem !important;
-      width: auto;
+      padding: 0;
+      margin: 0;
     }
-    
+  
+    /* Hide any mobile-only menu toggle if present */
     .menu-toggle {
       display: none !important;
     }
