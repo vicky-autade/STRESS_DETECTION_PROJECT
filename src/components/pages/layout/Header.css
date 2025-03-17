@@ -232,6 +232,8 @@
       margin: 0;
     }
   
+
+    
     /* Hide any mobile-only menu toggle if present */
     .menu-toggle {
       display: none !important;
