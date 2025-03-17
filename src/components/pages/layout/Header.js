@@ -1,8 +1,7 @@
-
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import React, { useEffect, useState, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaBars, FaTimes, FaHome, FaSignOutAlt, FaSignInAlt, FaUserPlus } from "react-icons/fa"; // Added icons
 import "./Header.css";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
@@ -12,12 +11,11 @@ const Header = (props) => {
   let setIsLoggedIn = props.setIsLoggedIn;
   let user = props.user;
   let setUser = props.setUser;
-  const navigate = useNavigate(); // Initialize navigate function
-
-  console.log("user profile image---->" + user);
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null); // Ref for the sidebar
 
   const scrollToTop = () => {
-    console.log("Scrolling to top...");
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -42,7 +40,6 @@ const Header = (props) => {
         throw new Error("Failed to log out from backend");
       }
 
-      // Remove token and user data from localStorage
       localStorage.removeItem("jwt");
       localStorage.removeItem("jwt_expiry");
       localStorage.removeItem("user");
@@ -50,9 +47,6 @@ const Header = (props) => {
       setIsLoggedIn(false);
       setUser(null);
       toast.success("Logged out successfully!");
-      console.log("User logged out and removed from backend.");
-
-      // Redirect to login page after logout
       navigate("/login");
     } catch (error) {
       console.error("Error during logout:", error);
@@ -62,15 +56,11 @@ const Header = (props) => {
 
   const checkTokenExpiration = () => {
     const token = localStorage.getItem("jwt");
-    console.log("Checking token expiration...");
-    console.log("Token: ", token);
     if (!token) return;
 
     try {
       const decodedToken = jwtDecode(token);
       const currentTime = Date.now() / 1000;
-      console.log("Current time: ", currentTime);
-      console.log("Token expiration: ", decodedToken.exp);
       if (decodedToken.exp < currentTime) {
         handleLogout();
       } else {
@@ -88,9 +78,22 @@ const Header = (props) => {
     checkTokenExpiration();
   }, [navigate]);
 
+  // Close sidebar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarOpen && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [sidebarOpen]);
 
   return (
-    <header className="header">
+    <header className="header" style={{ paddingRight: "30px" }}>
       <div className="logo">
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
           <h1 onClick={scrollToTop}>Stress Research Analyzer</h1>
@@ -151,6 +154,69 @@ const Header = (props) => {
           </>
         )}
       </nav>
+
+      {/* Mobile Navigation Elements */}
+      <div className="mobile-nav">
+        {isLoggedIn && (
+          <Link to="/profile" className="mobile-profile">
+            {user && user.profileImage ? (
+              <img src={user.profileImage} alt="Profile" className="profile-icon" />
+            ) : (
+              <FaUserCircle className="profile-icon" />
+            )}
+          </Link>
+        )}
+        <button
+          className="mobile-menu-button"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          <FaBars />
+        </button>
+      </div>
+
+      {/* Mobile Sidebar */}
+      {sidebarOpen && (
+        <div className="mobile-sidebar" ref={sidebarRef}>
+          <button className="close-btn" onClick={() => setSidebarOpen(false)}>
+            <FaTimes />
+          </button>
+          {isLoggedIn ? (
+            <>
+              <Link
+                to={user && user.role === "admin" ? "/admin" : "/first"}
+                className="sidebar-link"
+                onClick={() => setSidebarOpen(false)}
+              >
+                <FaHome className="sidebar-icon" /> {/* Home icon */}
+                <span>Home</span>
+              </Link>
+              <button className="sidebar-link" onClick={handleLogout}>
+                <FaSignOutAlt className="sidebar-icon" /> {/* Logout icon */}
+                <span>Logout</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="sidebar-link"
+                onClick={() => setSidebarOpen(false)}
+              >
+                <FaSignInAlt className="sidebar-icon" /> {/* Login icon */}
+                <span>Login</span>
+              </Link>
+              <Link
+                to="/signup"
+                className="sidebar-link"
+                onClick={() => setSidebarOpen(false)}
+              >
+                <FaUserPlus className="sidebar-icon" /> {/* Sign Up icon */}
+                <span>Sign Up</span>
+              </Link>
+            </>
+          )}
+        </div>
+      )}
     </header>
   );
 };
