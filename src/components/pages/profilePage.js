@@ -11,7 +11,6 @@ const ProfilePage = (props) => {
       window.scrollTo(0, 0);
     }, []);
 
-    
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -28,6 +27,8 @@ const ProfilePage = (props) => {
   let setUser = props.setUser;
 
   const [loading, setLoading] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false); // Track if form is updated
+
   // Fetch profile data when the component loads
   useEffect(() => {
     const fetchProfile = async () => {
@@ -61,7 +62,7 @@ const ProfilePage = (props) => {
       } catch (error) {
         console.error("Error fetching profile:", error);
         toast.error("Failed to load profile data.");
-      }finally {
+      } finally {
         setLoading(false); // End loading
       }
     };
@@ -71,9 +72,15 @@ const ProfilePage = (props) => {
 
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "file" ? files[0] : value,
+    setFormData((prev) => {
+      const newFormData = {
+        ...prev,
+        [name]: type === "file" ? files[0] : value,
+      };
+      if (JSON.stringify(newFormData) !== JSON.stringify(prev)) {
+        setIsUpdated(true);
+      }
+      return newFormData;
     });
   };
 
@@ -113,6 +120,7 @@ const ProfilePage = (props) => {
       });
 
       console.log("Profile Updated:", response.data);
+      setIsUpdated(false); // Reset update tracker
     } catch (error) {
       console.error("Error updating profile:", error);
 
@@ -124,7 +132,7 @@ const ProfilePage = (props) => {
         pauseOnHover: true,
         draggable: true,
       });
-    }finally {
+    } finally {
       setLoading(false); // End loading
     }
   };
@@ -171,9 +179,8 @@ const ProfilePage = (props) => {
               Change Photo
             </button>
           </div>
-
-          {/* First Set of Text Fields */}
-          <div className="section input-section">
+                 {/* First Set of Text Fields */}
+                 <div className="section input-section">
             <div className="form-group">
               <label htmlFor="username">Username</label>
               <input
@@ -271,22 +278,20 @@ const ProfilePage = (props) => {
             </div>
             
           </div>
+        
         </div>
         <div className="form-footer1">
-          <button type="submit" onClick={handleSubmit} className="submit-btn1" disabled={loading}>
+          <button type="submit" onClick={handleSubmit} className="submit-btn1" disabled={loading || !isUpdated}>
               {loading ? "Updating ..." : "Update Profile"}
           </button>
-          
-          <button type="submit"  className="submit-btn2" disabled={loading}>
+          <button type="submit" className="submit-btn2" disabled={loading}>
               {loading ? "Deleting ..." : "Delete Profile"}
           </button>
         </div>
       </form>
-      {loading && <Loader />} {/* Show loader when loading is true */}
+      {loading && <Loader />} 
     </main>
   );
 };
 
 export default ProfilePage;
-
-

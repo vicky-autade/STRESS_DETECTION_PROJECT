@@ -8,6 +8,7 @@ import '../style/HomePageStyle.css';
 
 
 const HomePage = (props) => {
+
   let isLoggedIn = props.isLoggedIn;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -25,7 +26,9 @@ const HomePage = (props) => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   useEffect(() => {
-    fetch("https://stress-detection-backend.vercel.app/api/general/getGeneralFeedbacks")
+    
+    ///////
+    fetch(`${process.env.REACT_APP_BACKEND_URL}api/general/getGeneralFeedbacks`)
       .then((response) => response.json())
       .then((data) => {
         if (data.feedbackByRating) {
@@ -48,10 +51,13 @@ const HomePage = (props) => {
   };
 
   const prevTestimonial = () => {
-    setCurrentTestimonial((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1
-    );
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
+
+  useEffect(() => {
+    const interval = setInterval(nextTestimonial, 3000); // Auto-slide every 3 seconds
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [testimonials]);
 
   useEffect(() => {
     if (inView) {
@@ -197,7 +203,7 @@ const HomePage = (props) => {
 
       <motion.section
         className="benefits-section"
-        // style={{ scale }}
+      // style={{ scale }}
       >
         <h2>The Impact of Advanced Stress Management</h2>
         <div className="benefits-grid">
@@ -259,7 +265,18 @@ const HomePage = (props) => {
           onHoverStart={() => setIsHovering(true)}
           onHoverEnd={() => setIsHovering(false)}
         >
-          <Link to={isLoggedIn ? "/first" : "/signup"} className="cta-button">
+          <Link
+            to={
+              isLoggedIn
+                ? props.user && props.user.role
+                  ? props.user.role === "admin"
+                    ? "/admin"
+                    : "/first"
+                  : "/first"
+                : "/signup"
+            }
+            className="cta-button"
+          >
             Start Your Journey
             <motion.span
               className="cta-arrow"
@@ -269,6 +286,7 @@ const HomePage = (props) => {
               →
             </motion.span>
           </Link>
+
         </motion.div>
       </section>
     </div>

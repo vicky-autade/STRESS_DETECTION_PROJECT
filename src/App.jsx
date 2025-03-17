@@ -2,6 +2,7 @@ import React, { useState, useEffect, Component } from 'react';
 import { Routes, Route, useNavigate ,useLocation} from 'react-router-dom';
 import './App.css';
 // import axios from "axios";
+
 import LoginPage from './components/pages/LoginPage';
 import SignupPage from './components/pages/SignUpPage';
 import HomePage from './components/pages/HomePage';
@@ -67,13 +68,14 @@ const App = () => {
       </div>
       <div>    
         <Routes>
-          <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} />} />
+          <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} user={user} />} />
           <Route path="/login" element={<LoginPage  fcmToken={fcmToken}  setFcmToken={setFcmToken}  isLoggedIn={isLoggedIn}  setIsLoggedIn={setIsLoggedIn}  user={user} setUser={setUser} />} />
           <Route path="/signup" element={<SignupPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/confirm-password" element={<ConfirmPassword />} />
           <Route path="/profile" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Profile user={user} setUser={setUser}/></PrivateRoute>} /> 
-
+          <Route path="/about" element={<About/>} /> 
+          <Route path="/privacyPolicy" element={<PrivacyPage/> }/>
           {/* Routes for Normal Users */}
           {userRole === "nonAdmin" && (
             <>
@@ -82,8 +84,8 @@ const App = () => {
               <Route path="/userStatistics" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><UserStatistics user={user} /></PrivateRoute>} /> 
               <Route path="/recommandation" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Recommandation  user={user} setUser={setUser}/></PrivateRoute>} />
               <Route path="/feedback" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Feedback/></PrivateRoute>} /> 
-              <Route path="/about" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><About/></PrivateRoute>} /> 
-              <Route path="/privacyPolicy" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><PrivacyPage/></PrivateRoute>} /> 
+              {/* <Route path="/about" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><About/></PrivateRoute>} /> 
+              <Route path="/privacyPolicy" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><PrivacyPage/></PrivateRoute>} />  */}
             </>
           )}
 
@@ -104,7 +106,7 @@ const App = () => {
       </div>
       {/* {loading && <Loader />} Show loader when loading is true */}
       <div className="footer">
-        <Footer isLoggedIn={isLoggedIn}/>
+        <Footer isLoggedIn={isLoggedIn} user={user}/>
       </div>
     </div>
   );

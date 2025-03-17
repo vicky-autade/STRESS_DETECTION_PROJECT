@@ -157,6 +157,12 @@
   transform: translateY(-2px);
 }
 
+.submit-btn1:disabled{
+  background: linear-gradient(135deg, #b0d3ea, #464c52);
+  color: white;
+  cursor: not-allowed;
+}
+
 .submit-btn2 {
   padding: 0.8rem 1.5rem;
   background: linear-gradient(135deg, #e63946, #b22222); /* Red gradient */
