@@ -73,6 +73,7 @@ const ResetPasswordPage = () => {
         toast.error("Error resetting password. Please try again.");
       }
     } catch (error) {
+      
       console.error("Error submitting form:", error);
       toast.error(error.response.data.message);
     }finally {
