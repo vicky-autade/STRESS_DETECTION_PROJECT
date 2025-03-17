@@ -65,9 +65,9 @@ const ResetPasswordPage = () => {
       });
 
       const data = response.data;
-      console.log("Sucess :"+data.sucess);
+      console.log("Sucess :"+JSON.stringify(data));
       // Handle response from the backend
-      if (data.sucess) {
+      if (data.message) {
         toast.success("Password reset successful!");
         navigate("/login"); // Redirect user to login page
       } else {
@@ -75,7 +75,7 @@ const ResetPasswordPage = () => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("Error submitting form. Please try again later.");
+      toast.error("Error submitting form. Please try again later."+error.message);
     }finally {
       setLoading(false); // Hide loader after API call finishes
     }
