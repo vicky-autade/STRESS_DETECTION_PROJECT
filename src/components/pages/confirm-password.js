@@ -71,7 +71,7 @@ const ResetPasswordPage = () => {
         toast.success("Password reset successful!");
         navigate("/login"); // Redirect user to login page
       } else {
-        toast.error("Error resetting password. Please try again.");
+        toast.error(data.message);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
