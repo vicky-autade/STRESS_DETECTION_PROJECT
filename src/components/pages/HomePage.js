@@ -1,14 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeartbeat, faRunning, faAppleAlt, faBed, faUsers, faChartLine, faBrain, faLightbulb, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { motion, useAnimation, useViewportScroll, useTransform } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import '../style/HomePageStyle.css';
-
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHeartbeat,
+  faRunning,
+  faAppleAlt,
+  faBed,
+  faUsers,
+  faChartLine,
+  faBrain,
+  faLightbulb,
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  motion,
+  useAnimation,
+  useViewportScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import "../style/HomePageStyle.css";
+// import { AnimatePresence } from 'framer-motion';
 
 const HomePage = (props) => {
-
   let isLoggedIn = props.isLoggedIn;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,7 +42,6 @@ const HomePage = (props) => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
   useEffect(() => {
-    
     ///////
     fetch(`${process.env.REACT_APP_BACKEND_URL}api/general/getGeneralFeedbacks`)
       .then((response) => response.json())
@@ -51,7 +66,9 @@ const HomePage = (props) => {
   };
 
   const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCurrentTestimonial(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+    );
   };
 
   useEffect(() => {
@@ -61,25 +78,26 @@ const HomePage = (props) => {
 
   useEffect(() => {
     if (inView) {
-      controls.start('visible');
+      controls.start("visible");
     }
   }, [controls, inView]);
 
   useEffect(() => {
-    const header = document.querySelector('header');
+    const header = document.querySelector("header");
     if (header) {
       const headerHeight = header.offsetHeight;
-      document.querySelector('.home-content').style.marginTop = `${headerHeight}px`;
+      document.querySelector(
+        ".home-content"
+      ).style.marginTop = `${headerHeight}px`;
     }
   }, []);
 
-
   useEffect(() => {
     if (stressLevelChart.current) {
-      const ctx = stressLevelChart.current.getContext('2d');
+      const ctx = stressLevelChart.current.getContext("2d");
       const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-      gradient.addColorStop(0, 'rgba(52, 152, 219, 0.8)');
-      gradient.addColorStop(1, 'rgba(52, 152, 219, 0.2)');
+      gradient.addColorStop(0, "rgba(52, 152, 219, 0.8)");
+      gradient.addColorStop(1, "rgba(52, 152, 219, 0.2)");
 
       const drawChart = () => {
         ctx.clearRect(0, 0, 400, 200);
@@ -104,7 +122,7 @@ const HomePage = (props) => {
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+    visible: { opacity: 1, y: 0 },
   };
 
   const staggerChildren = {
@@ -112,20 +130,19 @@ const HomePage = (props) => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   return (
-    <div className="home-content" >
+    <div className="home-content">
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-
       >
-        <Link to="/" className="title-link"   >
+        <Link to="/" className="title-link">
           Stress Research Analyzer
         </Link>
       </motion.h1>
@@ -135,7 +152,8 @@ const HomePage = (props) => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.8 }}
       >
-        Track and analyze your stress levels with precision using advanced AI and machine learning algorithms
+        Track and analyze your stress levels with precision using advanced AI
+        and machine learning algorithms
       </motion.p>
 
       <motion.section
@@ -148,10 +166,14 @@ const HomePage = (props) => {
       >
         <h2>Revolutionizing Stress Management</h2>
         <p>
-          The Stress Research Analyzer is at the forefront of mental health technology, utilizing cutting-edge AI and biometric data analysis to provide unprecedented insights into your stress patterns.
+          The Stress Research Analyzer is at the forefront of mental health
+          technology, utilizing cutting-edge AI and biometric data analysis to
+          provide unprecedented insights into your stress patterns.
         </p>
         <p>
-          Our platform goes beyond simple tracking, offering personalized strategies and real-time interventions to help you not just manage, but master your stress responses.
+          Our platform goes beyond simple tracking, offering personalized
+          strategies and real-time interventions to help you not just manage,
+          but master your stress responses.
         </p>
       </motion.section>
 
@@ -166,17 +188,20 @@ const HomePage = (props) => {
           <p>Real-time visualization of stress levels</p>
         </motion.div>
         <p>
-          Stress is more than just a feeling - it's a complex physiological response that affects every system in your body. Our analyzer uses advanced algorithms to interpret these responses, giving you a comprehensive view of your stress profile.
+          Stress is more than just a feeling - it's a complex physiological
+          response that affects every system in your body. Our analyzer uses
+          advanced algorithms to interpret these responses, giving you a
+          comprehensive view of your stress profile.
         </p>
       </section>
 
-      <section className="animation-section" >
+      <section className="animation-section">
         <h2>Our Innovative Approach</h2>
         <div className="animation-container">
           {[
             { icon: faChartLine, text: "Analyze" },
             { icon: faBrain, text: "Adapt" },
-            { icon: faLightbulb, text: "Improve" }
+            { icon: faLightbulb, text: "Improve" },
           ].map((item, index) => (
             <motion.div
               key={index}
@@ -191,7 +216,7 @@ const HomePage = (props) => {
                 times: [0, 0.2, 0.5, 0.8, 1],
                 repeat: Infinity,
                 repeatDelay: 1,
-                delay: index * 0.5
+                delay: index * 0.5,
               }}
             >
               <FontAwesomeIcon icon={item.icon} size="2x" />
@@ -203,20 +228,33 @@ const HomePage = (props) => {
 
       <motion.section
         className="benefits-section"
-      // style={{ scale }}
+        // style={{ scale }}
       >
         <h2>The Impact of Advanced Stress Management</h2>
         <div className="benefits-grid">
           {[
-            { title: "Enhanced Mental Clarity", description: "Sharpen your focus and decision-making abilities." },
-            { title: "Improved Physical Health", description: "Boost your immune system and overall vitality." },
-            { title: "Emotional Resilience", description: "Develop stronger coping mechanisms for life's challenges." },
+            {
+              title: "Enhanced Mental Clarity",
+              description: "Sharpen your focus and decision-making abilities.",
+            },
+            {
+              title: "Improved Physical Health",
+              description: "Boost your immune system and overall vitality.",
+            },
+            {
+              title: "Emotional Resilience",
+              description:
+                "Develop stronger coping mechanisms for life's challenges.",
+            },
             // { title: "Career Advancement", description: "Perform better under pressure and stand out professionally." }
           ].map((benefit, index) => (
             <motion.div
               key={index}
               className="benefit-item"
-              whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)" }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)",
+              }}
               initial="hidden"
               animate={controls}
               variants={fadeInUp}
@@ -232,19 +270,33 @@ const HomePage = (props) => {
       <section className="testimonials-section">
         <h2>Success Stories</h2>
         {testimonials.length > 0 ? (
-          <div className="testimonial-carousel">
-            <motion.div
-              key={currentTestimonial}
-              className="testimonial"
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.5 }}
-            >
-              <img src={testimonials[currentTestimonial].image} alt="User" className="testimonial-image" />
-              <blockquote>{testimonials[currentTestimonial].quote}</blockquote>
-              <p className="testimonial-author">{testimonials[currentTestimonial].author}</p>
-            </motion.div>
+          <div
+            className="testimonial-carousel"
+            style={{ position: "relative", minHeight: "300px" }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentTestimonial}
+                className="testimonial"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 3 }}
+                style={{ position: "absolute", width: "100%" }}
+              >
+                <img
+                  src={testimonials[currentTestimonial].image}
+                  alt="User"
+                  className="testimonial-image"
+                />
+                <blockquote>
+                  {testimonials[currentTestimonial].quote}
+                </blockquote>
+                <p className="testimonial-author">
+                  {testimonials[currentTestimonial].author}
+                </p>
+              </motion.div>
+            </AnimatePresence>
             <button className="testimonial-nav prev" onClick={prevTestimonial}>
               <FontAwesomeIcon icon={faChevronLeft} />
             </button>
@@ -253,7 +305,9 @@ const HomePage = (props) => {
             </button>
           </div>
         ) : (
-          <p className="testimonial-placeholder">No testimonials available yet.</p>
+          <p className="testimonial-placeholder">
+            No testimonials available yet.
+          </p>
         )}
       </section>
 
@@ -286,7 +340,6 @@ const HomePage = (props) => {
               →
             </motion.span>
           </Link>
-
         </motion.div>
       </section>
     </div>
