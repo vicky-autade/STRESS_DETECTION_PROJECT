@@ -154,3 +154,49 @@
     text-align: center;
   }
 }
+@media (max-width: 480px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .footer-links ul {
+    padding: 0;
+  }
+
+  .footer-links li {
+    margin: 0.3rem 0;
+  }
+
+  .footer-social .social-icons {
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer-social .social-icons a {
+    font-size: 1.3rem;
+    margin: 0 0.5rem;
+  }
+
+  .footer-contact p {
+    font-size: 0.9rem;
+  }
+
+  .footer-newsletter input[type="email"] {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.4rem;
+  }
+
+  .footer-newsletter button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  .footer-bottom {
+    font-size: 0.8rem;
+    padding-top: 0.5rem;
+  }
+}
