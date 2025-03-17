@@ -390,7 +390,6 @@ blockquote {
     margin-bottom: 1rem;
     border: 3px solid var(--primary-color);
   }
-
   /* Adjust typography for blockquote and author */
   blockquote {
     font-size: 1rem;
@@ -398,8 +397,6 @@ blockquote {
     margin: 1rem 0;
     padding: 0 1rem;
   }
-
-  
   .testimonial-author {
     font-size: 0.9rem;
     margin-top: 0.5rem;
