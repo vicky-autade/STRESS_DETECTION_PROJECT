@@ -89,9 +89,9 @@ const ProfilePage = (props) => {
     });
   };
 
-  // const handleImageClick = () => {
-  //   document.getElementById("profileImage").click();
-  // };
+  const handleImageClick_Se = () => {
+    document.getElementById("profileImage").click();
+  };
   const handleImageClick = () => {
     // If an image is already available, open the popup; otherwise trigger file input
     if (formData.profileImage || formData.profileImageUrl) {
@@ -163,7 +163,7 @@ const ProfilePage = (props) => {
         <div className="form-section-container">
           {/* Profile Image Section */}
           <div className="section profile-section">
-            <div className="image-picker" onClick={handleImageClick}>
+            <div className="image-picker" onDoubleClick={handleImageClick}>
               {formData.profileImage ? (
                 <img
                   src={URL.createObjectURL(formData.profileImage)}
@@ -188,10 +188,11 @@ const ProfilePage = (props) => {
                 style={{ display: "none" }}
               />
             </div>
+
             <button
               type="button"
               className="change-photo-btn"
-              onClick={handleImageClick}
+              onClick={handleImageClick_Se}
             >
               Change Photo
             </button>
