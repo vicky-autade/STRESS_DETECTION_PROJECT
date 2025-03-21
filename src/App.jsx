@@ -27,6 +27,7 @@ import UserStatistics from './components/pages/userStatistics';
 import About from './components/pages/About';
 import AdminUserStatistics from './components/pages/AdminUserStatistics';
 import PrivacyPage from './components/pages/PrivacyPolicyPage';
+import Not_found from './components/pages/404Not_found_page';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,10 +70,15 @@ const App = () => {
       <div>    
         <Routes>
           <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} user={user} />} />
-          <Route path="/login" element={<LoginPage  fcmToken={fcmToken}  setFcmToken={setFcmToken}  isLoggedIn={isLoggedIn}  setIsLoggedIn={setIsLoggedIn}  user={user} setUser={setUser} />} />
-          <Route path="/signup" element={<SignupPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+          {!isLoggedIn &&(
+            <>
+            <Route path="/login" element={<LoginPage  fcmToken={fcmToken}  setFcmToken={setFcmToken}  isLoggedIn={isLoggedIn}  setIsLoggedIn={setIsLoggedIn}  user={user} setUser={setUser} />} />
+            <Route path="/signup" element={<SignupPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+           </>
+          )}
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/confirm-password" element={<ConfirmPassword />} />
+          <Route path="/*" element={<Not_found  isLoggedIn={isLoggedIn} user = {user}/>} />
           <Route path="/profile" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Profile user={user} setUser={setUser}/></PrivateRoute>} /> 
           <Route path="/about" element={<About/>} /> 
           <Route path="/privacyPolicy" element={<PrivacyPage/> }/>

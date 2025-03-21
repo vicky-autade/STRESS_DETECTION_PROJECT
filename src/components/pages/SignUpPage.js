@@ -8,8 +8,11 @@ import Loader from "./Loader";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 function SignUpPage() {
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 0);
   }, []);
 
   const [formData, setFormData] = useState({

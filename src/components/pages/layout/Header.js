@@ -106,7 +106,7 @@ const Header = (props) => {
     <header className="header" style={{ paddingRight: "30px" }}>
       <div className="logo">
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1 onClick={scrollToTop}>Stress Research Analyzer</h1>
+          <h1 onClick={scrollToTop}>Stress Detector</h1>
         </Link>
       </div>
 

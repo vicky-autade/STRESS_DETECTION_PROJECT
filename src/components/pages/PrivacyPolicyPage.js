@@ -4,9 +4,10 @@ import '../style/PrivacyPolicyStyle.css';
 const PrivacyPolicy = () => {
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 0);
   }, []);
-
 
   const sections = [
     {

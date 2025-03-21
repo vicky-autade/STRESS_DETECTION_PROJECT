@@ -4,8 +4,11 @@ import aboutImage from '../assets/web_logo.jpg';
 
 const About = () => {
 
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 0);
   }, []);
 
 

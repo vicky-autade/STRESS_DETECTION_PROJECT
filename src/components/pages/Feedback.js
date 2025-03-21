@@ -8,10 +8,12 @@ import Loader from "./Loader";
 
 
 const FeedbackPage = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 0);
+  }, []);
  
   
   const [loading, setLoading] = useState(false);

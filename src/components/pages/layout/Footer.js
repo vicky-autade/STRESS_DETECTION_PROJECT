@@ -78,8 +78,16 @@ const Footer = (props) => {
         </div>
         <div className="footer-contact">
           <h3>Contact Us</h3>
-          <p>Email: support@stressresearchanalyzer.com</p>
-          <p>Phone: (123) 456-7890</p>
+          <p style={{ display: "inline" }}>
+            Email:&nbsp;&nbsp;
+            <a
+              href="mailto:contact.stressdetector@gmail.com"
+              style={{ color: "white", textDecoration: "none" }}
+            >
+              contact.stressdetector@gmail.com
+            </a>
+          </p>
+          <p>Phone: +91 7263840533</p>
         </div>
         <div className="footer-newsletter">
           <h3>Subscribe to Our Newsletter</h3>
@@ -90,7 +98,7 @@ const Footer = (props) => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© 2024 Stress Research Analyzer. All rights reserved.</p>
+        <p>© 2024 Stress Detector. All rights reserved.</p>
       </div>
     </footer>
   );
