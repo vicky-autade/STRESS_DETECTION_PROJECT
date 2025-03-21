@@ -1,43 +1,275 @@
-.privacy-policy-container {
+/* Base Styles */
+:root {
+    --background: #ffffff;
+    --foreground: #0a0a0a;
+    --primary: #1e40af;
+    --primary-light: #3b82f6;
+    --secondary: #e2e8f0;
+    --accent: #ff6b6b;
+    --muted: #64748b;
+    --border: #cbd5e1;
+    --radius: 12px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Dark Mode */
+  .dark {
+    --background: #0a0a0a;
+    --foreground: #f1f5f9;
+    --primary: #2563eb;
+    --primary-light: #60a5fa;
+    --secondary: #334155;
+    --accent: #ff6b6b;
+    --muted: #94a3b8;
+    --border: #334155;
+  }
+  
+  /* General Layout */
+  body {
+    font-family: "Inter", sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Container Styling */
+  .privacy-policy-container {
     text-align: center;
-    padding: 40px;
-    background: linear-gradient(135deg, #f5f7fa, #e4e9f2);
-    border-radius: 15px;
-    margin: 120px 40px 40px 40px;
-}
-
-.privacy-policy-title {
-    font-size: 2.5rem;
-    /* color: #2c3e50; */
-    margin-bottom: 40px;
-    /* text-transform: uppercase; */
-}
-
-h2 {
-    font-size: 2rem;
-}
-
-.privacy-policy-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.privacy-policy-box {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-}
-
-.privacy-policy-box:hover {
-    transform: translateY(-10px);
-}
-
-.privacy-policy-text {
-    color: #7f8c8d;
+    padding: 60px 20px;
+    background: var(--background);
+    margin: 40px auto;
+    max-width: 1200px;
+  }
+  
+  /* Header Styling */
+  .privacy-header {
+    position: relative;
+    margin-bottom: 60px;
+  }
+  
+  .header-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    opacity: 0.8;
+  }
+  
+  .header-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--foreground);
+  }
+  
+  .privacy-icon {
+    font-size: 4rem;
+    color: var(--primary);
+    animation: spin 3s linear infinite;
+    margin-bottom: 20px;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .privacy-policy-title {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    color: var(--primary);
+    animation: slideDown 1s ease-out forwards;
+  }
+  
+  .privacy-policy-subtitle {
     font-size: 1.4rem;
-    line-height: 1.5;
-}
+    color: var(--muted);
+    animation: slideUp 1s ease-out forwards;
+  }
+  
+  /* Timeline Layout */
+  .timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 0;
+  }
+  
+  .timeline-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideIn 0.6s ease-out forwards;
+  }
+  
+  .timeline-icon {
+    background: var(--primary);
+    color: var(--background);
+    border-radius: 50%;
+    padding: 15px;
+    margin-right: 20px;
+    flex-shrink: 0;
+    animation: bounce 2s infinite;
+  }
+  
+  .timeline-content {
+    text-align: left;
+    background: var(--secondary);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    flex-grow: 1;
+  }
+  
+  .timeline-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--accent);
+  }
+  
+  .timeline-text {
+    font-size: 1.2rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  
+  .timeline-additional-info {
+    font-size: 1rem;
+    color: var(--muted);
+    margin-top: 10px;
+    font-style: italic;
+  }
+  
+  .timeline-image {
+    width: 100%;
+    border-radius: var(--radius);
+    margin-top: 20px;
+  }
+  
+  /* Animations */
+  @keyframes slideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  @keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  /* Responsive Design for Mobile View */
+  @media (max-width: 768px) {
+    .privacy-policy-title {
+      font-size: 2.5rem;
+    }
+  
+    .privacy-policy-subtitle {
+      
+      font-size: 1.2rem;
+    }
+  
+    .timeline-item {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .timeline-icon {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+  
+    .timeline-content {
+      text-align: center;
+    }
+  }
+
+
+  /* Container for the image and text overlay */
+.privacy-header {
+    position: relative;
+    margin-bottom: 60px;
+  }
+  
+  /* Image styling */
+  .header-image {
+    width: 100%;
+    height: 300px; /* Adjust height as needed */
+    object-fit: cover;
+    border-radius: var(--radius);
+    opacity: 0.8; /* Slightly transparent for better text visibility */
+  }
+  
+  /* Overlay for better text readability */
+  .header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    border-radius: var(--radius);
+  }
+  
+  /* Text container */
+  .header-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: var(--background); /* Light text for contrast */
+    z-index: 2; /* Ensure text is above the overlay */
+  }
+  
+  /* Privacy icon styling */
+  .privacy-icon {
+    font-size: 4rem;
+    color: var(--primary);
+    animation: spin 3s linear infinite;
+    margin-bottom: 20px;
+  }
+  
+  /* Title styling */
+  .privacy-policy-title {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    color: var(--primary-light); /* Light primary color for contrast */
+    animation: slideDown 1s ease-out forwards;
+  }
+  
+  /* Subtitle styling */
+  .privacy-policy-subtitle {
+    font-size: 1.4rem;
+    color: var(--secondary); /* Light secondary color for contrast */
+    animation: slideUp 1s ease-out forwards;
+  }
+  
+  /* Animations */
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  @keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
