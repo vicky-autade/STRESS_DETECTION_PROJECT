@@ -202,40 +202,176 @@
     transform: scaleX(1);
     transform-origin: left;
   }
+  :root {
+    --primary-color: #2980b9;
+    --secondary-color: #3498db;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --footer-bg-color: #343a40;
+    --footer-text-color: #f8f9fa;
+    --transition-speed: 0.3s;
+  }
   
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Reset default browser styles */
+  body, html {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Header Styles */
+  .header {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    align-items: center;
+    z-index: 1000;
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .header.scrolled {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    width: 100%;
+  }
+  
+  .logo-link {
+    text-decoration: none;
+    color: var(--primary-color);
+  }
+  
+  .logo h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: 500;
+    transition: color var(--transition-speed) ease;
+  }
+  
+  .nav-link:hover {
+    color: var(--primary-color);
+  }
+  
+  .nav-link.cta {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color var(--transition-speed) ease;
+  }
+  
+  .nav-link.cta:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  /* Profile icon styles */
+  .profile-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  }
+  
+  .profile-icon:hover {
+    background-color: rgba(56, 189, 248, 0.2);
+    color: var(--secondary-color);
+  }
+  
+  /* Logout button styles */
+  .logout-button {
+    background-color: #ef4444;
+    color: white;
+    height: 2.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 7px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive Design */
   @media (max-width: 768px) {
-    /* Make the header a flex container */
     .header {
-      display: flex;
+      display: flex !important;
+      flex-direction: row !important;
       justify-content: space-between;
       align-items: center;
-      padding: 0.5rem 1rem; /* Adjust as needed */
+      width: 100%;
+      padding: 0;
     }
-    
-    /* Hide desktop nav-links */
+  
+    .header-content {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0 0.5rem;
+      width: 100%;
+    }
+  
+    .logo h1 {
+      padding-left: 0.5rem;
+    }
+  
     .nav-links {
       display: none;
     }
-    
-    /* Mobile navigation container (profile pic + menu button) */
+  
     .mobile-nav {
-      display: flex;
-      justify-content: flex-end;
+      display: flex !important;
+      flex-direction: row;
       align-items: center;
       gap: 1rem;
+      padding-right: 0.5rem;
     }
-    
-    /* Mobile Menu Button (Square Button) */
+  
     .mobile-menu-button {
       background-color: transparent;
       border: 1px solid var(--primary-color);
       padding: 0.5rem;
+      margin:5px 0px;
       border-radius: 4px;
       cursor: pointer;
       font-size: 1.2rem;
       color: var(--primary-color);
     }
-    
+  
     /* Mobile Sidebar Styles */
     .mobile-sidebar {
       position: fixed;
@@ -243,15 +379,16 @@
       right: 0;
       width: 200px;
       height: 100%;
-      background-color: var(--background-color);
+      background-color: rgba(248, 249, 250, 0.6);
       box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
       padding: 1rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
       z-index: 1500;
+      backdrop-filter: blur(5px);
     }
-    
+  
     .mobile-sidebar .sidebar-link {
       text-decoration: none;
       color: var(--secondary-color);
@@ -262,11 +399,11 @@
       border: none;
       text-align: left;
     }
-    
+  
     .mobile-sidebar .sidebar-link:hover {
       color: var(--primary-color);
     }
-    
+  
     .mobile-sidebar .close-btn {
       align-self: flex-end;
       background: none;
@@ -276,88 +413,38 @@
       cursor: pointer;
     }
   }
-  @media (max-width: 768px) {
-    /* Force header to use a row layout */
-    .header {
-      display: flex !important;
-      flex-direction: row !important;
-      justify-content: space-between;
-      /* align-items: center; */
-      /* padding-right:0.6rem; */
-    }
-    
-    /* Hide desktop navigation links */
-    .nav-links {
-      display: none;
-    }
-    
-    /* Display mobile navigation in a row on the right */
-    .mobile-nav {
-      display: flex !important;
-      flex-direction: row;
-      align-items: center;
-      gap: 1rem;
-    }
-  }
-
-
-  .mobile-sidebar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 200px;
-    height: 100%;
-    background-color: rgba(248, 249, 250, 0.6); /* 60% transparency */
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    z-index: 1500;
-    backdrop-filter: blur(5px); /* Optional: Adds a blur effect to the background */
-  }
-
-
-  .mobile-sidebar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 200px;
-    height: 100%;
-    background-color: rgba(248, 249, 250, 0.6); /* 60% transparency */
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    z-index: 1500;
-    backdrop-filter: blur(5px); /* Optional: Adds a blur effect to the background */
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
   
-  .mobile-sidebar .sidebar-link {
-    text-decoration: none;
-    color: var(--secondary-color);
-    font-size: 1.1rem;
-    padding: 0.5rem;
-    border-bottom: 1px solid var(--primary-color);
-    background: none;
-    border: none;
-    text-align: left;
+  .footer-section {
+    animation: fadeIn 1s ease-in-out;
   }
   
-  .mobile-sidebar .sidebar-link:hover {
-    color: var(--primary-color);
+  /* Hover Underline */
+  .nav-link, .social-icons a {
+    position: relative;
+    overflow: hidden;
   }
   
-  .mobile-sidebar .close-btn {
-    align-self: flex-end;
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    cursor: pointer;
+  .nav-link::after, .social-icons a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition-speed) ease;
   }
-
-  .sidebar-icon {
-    margin-right: 0.5rem; /* Add spacing between icon and text */
+  
+  .nav-link:hover::after, .social-icons a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
+  

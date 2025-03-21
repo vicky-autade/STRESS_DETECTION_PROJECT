@@ -171,3 +171,46 @@
   width: 300px;
 }
 
+/* Remove fixed width and make it responsive */
+.health-tracking .button-primary {
+  width: 100%;
+  max-width: 300px;
+}
+
+.health-inputs-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5rem;
+  margin-top: 0.5rem;
+}
+
+/* Inside media query, allow it to be fluid */
+@media (max-width: 768px) {
+  .health-tracking .button-primary {
+    max-width: 100%;
+  }
+
+  .health-inputs-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .health-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .health-inputs {
+    width: 100%;
+  }
+
+  .input-field,
+  .sub {
+    width: 100%;
+  }
+}
+
+

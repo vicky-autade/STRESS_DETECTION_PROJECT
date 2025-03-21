@@ -219,3 +219,87 @@
 .recommendation-btn:hover {
   transform: translateY(-2px);
 }
+
+/* //////////// */
+
+@media (max-width: 992px) {
+  .form-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .input-container,
+  .stress-container {
+    max-width: 100%;
+    padding: 20px 0;
+  }
+
+  .input-container {
+    padding-right: 0;
+  }
+
+  .btn {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .submit-btn {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .input-method-selection {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .input-btn {
+    width: 100%;
+  }
+
+  .file-upload-btn {
+    width: 100%;
+  }
+
+  .stress-container {
+    padding: 20px;
+  }
+
+  .stress-image img {
+    width: 70%;
+  }
+
+  .recommendation-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .input-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .stress-level h3 {
+    font-size: 1.5rem;
+  }
+
+  .form-group input,
+  .input-btn,
+  .file-upload-btn,
+  .submit-btn,
+  .recommendation-btn {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 8px;
+  }
+
+  .stress-image img {
+    width: 90%;
+  }
+}

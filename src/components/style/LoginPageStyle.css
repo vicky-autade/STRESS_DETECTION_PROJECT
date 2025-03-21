@@ -21,7 +21,7 @@
   padding: 1rem;
   border-radius: 15px;
   box-shadow: var(--shadow-light);
-  margin: 0; /* Remove large margins for a consistent layout */
+  margin:100px 40px 20px 40px; /* Remove large margins for a consistent layout */
 }
 
 /* Container */
@@ -134,6 +134,7 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+  margin-top: 10px;
   transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
@@ -144,6 +145,7 @@
 
 /* Links */
 .link {
+
   text-decoration: none;
   color: #3498db;
 }

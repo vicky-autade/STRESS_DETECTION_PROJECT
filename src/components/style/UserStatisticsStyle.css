@@ -137,3 +137,127 @@
     background-color: #dc3545; /* Red */
 }
 
+
+/* ======= Responsive for Admin Page ======= */
+
+@media (max-width: 992px) {
+    .admin-page-container {
+      margin: 80px 10px 20px 10px;
+      padding: 1.5rem;
+    }
+  
+    .admin-content-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .admin-section-group {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .admin-data-section {
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .admin-page-container {
+      padding: 1rem;
+      margin: 60px 10px 15px 10px;
+    }
+  
+    .admin-data-section h2 {
+      font-size: 1.5rem;
+    }
+  
+    .admin-data-section p {
+      font-size: 1.1rem;
+    }
+  
+    .admin-input, .admin-msg {
+      width: 100%;
+    }
+  
+    .admin-button-primary {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .admin-page-container {
+      padding: 0.8rem;
+      margin: 50px 10px 10px 10px;
+    }
+  
+    .admin-data-section h2 {
+      font-size: 1.3rem;
+    }
+  
+    .admin-data-section p {
+      font-size: 1rem;
+    }
+  }
+  
+  /* ======= Responsive for User Statistics ======= */
+  
+  @media (max-width: 992px) {
+    .user-statistics-container {
+      padding: 20px;
+    }
+  
+    .charts-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  
+    .chart-wrapper {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .user-statistics-title {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+  
+    .user-statistics-table th,
+    .user-statistics-table td {
+      padding: 8px;
+      font-size: 0.9rem;
+    }
+  
+    .chart-container h1 {
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .user-statistics-container {
+      padding: 10px;
+    }
+  
+    .user-statistics-title {
+      font-size: 1.5rem;
+    }
+  
+    .user-statistics-table th,
+    .user-statistics-table td {
+      font-size: 0.85rem;
+      padding: 6px;
+    }
+  
+    .chart-container h1 {
+      font-size: 1rem;
+    }
+  
+    .ResponsiveContainer {
+      height: 250px !important;
+    }
+  }
+  
+

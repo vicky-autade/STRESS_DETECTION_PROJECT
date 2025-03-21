@@ -135,22 +135,51 @@
   }
   
   /* Responsive Styles */
-  @media (max-width: 768px) {
-    .admin-section-group {
-      flex-direction: column;
-      gap: 2rem;
-    }
-  
-    .admin-data-section {
-      width: 100%;
-    }
-  
-    .admin-data-section h2 {
-      font-size: 1.5rem;
-    }
-  
-    .admin-button-primary {
-      font-size: 0.9rem;
-    }
+ /* Responsive Styles for Mobile Devices */
+@media (max-width: 768px) {
+  /* Reduce container margins and adjust padding */
+  .admin-page-container {
+    margin: 60px 20px;
+    padding: 1.5rem;
   }
+
+  /* Stack content vertically on smaller screens */
+  .admin-content-wrapper {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Stack section groups vertically */
+  .admin-section-group {
+    flex-direction: column;
+    gap: 1.5rem;
+    justify-content: center;
+  }
+
+  /* Ensure data sections adapt well on mobile */
+  .admin-data-section {
+    width: 100%;
+    height: auto;  /* Allow height to adjust based on content */
+    padding: 1.5rem;
+  }
+
+  /* Adjust headings for smaller screens */
+  .admin-data-section h2 {
+    font-size: 1.5rem;
+  }
+
+  /* Scale down button sizes and text */
+  .admin-button-primary {
+    width: 100%;
+    max-width: none;
+    font-size: 0.9rem;
+  }
+
+  /* Ensure inputs and message boxes use full available width */
+  .admin-input,
+  .admin-msg {
+    width: 100%;
+  }
+}
+
   

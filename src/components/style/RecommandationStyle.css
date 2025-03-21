@@ -47,3 +47,68 @@
   font-size: 1rem;
   margin-top: 10px;
 }
+
+@media (max-width: 992px) {
+  .recommendation-page {
+    padding: 30px;
+    margin: 120px 20px 20px 20px;
+  }
+
+  .recommendation-title {
+    font-size: 2rem;
+  }
+
+  .recommendation-container {
+    gap: 1rem;
+  }
+
+  .recommendation-card {
+    width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .recommendation-page {
+    padding: 20px;
+    margin: 90px 15px 15px 15px;
+  }
+
+  .recommendation-title {
+    font-size: 1.8rem;
+  }
+
+  .recommendation-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .recommendation-card {
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .recommendation-page {
+    padding: 15px;
+    margin: 80px 10px 10px 10px;
+  }
+
+  .recommendation-title {
+    font-size: 1.5rem;
+    border-bottom: 2px solid #3498db;
+  }
+
+  .recommendation-card {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .recommendation-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .recommendation-card p {
+    font-size: 0.95rem;
+  }
+}
+

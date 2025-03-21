@@ -194,7 +194,7 @@ const LoginPage = ({ isLoggedIn, setIsLoggedIn, user, setUser, setFcmToken, fcmT
 
             <p className="login-link animate-in">
                       
-                        <Link className="link" to="/reset-password">
+                        <Link className="link" to="/reset-password" >
                           Forget Password?
                           </Link>
                       </p>
