@@ -8,8 +8,11 @@ import toast from "react-hot-toast";
 
 const UserDetailPage = () => {
   useEffect(() => {
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 0);
   }, []);
+
 
   const location = useLocation();
   const user = location.state?.user || {};
