@@ -78,7 +78,6 @@ const App = () => {
           )}
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/confirm-password" element={<ConfirmPassword />} />
-          <Route path="/*" element={<Not_found  isLoggedIn={isLoggedIn} user = {user}/>} />
           <Route path="/profile" element={<PrivateRoute isLoggedIn={isLoggedIn} loading={loading}><Profile user={user} setUser={setUser}/></PrivateRoute>} /> 
           <Route path="/about" element={<About/>} /> 
           <Route path="/privacyPolicy" element={<PrivacyPage/> }/>
@@ -107,6 +106,7 @@ const App = () => {
             </>
           )}
           
+          <Route path="/*" element={<Not_found  isLoggedIn={isLoggedIn} user = {user}/>} />
 
         </Routes>
       </div>
