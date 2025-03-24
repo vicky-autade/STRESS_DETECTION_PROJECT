@@ -109,6 +109,14 @@ const AdminHomePage = () => {
 
     
     const trainModel = async () => {
+        toast.success("Model training initiated successfully!", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
         try {
             const response = await axios.get(
                 `${process.env.REACT_APP_BACKEND_URL}api/admin/TrainModel`,
@@ -121,24 +129,17 @@ const AdminHomePage = () => {
             );
     
             console.log("Model training started:", response.data);
-            toast.success("Model training initiated successfully!", {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-              });
+            
         } catch (error) {
             console.error("Error training model:", error);
-            toast.error("Failed to initiate model training.", {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-              });
+            // toast.error("Failed to initiate model training.", {
+            //     position: "top-center",
+            //     autoClose: 3000,
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //   });
         }
     };
     
