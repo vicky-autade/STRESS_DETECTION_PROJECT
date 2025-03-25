@@ -92,7 +92,8 @@ const ResetPasswordPage = () => {
           <form onSubmit={handlePasswordSubmit} className="login-form">
             <div className="form-header">
               <h2>Reset Your Password</h2>
-              <p>Enter your new password below</p>
+              
+              <p style={{marginTop:"20px"}}>Enter your new password below</p>
             </div>
 
             {/* Password field */}

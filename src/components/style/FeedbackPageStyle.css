@@ -140,3 +140,102 @@ textarea:focus{
 .send-feedback-btn:hover {
   transform: translateY(-2px);
 }
+/* Media Queries for Responsive Design */
+
+/* For tablets and smaller desktops */
+@media (max-width: 1024px) {
+  .feedback-page-container {
+    height: auto;
+    padding: 30px;
+    margin-top: 90px;
+  }
+  
+  .feedback-left-section h1 {
+    font-size: 1.8rem;
+  }
+}
+
+/* For tablets in portrait mode */
+@media (max-width: 768px) {
+  .feedback-page-container {
+    flex-direction: column;
+    height: auto;
+    margin-top: 80px;
+    padding: 25px;
+  }
+  
+  .feedback-left-section,
+  .feedback-form-section {
+    width: 100%;
+  }
+  
+  .feedback-left-section {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .feedback-left-section h1 {
+    font-size: 1.6rem;
+  }
+  
+  .feedback-image {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 480px) {
+  .feedback-page-container {
+    padding: 20px;
+    margin-top: 70px;
+    margin-bottom: 20px;
+  }
+  
+  .feedback-left-section h1 {
+    font-size: 1.4rem;
+  }
+  
+  .feedback-type-section select,
+  textarea,
+  .send-feedback-btn {
+    font-size: 0.9rem;
+  }
+  
+  .star-rating-feedback .star {
+    size: 25px;
+  }
+  
+  .send-feedback-btn {
+    padding: 0.7rem 1.2rem;
+    width: 100%;
+  }
+}
+
+/* For very small mobile devices */
+@media (max-width: 360px) {
+  .feedback-page-container {
+    padding: 15px;
+  }
+  
+  .feedback-left-section h1 {
+    font-size: 1.2rem;
+  }
+  
+  .star-rating-feedback .star {
+    size: 20px;
+  }
+}
+
+/* Adjustments for landscape orientation on mobile */
+@media (max-height: 480px) and (orientation: landscape) {
+  .feedback-page-container {
+    height: auto;
+    min-height: 100vh;
+    margin-top: 70px;
+  }
+  
+  .feedback-left-section img {
+    max-height: 150px;
+  }
+}

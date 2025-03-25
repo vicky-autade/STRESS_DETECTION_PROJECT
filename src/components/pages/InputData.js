@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import "../style/inputDataStyle.css";
 import meter from "../assets/trend.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; 
-import Loader from "./Loader"; 
+import axios from "axios";
+import Loader from "./Loader";
 
 const InputData = ({ user }) => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,7 +26,7 @@ const InputData = ({ user }) => {
 
   const [stressLevel, setStressLevel] = useState(0);
   const [inputMethod, setInputMethod] = useState("file");
-  const [fileData, setFileData] = useState(null); 
+  const [fileData, setFileData] = useState(null);
   const [stressGiven, setStressGiven] = useState("Not Yet Given");
   const [recommendations, setRecommendations] = useState([]); // Store recommendations
 
@@ -45,40 +45,54 @@ const InputData = ({ user }) => {
       [name]: value,
     });
   };
-
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         try {
-          const jsonData = JSON.parse(event.target.result);
-          console.log("Parsed JSON Data:", jsonData);
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(event.target.result, "application/xml");
 
-          // Ensure required fields exist
-          const requiredFields = [
-            "snoring_range", "respiration_rate", "body_temperature",
-            "limb_movement", "blood_oxygen", "heart_rate",
-            "sleep_duration", "weight"
-          ];
-          
+          // Extracting values from XML
+          const getValue = (tagName) => {
+            const element = xmlDoc.getElementsByTagName(tagName)[0];
+            return element ? element.textContent : null;
+          };
+          console.log("Soham age >>>>>>>>>>>> " + user.age);
+          const extractedData = {
+            weight: parseFloat(getValue("weight")), // Float
+            snoring_range: parseFloat(getValue("snoring_range")), // Float
+            respiration_rate: parseFloat(getValue("respiration_rate")), // Float
+            body_temperature: parseFloat(getValue("body_temperature")), // Float
+            limb_movement: parseInt(getValue("limb_movement"), 10), // Integer
+            blood_oxygen: parseFloat(getValue("blood_oxygen")), // Float
+            sleep_duration: parseFloat(getValue("sleep_duration")), // Float
+            heart_rate: parseInt(getValue("heart_rate"), 10), // Integer
+            age: parseInt(user.age, 10), // Integer (from user data)
+          };
+
+
+          // Validate required fields
+          const requiredFields = Object.keys(extractedData);
           for (const field of requiredFields) {
-            if (!(field in jsonData)) {
-              alert(`Missing field: ${field} in file.`);
+            if (!extractedData[field]) {
+              alert(`Missing field: ${field} in XML file.`);
               return;
             }
           }
 
-          setFileData(jsonData); // Store parsed data
-          setFormData(jsonData); // Auto-fill form
+          setFileData(extractedData); // Store parsed data
+          setFormData(extractedData); // Auto-fill form
         } catch (error) {
-          alert("Invalid file format. Please upload a valid JSON file.");
+          alert("Invalid file format. Please upload a valid XML file.");
           console.error("File parsing error:", error);
         }
       };
       reader.readAsText(file);
     }
   };
+  ;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,7 +104,7 @@ const InputData = ({ user }) => {
         return;
       }
       requestData = {
-        ...fileData, 
+        ...fileData,
         source: "Automated Device"
       };
     } else {
@@ -129,7 +143,7 @@ const InputData = ({ user }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("jwt")}`,
           },
-          withCredentials: true, 
+          withCredentials: true,
         }
       );
 
@@ -183,14 +197,15 @@ const InputData = ({ user }) => {
           {/* File Upload Section */}
           {inputMethod === "file" && (
             <div className="form-group">
-              <label htmlFor="fileInput">Upload Health Data (JSON)</label>
+              <label htmlFor="fileInput">Upload Health Data (XML)</label>
               <input
                 type="file"
                 id="fileInput"
-                accept=".json"
+                accept=".xml"
                 className="file-upload-btn"
                 onChange={handleFileUpload}
               />
+
             </div>
           )}
 

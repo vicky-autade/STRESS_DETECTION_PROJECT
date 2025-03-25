@@ -159,11 +159,11 @@ const ResetPasswordPage = () => {
             </button>
 
             {step === 1 ? (
-              <p className="signup-link animate-in">
+              <p className="login-link animate-in">
                 Remembered your password? <Link to="/login">Login</Link>
               </p>
             ) : (
-              <p className="signup-link animate-in">
+              <p className="login-link animate-in">
                 Remember your password? <Link to="/login">Login</Link>
               </p>
             )}
