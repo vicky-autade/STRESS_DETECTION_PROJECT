@@ -12,8 +12,9 @@ const AllUserListPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setLoading(false);
-  }, []); // Ensures loading is updated once on mount
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleUserClick = (user) => {
     navigate("/UserDetailPage", { state: { user } });
@@ -31,40 +32,59 @@ const AllUserListPage = () => {
     <main className="user-list-page-wrapper">
       <h2 className="user-list-title">Users Details</h2>
 
-      {/* Show loading spinner */}
       {loading ? (
-        <p className="loading-text">Loading users...</p>
+        <div className="loader-container">
+          <div className="loader"></div>
+        </div>
       ) : (
         <>
-          {/* Search Bar */}
           <div className="search-bar-container">
             <input
               type="text"
               className="search-bar"
-              placeholder="Search across all fields..."
+              placeholder="Search users..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
           {filteredUsers.length === 0 ? (
-            <p className="user-list-empty">No users found.</p>
+            <p className="user-list-empty">No users found</p>
           ) : (
-            <div className="user-list-container">
+            <div className={`user-list-container ${filteredUsers.length === 1 ? "single-user" : ""}`}>
               {filteredUsers.map((user) => (
-                <div key={user.id} className="user-list-card">
-                  <img
-                    src={user.profileImage}
-                    alt={`${user.username}'s profile`}
-                    className="user-list-profile-photo"
-                  />
-                  <p className="user-list-username">{user.username}</p>
-                  <button
-                    className="user-details-button"
-                    onClick={() => handleUserClick(user)}
-                  >
-                    View Details
-                  </button>
+                <div 
+                  key={user._id} 
+                  className={`user-list-card ${filteredUsers.length === 1 ? "single-user-card" : ""}`}
+                  onClick={() => handleUserClick(user)}
+                >
+                  <div className="card-image-container">
+                    <img
+                      src={user.profileImage}
+                      alt={`${user.username}'s profile`}
+                      className="user-list-profile-photo"
+                    />
+                  </div>
+                  <div className="card-content">
+                    <p className="user-list-username">{user.username}</p>
+                    {filteredUsers.length === 1 && (
+                      <div className="additional-details">
+                        <p><strong>Email:</strong> {user.email}</p>
+                        <p><strong>Age:</strong> {user.age}</p>
+                        <p><strong>Gender:</strong> {user.gender}</p>
+                        <p><strong>Status:</strong> {user.status}</p>
+                      </div>
+                    )}
+                    <button 
+                      className="user-details-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleUserClick(user);
+                      }}
+                    >
+                      View Full Details
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
